@@ -15,8 +15,10 @@
      * [为什么jvm需要有栈协程](loom/为什么jvm需要有栈协程.md)
      * [VitrualThread对于synchronized适配](loom/synchronized适配.md) 
  * Panama
+     * [Panama教程-0-MethodHandle介绍](panama/panama-tutorial-0.md)
      * [失去了Unsafe内存操作之后该何去何从](panama/afterUnsafe.md)
-     * [Panama浅析](panama/Panama浅析.md)
+     * [Panama源码浅析](panama/Panama浅析.md)
+     
 
 ## 翻译
 * [为什么现代的jvm仍然偏爱安全点](translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.md)
