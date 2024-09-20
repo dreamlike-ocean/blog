@@ -386,7 +386,7 @@ private boolean checkCaptureContainAsyncFd(Object ops) {
 
 你会发现 好多异步代码，回调套回调，感觉性能上去了但是好像更难写了这该如何是好？
 
-其实有很多解决方案这里不再展开 请参考[为什么jvm需要有栈协程](为什么jvm需要有栈协程.md)
+其实有很多解决方案这里不再展开 请参考[为什么jvm需要有栈协程](../loom/为什么jvm需要有栈协程.md)
 
 ## 性能参考
 

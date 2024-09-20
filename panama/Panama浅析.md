@@ -325,7 +325,7 @@ generate 没什么好讲的就是又做了一边调用约定的解析并生成�
 
 具体请看在构造调用约定的时候的传参，将第一个参数的调用约定声明为放在这个特殊的寄存器上，即在搓出来的这一堆用于调用native函数的的汇编里面重排调用参数时会把第一个java层的参数放在这个约定的targetAddress寄存器上
 
-![](PanamaTargetAddress.png)
+![](./assets/PanamaTargetAddress.png)
 
 这里后面代码还有个小彩蛋 关于linkerOptions.isTrivial()的，如果不加的话在native函数执行完毕后会多一些操作，比如说safepoint_poll，change thread state，栈溢出安全水位检测（类似于金丝雀），这就是为什么说接近于空函数的native调用用这个参数性能会更好的原因
 
