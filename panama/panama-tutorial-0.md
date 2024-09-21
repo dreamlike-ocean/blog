@@ -298,3 +298,5 @@ class Holder {
 [R大的Methodhandle介绍](https://greenteajug.cn/images/%E8%8E%AB%E6%9E%A2_201207-LF-Tutorial.pdf)
 
 [oracle的详细的mh介绍文档](https://cr.openjdk.org/~vlivanov/talks/2015-Indy_Deep_Dive.pdf)
+
+[更有趣的jit剪枝](https://stackoverflow.com/questions/53271900/jit-micro-optimization-if-statement-elimination)
