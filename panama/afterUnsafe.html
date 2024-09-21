@@ -1,0 +1,679 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>失去了Unsafe内存操作之后该何去何从 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Panama浅析.html" />
+    
+    
+    <link rel="prev" href="panama-tutorial-0.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="panama-tutorial-0.html">
+            
+                <a href="panama-tutorial-0.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.2.2" data-path="afterUnsafe.html">
+            
+                <a href="afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="Panama浅析.html">
+            
+                <a href="Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >失去了Unsafe内存操作之后该何去何从</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="unsafe&#x4E2D;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x79FB;&#x9664;&#x540E;&#x7684;&#x66FF;&#x4EE3;&#x7269;">Unsafe&#x4E2D;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x79FB;&#x9664;&#x540E;&#x7684;&#x66FF;&#x4EE3;&#x7269;</h1>
+<blockquote>
+<p>&#x5F53;&#x524D;&#x6211;&#x4EEC;&#x4ECD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;Unsafe&#x505A;&#x5404;&#x79CD;&#x5404;&#x6837;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x53EF;&#x9884;&#x89C1;&#x7684;&#x672A;&#x6765;&#xFF0C;&#x8FD9;&#x79CD;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x4F1A;&#x88AB;<a href="https://openjdk.org/jeps/8323072" target="_blank">openjdk&#x7EC4;&#x79FB;&#x9664;</a></p>
+</blockquote>
+<p>&#x8FD9;&#x4EFD;JEP&#x8BA4;&#x4E3A;&#x5F53;&#x524D;&#x8FD9;&#x4E9B;<strong>Unsafe</strong>&#x7684;&#x64CD;&#x4F5C;&#x5DF2;&#x7ECF;&#x6709;<strong>Safe</strong>&#x7684;API&#x4F5C;&#x4E3A;&#x66FF;&#x4EE3;&#xFF0C;&#x540C;&#x65F6;&#x5728;safe&#x7684;&#x524D;&#x63D0;&#x4E0B;&#x53EF;&#x4EE5;&#x4F9D;&#x8D56;&#x4E8E;jit&#x7684;&#x9B54;&#x529B;&#x5C06;&#x5176;&#x8FFD;&#x5E73;Unsafe&#x7684;&#x6027;&#x80FD;</p>
+<p>&#x4F46;&#x662F;&#x7B14;&#x8005;&#x8BA4;&#x4E3A;&#x8FD9;&#x4EFD;JEP&#x662F;openjdk&#x7EC4;&#x90A3;&#x79CD;&#x72C2;&#x70ED;&#x7684;&#x8FFD;&#x6C42;&quot;&#x5B89;&#x5168;&quot;&#xFF0C;&quot;&#x53EF;&#x7EF4;&#x62A4;&quot;&#x7684;&#x601D;&#x60F3;&#x7684;&#x53C8;&#x4E00;&#x6B21;&#x4F53;&#x73B0;&#x3002;&#x603B;&#x7684;&#x6765;&#x8BF4;&#x8FD9;&#x4EFD;JEP&#x7684;&#x542B;&#x4E49;&#x662F;&#xFF1A;</p>
+<ul>
+<li>&#x5806;&#x5185;&#x7684;&#x90E8;&#x5206;&#x4E0D;&#x8981;&#x778E;&#x641E;&#xFF0C;&#x53EA;&#x5141;&#x8BB8;&#x5728;&#x6709;&#x6743;&#x9650;&#x7684;&#x8303;&#x56F4;&#x5185;&#x6267;&#x884C;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x3002;&#x6570;&#x7EC4;&#x7ED9;&#x4F60;&#x5212;&#x754C;&#xFF0C;&#x5BF9;&#x8C61;&#x7ED9;&#x4F60;&#x5361;&#x6743;&#x9650;&#xFF0C;&#x901A;&#x8FC7;&#x6A21;&#x5757;&#x5316;&#xFF0C;&#x6570;&#x7EC4;&#x8FB9;&#x754C;&#x68C0;&#x67E5;&#x63A7;&#x5236;&#x80FD;get&#x548C;&#x80FD;set&#x7684;&#x90E8;&#x5206;</li>
+<li>&#x5806;&#x5916;&#x7684;&#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x641E;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x5F97;&#x662F;&#x5728;&#x76D1;&#x7BA1;&#x8303;&#x56F4;&#x5185;&#x7684;&#xFF0C;&#x751F;&#x547D;&#x5468;&#x671F;&#x7EA6;&#x675F;&#xFF0C;GC&#x8FFD;&#x8E2A;&#xFF0C;&#x7EBF;&#x7A0B;&#x672C;&#x5730;&#x63E1;&#x624B;&#x8FD9;&#x4E9B;&#x90FD;&#x662F;&#x4FDD;&#x8BC1;&#x4E0D;&#x4F1A;&#x91CA;&#x653E;&#x540E;&#x4F7F;&#x7528;&#x7684;&#x624B;&#x6BB5;</li>
+<li>&#x53E6;&#x5916;&#x5219;&#x662F;&#x7EE7;&#x7EED;&#x575A;&#x6301;&#x53CD;&#x5BF9;hack&#x6807;&#x51C6;&#x5E93;</li>
+</ul>
+<p>&#x8FD9;&#x91CC;openjdk&#x7EC4;&#x73A9;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x5B57;&#x6E38;&#x620F;&#xFF0C;jdk&#x5B58;&#x5728;&#x4E24;&#x4E2A;Unsafe,&#x4E00;&#x4E2A;&#x662F;&#x672C;&#x6B21;&#x4F1A;&#x88AB;&#x9609;&#x5272;&#x7684;<code>sun.misc.Unsafe</code>,&#x5C5E;&#x4E8E;jdk.unsupported&#x6A21;&#x5757;&#x662F;&#x7ED9;&#x5F00;&#x53D1;&#x8005;&#x7528;&#x7684;&#xFF0C;&#x5176;&#x5168;&#x90E8;&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x8F6C;&#x53D1;&#x5230;&#x53E6;&#x5916;&#x4E00;&#x4E2A;Unsafe&#x4E0A;&#x2014;&#x2014;<code>jdk.internal.misc.Unsafe</code>,&#x5176;&#x5728;java.base&#x6A21;&#x5757;&#x4E0B;&#xFF0C;&#x88AB;&#x4E25;&#x5BC6;&#x4FDD;&#x62A4;&#x8D77;&#x6765;&#x4E86;&#x3002; &#x6240;&#x4EE5;&#x672C;&#x6B21;&#x770B;&#x8D77;&#x6765;&#x662F;&#x5927;&#x524A;&#x5F31;&#xFF0C;&#x4F46;&#x662F;&#x5176;&#x5B9E;&#x4E00;&#x65B9;&#x9762;&#x6CA1;&#x6709;&#x780D;&#x6389;jdk&#x5185;&#x90E8;Unsafe&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x4E00;&#x65B9;&#x9762;&#x53C8;&#x6709;&#x66FF;&#x4EE3;&#x54C1;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5C0F;&#x524A;&#x5F31;&#x3002;&#x4F46;&#x662F;&#x67D0;&#x4E9B;&#x6CA1;&#x6709;&#x66FF;&#x4EE3;&#x54C1;&#x7684;api&#x7684;&#x53BB;&#x9664;&#x5219;&#x5B9E;&#x5B9E;&#x5728;&#x5728;&#x7ED9;&#x5C1D;&#x8BD5;&#x624B;&#x52A8;&#x63A5;&#x7BA1;jvm&#x8FD9;&#x53F0;&#x7EAF;&#x81EA;&#x52A8;&#x9A7E;&#x9A76;&#x7684;&#x5F00;&#x53D1;&#x8005;&#x4E00;&#x8BB0;&#x91CD;&#x62F3;&#x3002;</p>
+<h2 id="&#x624B;&#x64CD;&#x5185;&#x5B58;">&#x624B;&#x64CD;&#x5185;&#x5B58;</h2>
+<p> &#x8FD9;&#x91CC;&#x4E0D;&#x5C55;&#x5F00;&#x76F4;&#x63A5;&#x8D34;JEP&#x622A;&#x56FE;
+<img src="assets/relaceffm.png" alt="Alt text">
+&#x9664;&#x4E86;invokeCleaner&#x4E4B;&#x5916;&#x5747;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x66FF;&#x6362;&#xFF0C;invokeCleaner&#x76EE;&#x524D;&#x6CA1;&#x6709;&#x7B49;&#x4EF7;&#x66FF;&#x6362;&#x7269;&#xFF08;&#x5728;AutoScope&#x4E0B;&#xFF09;</p>
+<h2 id="&#x65E0;&#x6761;&#x4EF6;&#x53CD;&#x5C04;&#x548C;&#x5185;&#x5B58;&#x6548;&#x5E94;">&#x65E0;&#x6761;&#x4EF6;&quot;&#x53CD;&#x5C04;&quot;&#x548C;&#x5185;&#x5B58;&#x6548;&#x5E94;</h2>
+<p>&#x5F88;&#x591A;&quot;&#x9AD8;&#x6027;&#x80FD;&quot;&#x4EE3;&#x7801;&#x4E2D;&#x53EF;&#x80FD;&#x4F1A;&#x51FA;&#x73B0;&#x8FD9;&#x6837;&#x7684;&#x4EE3;&#x7801;</p>
+<pre><code class="lang-java">Field implLookupField = lookupClass.getDeclaredField(<span class="hljs-string">&quot;IMPL_LOOKUP&quot;</span>);
+<span class="hljs-keyword">long</span> offset = UNSAFE.staticFieldOffset(implLookupField);
+<span class="hljs-keyword">return</span> (MethodHandles.Lookup) UNSAFE.getObject(UNSAFE.staticFieldBase(implLookupField), offset);
+</code></pre>
+<p>&#x6765;&#x83B7;&#x53D6;&#x67D0;&#x4E9B;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x67D0;&#x4E9B;&#x5B57;&#x6BB5;&#xFF0C;&#x751A;&#x81F3;&#x662F;&#x7528;&#x6765;hack&#x6807;&#x51C6;&#x5E93;&#x83B7;&#x53D6;&#x7279;&#x6743;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x91CC;&#x6D89;&#x53CA;&#x5230;&#x7684;<code>staticFieldOffset</code>&#x548C;<code>getObject</code>&#x7684;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x672A;&#x6765;&#x5747;&#x4F1A;&#x79FB;&#x9664;&#x3002;&#x4ECE;jdk&#x6E90;&#x7801;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;
+<img src="assets/jdk_field_offset.png" alt="Alt text"></p>
+<p><img src="assets/c1_unsafe_get.png" alt="Alt text">
+&#x8FD9;&#x91CC;&#x83B7;&#x53D6;offset&#x548C;&#x4ECE;offset&#x83B7;&#x53D6;&#x67D0;&#x4E2A;&#x503C;&#x662F;&#x5B8C;&#x5168;&#x7684;&#x5185;&#x5B58;&#x504F;&#x79FB;&#x91CF;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x4E0D;&#x5305;&#x542B;&#x4EFB;&#x4F55;&#x6743;&#x9650;&#x5224;&#x65AD;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x6B63;&#x662F;openjdk&#x7EC4;&#x8BA4;&#x4E3A;&#x8FD9;&#x4E1C;&#x897F;&#x4E0D;&#x5B89;&#x5168;&#x4E0D;&#x7A33;&#x5B9A;&#x7684;&#x539F;&#x56E0;&#x3002;&#x4ED6;&#x4EEC;&#x7ED9;&#x51FA;&#x7684;&#x66FF;&#x4EE3;&#x54C1;&#x662F;<code>Varhandle</code>;</p>
+<pre><code class="lang-java">        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        VarHandle varHandle = lookup.findStaticVarHandle(Main.class, <span class="hljs-string">&quot;a&quot;</span>, MethodHandles.Lookup.class);
+        varHandle.set(lookup);
+        MethodHandles.Lookup staticValue = (MethodHandles.Lookup) varHandle.get();
+</code></pre>
+<p>&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x795E;&#x79D8;&#x7684;LookUp&#x6765;&#x51B3;&#x5B9A;&#x5F53;&#x524D;&#x83B7;&#x53D6;&#x5230;&#x7684;Varhandle&#x662F;&#x5426;&#x5177;&#x6709;&#x64CD;&#x4F5C;&#x5BF9;&#x5E94;&#x5B57;&#x6BB5;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x8FD9;&#x91CC;&#x5F80;&#x5F80;&#x4F1A;&#x8DDF;&#x6A21;&#x5757;&#xFF0C;&#x53EF;&#x89C1;&#x6027;&#x7B49;&#x76F8;&#x7ED1;&#x5B9A;&#xFF0C;&#x518D;&#x52A0;&#x4E4B;JDK17&#x5E26;&#x6765;&#x7684;&#x5F3A;&#x6A21;&#x5757;&#x5316;&#x5C01;&#x6B7B;&#x4E86;&#x901A;&#x8FC7;Unsafe&#x7834;&#x574F;&#x6A21;&#x5757;&#x5316;&#x5C01;&#x88C5;&#x7684;&quot;&#x6F0F;&#x6D1E;&quot;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x5185;&#x5B58;&#x6548;&#x5E94;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;CAS,Memory Order,&#x4E5F;&#x662F;&#x76F4;&#x63A5;&#x4F7F;&#x7528;Varhandle&#x8FDB;&#x884C;&#x89E3;&#x51B3;&#xFF0C;&#x539F;&#x6765;&#x7684;<code>Unsafe::compareAndSwapInt</code>&#x8F6C;&#x4E3A;&#x4E86;<code>VarHandle::compareAndSet</code>&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x624B;&#x64CD;&#x5185;&#x5B58;&#x5C4F;&#x969C;&#x7684;&#x90E8;&#x5206;&#x5219;&#x662F;&#x5168;&#x90E8;&#x4ECE;Unsafe&#x76F4;&#x63A5;&#x8FC1;&#x79FB;&#x5230;Varhandle&#x4E0B;</p>
+<pre><code class="lang-java">        VarHandle.fullFence();
+        VarHandle.acquireFence();
+        VarHandle.releaseFence();
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x5728;&#x66FF;&#x6362;&#x65F6;&#x5C31;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x9690;&#x85CF;&#x7684;&#x5751;&#xFF0C;&#x539F;&#x6709;&#x7684;Unsafe&#x64CD;&#x4F5C;&#x539F;&#x7406;&#x662F;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x5BF9;&#x5E94;&#x5185;&#x5B58;&#x6240;&#x4EE5;&#x4E0D;&#x662F;const&#x4E5F;&#x662F;&#x6709;&#x5F88;&#x597D;&#x7684;&#x6548;&#x679C;&#x7684;&#xFF0C;&#x4F46;&#x662F;Varhandle&#x6BD4;&#x8F83;&#x590D;&#x6742;&#x6D89;&#x53CA;&#x5230;&#x591A;&#x91CD;&#x7F16;&#x8BD1;&#xFF0C;&#x5185;&#x8054;&#x4F18;&#x5316;&#x6240;&#x4EE5;&#x5FC5;&#x987B;&#x662F;const&#x7684;&#xFF0C;&#x5426;&#x5219;&#x6027;&#x80FD;&#x4E0B;&#x964D;&#x7684;&#x5F88;&#x5BA2;&#x89C2;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x58F0;&#x660E;&#x6210;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x624D;&#x80FD;&#x83B7;&#x53D6;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> VarHandle VH = ...
+</code></pre>
+<p>&#x5982;&#x679C;&#x4F60;&#x7684;&#x6A21;&#x5F0F;&#x6BD4;&#x8F83;&#x56FA;&#x5B9A;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4E00;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x64CD;&#x4F5C;&#x53C8;&#x60F3;&#x5EF6;&#x8FDF;&#x64CD;&#x4F5C;&#x4E0D;&#x59A8;&#x8BD5;&#x8BD5;invokeDynamic+ConstantCallSite,&#x5C06;&#x5BF9;&#x5E94;&#x7684;<code>MethodHandle methodHandle = varHandle.toMethodHandle(VarHandle.AccessMode.GET);</code> &#x8F6C;&#x6362;&#x4E3A;Methodhandle&#x540E;&#x585E;&#x5165;callsite.</p>
+<h2 id="&#x7C7B;&#x521D;&#x59CB;&#x5316;">&#x7C7B;&#x521D;&#x59CB;&#x5316;</h2>
+<p>&#x4E4B;&#x524D;&#x7684;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;&#x673A;&#x5236;&#x5176;&#x5B9E;&#x5E76;&#x6CA1;&#x6709;&#x5BF9;&#x5916;&#x5F00;&#x653E;&#x4E00;&#x4E9B;&#x8BF8;&#x5982;&#x5B57;&#x8282;&#x7801;&#x6570;&#x7EC4;&#x8F6C;Class,&#x5F3A;&#x5236;&#x521D;&#x59CB;&#x5316;&#x7B49;API,&#x5F80;&#x5F80;&#x5F88;&#x4F9D;&#x8D56;&#x4E8E;Unsafe&#x7684;&#x67D0;&#x4E9B;api,&#x6BD4;&#x5982;<code>Unsafe::defindClass</code>, <code>Unsafe::ensureClass</code>.
+&#x76EE;&#x524D;&#x8FD9;&#x4E9B;&#x90FD;&#x5168;&#x91CF;&#x79FB;&#x52A8;&#x5230;&#x4E86;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;Methodhandle$Lookup&#x7C7B;&#x4E0B;&#x3002;
+&#x5728;&#x5B9E;&#x6218;&#x4E2D;&#x6211;&#x4EEC;&#x5F80;&#x5F80;&#x4F1A;&#x624B;&#x6413;&#x4E00;&#x4E9B;&#x5B57;&#x8282;&#x7801;&#x7136;&#x540E;&#x52A0;&#x8F7D;&#xFF0C;&#x540C;&#x65F6;&#x5728;<code>&lt;cinit&gt;</code>&#x4E2D;&#x5199;&#x4E00;&#x4E9B;&#x903B;&#x8F91;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x5C31;&#x9700;&#x8981;<code>ensureInitialized</code>&#x51FA;&#x9A6C;&#x4FDD;&#x8BC1;&#x8FD4;&#x56DE;&#x7684;Class&#x4E00;&#x5B9A;&#x662F;&#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6BD5;&#x7684;</p>
+<pre><code class="lang-java">            Class&lt;?&gt; aClass = <span class="hljs-keyword">null</span>;
+            <span class="hljs-keyword">try</span> {
+                aClass = lookup.findClass(className);
+            } <span class="hljs-keyword">catch</span> (ClassNotFoundException ignore) {
+            }
+            <span class="hljs-comment">//&#x8BC1;&#x660E;&#x6CA1;&#x6709;&#x751F;&#x6210;&#x8FC7;</span>
+            <span class="hljs-keyword">if</span> (aClass == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-comment">//&#x5176;&#x4E2D;&#x4F7F;&#x7528;lookup.defineClass&#x52A0;&#x8F7D;&#x751F;&#x6210;&#x51FA;&#x6765;&#x7684;&#x7C7B;</span>
+                aClass = generateRuntimeProxyClass(lookup, nativeInterface);
+            }
+            <span class="hljs-comment">//&#x5F3A;&#x5236;&#x521D;&#x59CB;&#x5316;&#x6267;&#x884C;cInit</span>
+            lookup.ensureInitialized(aClass);
+</code></pre>
+<h2 id="&#x6742;&#x9879;">&#x6742;&#x9879;</h2>
+<h3 id="&#x83B7;&#x53D6;&#x9875;&#x9762;&#x5927;&#x5C0F;">&#x83B7;&#x53D6;&#x9875;&#x9762;&#x5927;&#x5C0F;</h3>
+<p><code>Unsafe::pageSize</code> &#x7528;&#x4E8E;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x7CFB;&#x7EDF;&#x9875;&#x9762;&#x5927;&#x5C0F;&#xFF0C;&#x8FD9;&#x4E2A;api&#x4E5F;&#x4F1A;&#x88AB;&#x79FB;&#x9664;&#x3002;&#x7531;&#x4E8E;&#x5176;&#x662F;libc&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x5F88;&#x8F7B;&#x677E;&#x5730;&#x4F7F;&#x7528;Panama FFI&#x83B7;&#x53D6;&#x5230;</p>
+<p><img src="assets/getpagesize.png" alt="&#x5BF9;&#x5E94;&#x624B;&#x518C;"></p>
+<p>&#x5BF9;&#x5E94;&#x7684;&#x8C03;&#x7528;&#x4EE3;&#x7801;&#x4E5F;&#x5F88;&#x7B80;&#x5355;</p>
+<pre><code class="lang-java">        Linker nativeLinker = Linker.nativeLinker();
+        <span class="hljs-comment">//&#x65B9;&#x4FBF;&#x5C55;&#x793A;&#x76F4;&#x63A5;get&#x4E86;</span>
+        MemorySegment functionAddress = nativeLinker.defaultLookup().find(<span class="hljs-string">&quot;getpagesize&quot;</span>).get();
+        MethodHandle getPageSizeHandle = nativeLinker.downcallHandle(
+                functionAddress,
+                FunctionDescriptor.of(ValueLayout.JAVA_INT),
+                Linker.Option.isTrivial()
+        );
+
+        <span class="hljs-keyword">int</span> pageSize = (<span class="hljs-keyword">int</span>) getPageSizeHandle.invokeExact();
+</code></pre>
+<p>&#x5F53;&#x7136;&#x4F7F;&#x7528;<a href="https://central.sonatype.com/artifact/io.github.dreamlike-ocean/panama-generator" target="_blank">Panama-generator</a>&#x66F4;&#x7B80;&#x5355;&#xFF01;</p>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">unistd</span> </span>{
+            <span class="hljs-meta">@NativeFunction</span>(value = <span class="hljs-string">&quot;getpagesize&quot;</span>, fast = <span class="hljs-keyword">true</span>)
+            <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getPageSize</span><span class="hljs-params">()</span></span>;
+        }
+
+        NativeCallGenerator generator = <span class="hljs-keyword">new</span> NativeCallGenerator();
+        <span class="hljs-keyword">int</span> size = generator.generate(unistd.class).getPageSize();
+        System.out.println(size);
+</code></pre>
+<h2 id="&#x79C1;&#x8D27;">&#x79C1;&#x8D27;</h2>
+<h3 id="jni&#x65B9;&#x6848;">JNI&#x65B9;&#x6848;</h3>
+<p>&#x524D;&#x9762;&#x8BF4;&#x4E86;&#x8FD9;&#x4E48;&#x591A;&#x5176;&#x5B9E;&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x79C1;&#x8D27;&#x90E8;&#x5206;&#xFF0C;&#x6211;&#x4E4B;&#x524D;&#x5199;&#x4E86;&#x4E2A;&#x5E93;&#x2014;&#x2014;<a href="https://github.com/dreamlike-ocean/UnsafeVirtualThread" target="_blank">&#x624B;&#x64CD;VirtualThread</a>&#xFF0C;&#x5C31;&#x662F;&#x628A;&#x4E00;&#x4E9B;jdk&#x5185;&#x90E8;&#x7684;&#x57FA;&#x5EFA;&#x62FF;&#x51FA;&#x6765;&#x7528;&#xFF0C;&#x5176;&#x4E2D;&#x6838;&#x5FC3;&#x5C31;&#x662F;MethodHandle.Lookup&#x4E2D;&#x7684;&#x90A3;&#x4E2A;&#x9759;&#x6001;&#x5B57;&#x6BB5;<code>IMPL_LOOKUP</code>&#xFF0C;&#x5176;&#x62E5;&#x6709;&#x65E0;&#x9650;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x4E0D;&#x53D7;&#x4EFB;&#x4F55;&#x9650;&#x5236;&#x8C03;&#x7528;&#x4EFB;&#x610F;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x54EA;&#x6015;&#x662F;jdk&#x5185;&#x90E8;&#x7684;&#x3002;&#x4F46;&#x662F;&#x7531;&#x4E8E;Unsafe&#x4E2D;offset&#x76F8;&#x5173;&#x65B9;&#x6CD5;&#x7684;&#x79FB;&#x9664;&#xFF0C;&#x6211;&#x4E5F;&#x4E0D;&#x5F97;&#x4E0D;&#x4E00;&#x8FB9;&#x9A82;openjdk&#x7EC4;&#x4E00;&#x8FB9;&#x5BFB;&#x627E;&#x522B;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x8BA9;&#x8FD9;&#x4E2A;&#x5E93;&#x7EE7;&#x7EED;&#x8DD1;&#x4E0B;&#x53BB;&#x3002;
+&#x5C01;&#x9501;&#x5230;&#x6700;&#x540E;&#x53D1;&#x73B0;&#x53EA;&#x6709;jni&#x8FD9;&#x4E00;&#x6761;&#x8DEF;&#x4E86;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function">JNIEXPORT jobject JNICALL <span class="hljs-title">Java_top_dreamlike_VirtualThreadUnsafe_getTrustedLookUp</span>
+        <span class="hljs-params">(JNIEnv *env, jclass jclazz)</span> </span>{
+  <span class="hljs-keyword">auto</span> lookupClass = env-&gt;FindClass(<span class="hljs-string">&quot;java/lang/invoke/MethodHandles$Lookup&quot;</span>);
+  <span class="hljs-keyword">auto</span> fieldId = env-&gt;GetStaticFieldID(lookupClass, <span class="hljs-string">&quot;IMPL_LOOKUP&quot;</span>, <span class="hljs-string">&quot;Ljava/lang/invoke/MethodHandles$Lookup;&quot;</span>);
+  <span class="hljs-keyword">auto</span> TRUST_LOOKUP = env-&gt;GetStaticObjectField(lookupClass, fieldId);
+  <span class="hljs-keyword">return</span> TRUST_LOOKUP;
+
+}
+</code></pre>
+<p>&#x4F46;&#x662F;&#x8FD9;&#x91CC;&#x8FD8;&#x6709;&#x4E2A;&#x9AD8;&#x60AC;&#x7684;&#x5DF2;&#x7ECF;&#x63D0;&#x4EA4;&#x7684;<a href="https://openjdk.org/jeps/8307341" target="_blank">JEP&#x8349;&#x6848;</a>,&#x51C6;&#x5907;&#x9ED8;&#x8BA4;&#x5173;&#x95ED;jni&#x7684;&#x52A0;&#x8F7D;&#xFF0C;&#x6216;&#x8BB8;&#x67D0;&#x4E00;&#x5929;&#x6211;&#x7684;<code>&#x63D0;&#x4F9B;&#x65E0;&#x9700;&#x6DFB;&#x52A0;&#x989D;&#x5916;&#x542F;&#x52A8;&#x53C2;&#x6570;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;VirtualThread&#x5E26;&#x6765;&#x7684;&#x5404;&#x79CD;&#x5185;&#x90E8;api&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;</code>&#x8FD9;&#x53E5;&#x8BDD;&#x4E5F;&#x4F1A;&#x88AB;&#x6211;&#x81EA;&#x5DF1;&#x5220;&#x6389;&#x3002;</p>
+<p>&#x6211;&#x5F88;&#x4E50;&#x610F;&#x89C1;&#x5230;jdk&#x53D8;&#x5F97;&#x66F4;&#x5B89;&#x5168;&#xFF0C;&#x4F46;&#x662F;&#x81F3;&#x5C11;&#x7ED9;&#x6211;&#x4EEC;&#x8FD9;&#x4E9B;&#x6709;&#x80FD;&#x529B;&#x624B;&#x64CD;&#x7684;&#x4EBA;&#x4E00;&#x70B9;&#x6D3B;&#x8DEF;&#xFF0C;&#x5982;&#x679C;&#x5B98;&#x65B9;&#x4E3E;&#x68CB;&#x4E0D;&#x5B9A;&#x4E0D;&#x77E5;&#x9053;&#x8BE5;&#x4E0D;&#x8BE5;&#x653E;&#x51FA;&#x6765;API,&#x4E5F;&#x81F3;&#x5C11;&#x7559;&#x4E2A;&#x540E;&#x95E8;&#x7ED9;&#x793E;&#x533A;&#x53D1;&#x6325;&#x521B;&#x9020;&#x529B;&#x3002;</p>
+<h3 id="panama&#x65B9;&#x6848;">Panama&#x65B9;&#x6848;</h3>
+<p>&#x5728;Linux&#x4E0A;&#x52A0;&#x8F7D;&#x591A;&#x6B21;&#x540C;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x5E93;&#x672C;&#x8D28;&#x662F;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4EFD;&#x5185;&#x5B58;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Panama API&#x52A0;&#x8F7D;libjava&#x548C;libjvm&#x4E24;&#x4E2A;&#x52A8;&#x6001;&#x5E93;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x518D;&#x89E3;&#x6790;&#x5BF9;&#x5E94;&#x7684;&#x7B26;&#x53F7;&#x5730;&#x5740;&#x76F4;&#x63A5;&#x5728;&#x5F53;&#x524D;&#x7684;&#x8FDB;&#x7A0B;&#x4E2D;&#x8C03;&#x7528;&#x5230;JVM&#x4E2D;&#x7684;&#x67D0;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#xFF5E;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;java&#x7528;Panama&#x63D0;&#x4F9B;&#x7684;FFI API&#x5B9E;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x7B49;&#x4EF7;JNI&#x529F;&#x80FD;&#x3002;</p>
+<p>&#x60F3;&#x8981;&#x505A;&#x5230;&#x8FD9;&#x4E00;&#x70B9;&#x9996;&#x5148;&#x9700;&#x8981;&#x62FF;&#x5230;JNIEnv *env&#x8FD9;&#x4E2A;&#x5C0F;&#x73A9;&#x610F;&#xFF0C;&#x901A;&#x8FC7;&#x4F7F;&#x7528;nm&#x548C;readelf&#x4E24;&#x4E2A;&#x6307;&#x4EE4;&#x518D;&#x642D;&#x914D;openjdk&#x6E90;&#x7801;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x5BFC;&#x51FA;&#x7684;&#x7B26;&#x53F7;&#x6765;&#x83B7;&#x53D6;JNIENV
+&#x7B26;&#x53F7;&#x53EF;&#x4EE5;&#x53C2;&#x8003;</p>
+<pre><code class="lang-shell">&#x279C;  cpp-code readelf -a /home/dreamlike/jdks/jdk-21.0.1/lib/libjava.so |grep &quot;JNU_GetEnv&quot;
+   383: 000000000001a110    26 FUNC    GLOBAL DEFAULT   12 JNU_GetEnv
+   633: 000000000001a110    26 FUNC    GLOBAL DEFAULT   12 JNU_GetEnv
+</code></pre>
+<p>&#x5BF9;&#x5E94;&#x7B26;&#x53F7;&#x7684;&#x6E90;&#x7801;&#x53EF;&#x4EE5;&#x53C2;&#x8003;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// &#x4F4D;&#x4E8E;src/java.base/share/native/libjava/jni_util.c</span>
+<span class="hljs-function">JNIEXPORT <span class="hljs-keyword">void</span> * JNICALL
+<span class="hljs-title">JNU_GetEnv</span><span class="hljs-params">(JavaVM *vm, jint version)</span>
+</span>{
+    <span class="hljs-keyword">void</span> *env;
+    (*vm)-&gt;GetEnv(vm, &amp;env, version); <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x7684;&#x5B9E;&#x73B0;&#x89C1;src/hotspot/share/prims/jni.cpp&#x7684;jni_GetEnv</span>
+    <span class="hljs-keyword">return</span> env;
+}
+</code></pre>
+<p>&#x90A3;&#x4E48;&#x95EE;&#x9898;&#x5C31;&#x8F6C;&#x6362;&#x4E3A;&#x83B7;&#x53D6;&#x5F53;&#x524D;JVM&#x5BF9;&#x5E94;&#x7684;JavaVM*&#x5373;&#x53EF;&#xFF0C;&#x719F;&#x6089;jdk&#x6E90;&#x7801;&#x7684;&#x8BFB;&#x8005;&#x5E94;&#x8BE5;&#x77E5;&#x9053;&#x6E90;&#x7801;&#x4E2D;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x53D8;&#x91CF;<code>main_vm</code>&#x4FDD;&#x5B58;&#x4E86;&#x5F53;&#x524D;&#x7684;JavaVM&#x5B9E;&#x4F8B;&#xFF0C;&#x4F46;&#x662F;&#x5F88;&#x53EF;&#x60DC;&#x8FD9;&#x4E2A;&#x7B26;&#x53F7;&#x5728;&#x7B26;&#x53F7;&#x8868;&#x91CC;&#x9762;&#x662F;&#x9690;&#x85CF;&#x7684;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x83B7;&#x53D6;</p>
+<pre><code class="lang-txt">&#x279C;  cpp-code readelf -a /home/dreamlike/jdks/jdk-21.0.1/lib/server/libjvm.so | grep &quot;main_vm&quot;
+ 42899: 00000000013e1fa0     8 OBJECT  LOCAL  HIDDEN    27 main_vm
+</code></pre>
+<p>&#x4F46;&#x662F;&#x4E0D;&#x8981;&#x7D27;&#x8FD9;&#x4E2A;&#x7B26;&#x53F7;&#x4F5C;&#x4E3A;&#x91CD;&#x8981;&#x7684;&#x4E00;&#x4E2A;&#x7B26;&#x53F7;&#x80AF;&#x5B9A;&#x6709;&#x5BFC;&#x51FA;&#x7684;&#x65B9;&#x6CD5;&#x7ED9;&#x5176;&#x4ED6;&#x7684;Java&#x6838;&#x5FC3;&#x52A8;&#x6001;&#x5E93;&#x4F7F;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x5BFC;&#x51FA;&#x7684;&#x7B26;&#x53F7;&#x6B63;&#x597D;&#x53EF;&#x4EE5;&#x5E2E;&#x5FD9;&#x62FF;&#x5230;&#x8FD9;&#x4E2A;<code>main_vm</code>&#x7684;&#x6307;&#x9488;</p>
+<pre><code class="lang-shell">&#x279C;  cpp-code readelf -a /home/dreamlike/jdks/jdk-21.0.1/lib/server/libjvm.so | grep &quot;JNI_GetCreatedJavaVMs&quot;
+ 63010: 0000000000977cc0    60 FUNC    GLOBAL DEFAULT   11 JNI_GetCreatedJavaVMs
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x6E90;&#x7801;&#x53C2;&#x8003;</p>
+<pre><code class="lang-c"><span class="hljs-comment">//  &#x4F4D;&#x4E8E;src/hotspot/share/prims/jni.cpp</span>
+_<span class="hljs-function">JNI_IMPORT_OR_EXPORT_ jint JNICALL <span class="hljs-title">JNI_GetCreatedJavaVMs</span><span class="hljs-params">(JavaVM **vm_buf, jsize bufLen, jsize *numVMs)</span> </span>{
+  HOTSPOT_JNI_GETCREATEDJAVAVMS_ENTRY((<span class="hljs-keyword">void</span> **) vm_buf, bufLen, (<span class="hljs-keyword">uintptr_t</span> *) numVMs);
+
+  <span class="hljs-keyword">if</span> (vm_created == COMPLETE) {
+    <span class="hljs-keyword">if</span> (numVMs != <span class="hljs-literal">nullptr</span>) *numVMs = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (bufLen &gt; <span class="hljs-number">0</span>)     *vm_buf = (JavaVM *)(&amp;main_vm);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (numVMs != <span class="hljs-literal">nullptr</span>) *numVMs = <span class="hljs-number">0</span>;
+  }
+  HOTSPOT_JNI_GETCREATEDJAVAVMS_RETURN(JNI_OK);
+  <span class="hljs-keyword">return</span> JNI_OK;
+}
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x62FF;&#x5230;&#x4E86;VM&#x6307;&#x9488;&#x8FDB;&#x800C;&#x62FF;&#x5230;&#x4E86;JNIENV</p>
+<p>&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x53C2;&#x8003;</p>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x7701;&#x7565;&#x52A8;&#x6001;&#x5E93;&#x52A0;&#x8F7D;</span>
+MemorySegment jniGetCreatedJavaVM_FP = SymbolLookup.loaderLookup()
+        .find(<span class="hljs-string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)
+        .get();
+MethodHandle JNI_GetCreatedJavaVM_MH = Linker.nativeLinker()
+        .downcallHandle(
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)
+        )
+        .bindTo(jniGetCreatedJavaVM_FP);
+Arena global = Arena.global();
+MemorySegment vm = global.allocate(ValueLayout.ADDRESS);
+MemorySegment numVMs = global.allocate(ValueLayout.JAVA_INT, <span class="hljs-number">0</span>);
+<span class="hljs-keyword">int</span> i = (<span class="hljs-keyword">int</span>) JNI_GetCreatedJavaVM_MH.invokeExact(vm, <span class="hljs-number">1</span>, numVMs);
+mainVMPointer = vm.get(ValueLayout.ADDRESS, <span class="hljs-number">0</span>);
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x62FF;&#x5230;&#x4E86;&#x5168;&#x90E8;&#x60F3;&#x8981;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x5728;&#x627E;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9047;&#x5230;&#x4E86;&#x4E00;&#x4E2A;jni&#x5DE5;&#x5177;&#x65B9;&#x6CD5;&#x7684;c&#x6587;&#x4EF6;&#x2014;&#x2014;<code>jni_util.c</code>&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x6709;&#x5F88;&#x591A;&#x597D;&#x73A9;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;<code>JNU_CallMethodByName</code>&#x53EF;&#x4EE5;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x8C03;&#x7528;&#x4EFB;&#x4F55;&#x65B9;&#x6CD5;&#x3002;
+&#x90A3;&#x4E48;&#x56DE;&#x5230;&#x9700;&#x6C42;&#x672C;&#x8EAB;&#xFF0C;&#x6211;&#x60F3;&#x8981;&#x62FF;&#x5230;MethodHandle.Lookup&#x4E2D;&#x7684;&#x90A3;&#x4E2A;&#x9759;&#x6001;&#x5B57;&#x6BB5;<code>IMPL_LOOKUP</code>&#x600E;&#x4E48;&#x529E;&#xFF1F;&#x9996;&#x5148;&#x76F4;&#x63A5;&#x901A;&#x8FC7;<code>JNU_GetStaticFieldByName</code>&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x5B57;&#x6BB5;&#x53EF;&#x4EE5;&#x5417;&#xFF1F;&#x663E;&#x7136;&#x4E0D;&#x884C;&#xFF0C;&#x8FD9;&#x91CC;&#x62FF;&#x5230;&#x7684;&#x662F;&#x4E00;&#x4E2A;jobject&#x8FD4;&#x56DE;&#x53EA;&#x662F;&#x4E00;&#x4E2A;long&#x503C;&#x6CA1;&#x6709;&#x529E;&#x6CD5;&#x8F6C;&#x6362;&#x4E3A;Object&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x5C31;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E00;&#x4E0B;&#x601D;&#x8DEF;&#xFF0C;&#x6211;&#x7528;jni&#x6253;&#x5F00;&#x6A21;&#x5757;&#x9650;&#x5236;&#x7136;&#x540E;&#x76F4;&#x63A5;&#x53CD;&#x5C04;&#x4E0D;&#x5C31;&#x597D;&#x4E86;&#xFF1F;</p>
+<p>&#x6211;&#x76F4;&#x63A5;&#x7ED9;&#x51FA;&#x4EE3;&#x7801;</p>
+<pre><code class="lang-java"> <span class="hljs-keyword">long</span> javaLangAccess = jniUtils.JNU_GetStaticFieldByName(<span class="hljs-string">&quot;jdk/internal/access/SharedSecrets&quot;</span>, <span class="hljs-string">&quot;javaLangAccess&quot;</span>, <span class="hljs-string">&quot;Ljdk/internal/access/JavaLangAccess;&quot;</span>);
+ <span class="hljs-comment">//&#x83B7;&#x53D6;&#x9759;&#x6001;&#x5B57;&#x6BB5;&#x7684;javaLangAccess&#x7684;jobect</span>
+ javaLangAccess = jniUtils.NewGlobalRef(javaLangAccess);
+ MethodHandle addExport = Linker.nativeLinker()
+         .downcallHandle(FunctionDescriptor.of(
+                 ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/*JNIEnv *env */</span>ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/*jboolean *hasException*/</span>ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/*  jobject obj **/</span> ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/*const char *name*/</span> ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/* const char *signature*/</span> ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/* jobject Module*/</span> ValueLayout.ADDRESS,
+                 <span class="hljs-comment">/* jstring pkg*/</span> ValueLayout.ADDRESS
+         )).bindTo(JniUtils.JNU_CallMethodByNameFP);
+ <span class="hljs-keyword">long</span> utilsSystemClass = jniUtils.getSystemClass(MethodHandles.Lookup.class);
+ <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x83B7;&#x53D6;MethodHandles.Lookup&#x6240;&#x5728;&#x6A21;&#x5757;&#x7684;jobject</span>
+ <span class="hljs-keyword">long</span> module = jniUtils.JNU_CallMethodByNameWithoutArg(utilsSystemClass, <span class="hljs-string">&quot;getModule&quot;</span>, <span class="hljs-string">&quot;()Ljava/lang/Module;&quot;</span>);
+ module = jniUtils.NewGlobalRef(module);
+ <span class="hljs-comment">//&#x5C06;const char*&#x8F6C;&#x4E3A;jstring</span>
+ <span class="hljs-keyword">long</span> pkg = jniUtils.StringToJString(tmp.allocateUtf8String(<span class="hljs-string">&quot;java.lang.invoke&quot;</span>));
+ pkg = jniUtils.NewGlobalRef(pkg);
+ <span class="hljs-comment">//&#x8C03;&#x7528;JavaLangAccess::addOpensToAllUnnamed(Module m, String pkg)</span>
+ MemorySegment address = (MemorySegment) addExport.invokeExact(
+         jniUtils.jniEnvPointer, MemorySegment.NULL, MemorySegment.ofAddress(javaLangAccess), tmp.allocateUtf8String(<span class="hljs-string">&quot;addOpensToAllUnnamed&quot;</span>),
+         tmp.allocateUtf8String(<span class="hljs-string">&quot;(Ljava/lang/Module;Ljava/lang/String;)V&quot;</span>), MemorySegment.ofAddress(module), MemorySegment.ofAddress(pkg));
+ Field field = MethodHandles.Lookup.class.getDeclaredField(<span class="hljs-string">&quot;IMPL_LOOKUP&quot;</span>);
+ field.setAccessible(<span class="hljs-keyword">true</span>);
+ Object o = field.get(<span class="hljs-keyword">null</span>);
+ System.out.println(o);
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="panama-tutorial-0.html" class="navigation navigation-prev " aria-label="Previous page: Panama教程-0-MethodHandle介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Panama浅析.html" class="navigation navigation-next " aria-label="Next page: Panama源码浅析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"失去了Unsafe内存操作之后该何去何从","level":"1.6.2.2","depth":3,"next":{"title":"Panama源码浅析","level":"1.6.2.3","depth":3,"path":"panama/Panama浅析.md","ref":"panama/Panama浅析.md","articles":[]},"previous":{"title":"Panama教程-0-MethodHandle介绍","level":"1.6.2.1","depth":3,"path":"panama/panama-tutorial-0.md","ref":"panama/panama-tutorial-0.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"panama/afterUnsafe.md","mtime":"2024-09-21T16:03:24.620Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-21T16:03:49.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

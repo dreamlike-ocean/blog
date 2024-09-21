@@ -1,0 +1,690 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Spring的Loom化改造 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="为什么jvm需要有栈协程.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.6.1.1" data-path="Spring的loom化改造.html">
+            
+                <a href="Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="为什么jvm需要有栈协程.html">
+            
+                <a href="为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="synchronized适配.html">
+            
+                <a href="synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../panama/panama-tutorial-0.html">
+            
+                <a href="../panama/panama-tutorial-0.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="loom的实现.html">
+            
+                <a href="loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Spring的Loom化改造</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="project-loom&#x4E0E;springboot">Project Loom&#x4E0E;SpringBoot</h1>
+<h2 id="&#x7B80;&#x5355;&#x7684;&#x538B;&#x6D4B;">&#x7B80;&#x5355;&#x7684;&#x538B;&#x6D4B;</h2>
+<h4 id="&#x6D4B;&#x8BD5;&#x53C2;&#x6570;">&#x6D4B;&#x8BD5;&#x53C2;&#x6570;</h4>
+<p><img src="assets/1626272800494.png" alt="1626272800494"></p>
+<p>jvm&#x53C2;&#x6570;</p>
+<p>-Xmx300m -Xms300m</p>
+<p>jdk &#x4E3A;<a href="http://jdk.java.net/loom/" target="_blank">Build 17-loom+7-342 (2021/5/11)</a></p>
+<h4 id="&#x7761;&#x7720;1s">&#x7761;&#x7720;1s</h4>
+<h5 id="loom">loom</h5>
+<p><img src="assets/loom.png" alt="loom"></p>
+<pre><code class="lang-java"><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/hello&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> DeferredResult&lt;String&gt; <span class="hljs-title">hello</span><span class="hljs-params">()</span></span>{
+        DeferredResult&lt;String&gt; res = <span class="hljs-keyword">new</span> DeferredResult&lt;&gt;();
+        Thread.startVirtualThread(() -&gt; {
+            <span class="hljs-keyword">try</span> {
+                Thread.sleep(<span class="hljs-number">1000</span>);
+            } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                e.printStackTrace();
+            }
+            res.setResult(<span class="hljs-string">&quot;hello&quot;</span>);
+        });
+        <span class="hljs-keyword">return</span> res;
+    }
+</code></pre>
+<h5 id="&#x975E;loom">&#x975E;loom</h5>
+<p><img src="assets/unloom.png" alt="unloom"></p>
+<pre><code class="lang-java"><span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/word&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">word</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+        Thread.sleep(<span class="hljs-number">1000</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>;
+    }
+</code></pre>
+<h5 id="&#x5355;&#x7EBF;&#x7A0B;vertxkt&#x534F;&#x7A0B;">&#x5355;&#x7EBF;&#x7A0B;vertx+kt&#x534F;&#x7A0B;</h5>
+<p><img src="assets/null4e98415efe468ba9.jpg" alt="null4e98415efe468ba9"></p>
+<pre><code class="lang-kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClientVerticle</span> :  <span class="hljs-type">CoroutineVerticle</span></span>(){
+  <span class="hljs-keyword">override</span> suspend <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-variable"><span class="hljs-keyword">var</span> router</span> = Router.router(vertx)
+    router.<span class="hljs-keyword">get</span>(<span class="hljs-string">&quot;/word&quot;</span>)
+      .handler { rc-&gt;
+        rc.vertx().setTimer(<span class="hljs-number">1000</span>){
+          rc.end(<span class="hljs-string">&quot;word&quot;</span>)
+        }
+      }
+    <span class="hljs-variable"><span class="hljs-keyword">val</span> httpserver</span> = vertx.createHttpServer()
+      .requestHandler(router)
+      .listen(<span class="hljs-number">8080</span>)
+      .await()
+    println(<span class="hljs-string">&quot;http server run on ${httpserver.actualPort()}&quot;</span>)
+  }
+}
+</code></pre>
+<h5 id="&#x7ED3;&#x8BBA;">&#x7ED3;&#x8BBA;</h5>
+<p>&#x4ECE;&#x4E0D;&#x592A;&#x4E25;&#x8C28;&#x7684;Windows&#x5E73;&#x53F0;&#x81EA;&#x5DF1;&#x538B;&#x81EA;&#x5DF1;&#x6765;&#x770B;
+loom&#x53EF;&#x4EE5;&#x7ED9;&#x4E88;spring&#x514D;&#x8D39;&#x7684;&#x6027;&#x80FD;&#x63D0;&#x5347;
+&#x4ECE;&#x7761;&#x7720;&#x4E00;&#x79D2;&#x6765;&#x8BF4; loom&#x6539;&#x9020;&#x540E;&#x7684;&#x6027;&#x80FD;&#x5927;&#x6982;&#x662F;&#x4E09;&#x56DB;&#x500D; &#x6301;&#x5E73;Vertx &#x7684; eventloop
+&#x5DEE;&#x4E0D;&#x591A;&#x80FD;&#x6301;&#x5E73;Vertx &#x4F46;&#x662F;&#x8FD8;&#x662F;Vertx&#x5185;&#x5B58;&#x5360;&#x7528;&#x7684;4-6&#x500D;</p>
+<p>&#x5168;&#x90E8;&#x90FD;&#x662F;&#x9ED8;&#x8BA4;jdk17 loom ea&#x7248;&#x672C; &#x5806;&#x5F00;300mb &#x672A;&#x53D1;&#x751F;full gc
+&#x76EE;&#x524D;&#x6765;&#x770B;loom&#x5E76;&#x4E0D;&#x4F1A;&#x5BFC;&#x81F4;gc&#x6216;&#x8005;&#x5185;&#x5B58;&#x5206;&#x914D;&#x538B;&#x529B;&#x8FC7;&#x5927;&#xFF0C;&#x53CD;&#x800C;&#x53EF;&#x4EE5;&#x66F4;&#x597D;&#x7684;&#x4EE5;&#x7B80;&#x5355;&#x7684;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x5199;&#x6CD5;&#x53D1;&#x6325;cpu&#x6027;&#x80FD; 
+&#x5C5E;&#x4E8E;&#x662F;&#x7A0D;&#x5FAE;&#x4E00;&#x5305;&#x88C5;controller&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x6027;&#x80FD;&#x63D0;&#x5347;&#xFF0C;&#x76F4;&#x63A5;&#x517C;&#x5BB9;&#x65E7;&#x6709;&#x7684;BIO&#x4F53;&#x7CFB;
+&#x76EE;&#x524D;&#x6211;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x9ED8;&#x8BA4;&#x7684;&#x534F;&#x7A0B;&#x5B9E;&#x73B0;&#x5373;&#x548C;go&#x4E00;&#x81F4; &#x65E0;&#x8111;&#x542F;&#x52A8;&#x865A;&#x62DF;&#x534F;&#x7A0B;&#x4E14;&#x5F00;&#x542F;&#x5DE5;&#x4F5C;&#x7A83;&#x53D6;</p>
+<p><strong>&#x6CE8;&#x610F;</strong>&#xFF1A;</p>
+<p>&#x65E7;&#x6709;&#x7684;BIO&#x4F53;&#x7CFB;&#x6307;&#x7684;&#x662F;&#x57FA;&#x4E8E;jdk&#x4E2D;&#x539F;&#x751F;socket api&#x7684;&#x963B;&#x585E;&#x4F53;&#x7CFB; &#x672C;&#x8D28;&#x4E0A;&#x4ECD;&#x7136;&#x662F;&#x963B;&#x585E;api &#x53EA;&#x4E0D;&#x8FC7;&#x963B;&#x585E;&#x7684;&#x7EBF;&#x7A0B;&#x7531;&#x539F;&#x6765;&#x7684;&#x5E73;&#x53F0;&#x7EBF;&#x7A0B;&#xFF08;Platform Thread&#xFF09;&#x6539;&#x4E3A;&#x4E86;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#xFF08;Virtual Thread&#xFF09;</p>
+<p>&#x9ED8;&#x8BA4;&#x8C03;&#x5EA6;&#x5668;&#x91C7;&#x7528;ForkJoin&#x7EBF;&#x7A0B;&#x6C60; &#x5F00;&#x542F;&#x5DE5;&#x4F5C;&#x7A83;&#x53D6;</p>
+<h2 id="&#x6539;&#x9020;springboot">&#x6539;&#x9020;SpringBoot</h2>
+<h3 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h3>
+<p>&#x5BF9;&#x4E8E;Spring Boot&#x7684;&#x6539;&#x9020;&#x7740;&#x773C;&#x4E8E;&#x6539;&#x9020;Servlet&#x5BB9;&#x5668; &#x628A;executor&#x6539; Executors.newVirtualThreadExecutor()</p>
+<p>&#x4EE5;&#x5185;&#x5D4C;&#x7684;Tomcat&#x4E3A;&#x4F8B;&#x5B50; &#x5176;&#x6267;&#x884C;&#x903B;&#x8F91;&#x662F;&#x5728;&#x4E0D;&#x5F00;&#x542F;&#x5F02;&#x6B65;&#x652F;&#x6301;&#x7684;&#x60C5;&#x51B5;&#x4E0B; &#x4F1A;&#x7B49;&#x5F85;controller&#x7ED3;&#x675F;&#x624D;&#x8FD4;&#x56DE;</p>
+<p>&#x5373;&#x4F7F;&#x4F60;&#x8FD9;&#x6837;&#x914D;&#x7F6E;&#x4E5F;&#x4F1A;&#x5BFC;&#x81F4;Tomcat&#x5185;&#x90E8;&#x7EBF;&#x7A0B;&#x963B;&#x585E;&#x7684;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TomcatConfiguration</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">TomcatWebServerFactoryCustomizer</span> </span>{
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TomcatConfiguration</span><span class="hljs-params">(Environment environment, ServerProperties serverProperties)</span> </span>{
+        <span class="hljs-keyword">super</span>(environment, serverProperties);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">customize</span><span class="hljs-params">(ConfigurableTomcatWebServerFactory factory)</span> </span>{
+ factory.addProtocolHandlerCustomizers(protocolHandler -&gt; protocolHandler.setExecutor(Executors.newVirtualThreadExecutor()));
+    }
+}
+</code></pre>
+<p>&#x6240;&#x4EE5;&#x53EA;&#x80FD;&#x53BB;&#x5F00;&#x542F;&#x5F02;&#x6B65;servlet&#x652F;&#x6301; &#x8BA9;&#x5BF9;&#x5E94;&#x7684;&#x7EBF;&#x7A0B;&#x53CA;&#x65F6;&#x201C;&#x79BB;&#x5F00;&#x201D;&#xFF0C;controller&#x5BF9;&#x5E94;&#x65B9;&#x6CD5;&#x5B8C;&#x6210;&#x65F6;&#x518D;&#x628A;&#x4ED6;&#x5199;&#x51FA;</p>
+<p>&#x67E5;&#x9605;SpringMVC&#x6587;&#x6863;&#x53EF;&#x4EE5;&#x5F97;&#x77E5;</p>
+<pre><code class="lang-java"> <span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">&quot;/word&quot;</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> DeferredResult&lt;String&gt; <span class="hljs-title">word</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+        <span class="hljs-keyword">final</span> DeferredResult&lt;String&gt; result = <span class="hljs-keyword">new</span> DeferredResult&lt;&gt;();
+        Thread.startVirtualThread(()-&gt;{
+            <span class="hljs-keyword">try</span> {
+                Thread.sleep(<span class="hljs-number">1000</span>);
+            } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                e.printStackTrace();
+            }
+            result.setResult(<span class="hljs-string">&quot;string&quot;</span>);
+        });
+        <span class="hljs-keyword">return</span> result;
+    }
+</code></pre>
+<p>&#x901A;&#x8FC7;DeferredResult&#x5C31;&#x5F00;&#x542F;&#x4E86;&#x5F02;&#x6B65;&#x54CD;&#x5E94;</p>
+<p>&#x4E5F;&#x5C31;&#x8BF4;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x63A5;&#x53E3;&#x6539;&#x9020;&#x4E3A;&#x7528;DeferredResult&#x5305;&#x88F9;&#x5C31;&#x53EF;&#x4EE5;&#x4E86; &#x5BF9;&#x4E8E;&#x65E7;&#x6709;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x80AF;&#x5B9A;&#x662F;&#x4E0D;&#x80FD;&#x591F;&#x52A8;&#x7684;</p>
+<p>&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x59D4;&#x6258;&#x7684;&#x5F62;&#x5F0F;&#x5077;&#x6881;&#x6362;&#x67F1;&#x66FF;&#x6362;&#x6389; &#x6BD4;&#x5982;&#x5B57;&#x8282;&#x7801;&#x5DE5;&#x7A0B;</p>
+<p>&#x7531;&#x4E8E;java agent&#x9700;&#x8981;&#x4E00;&#x5B9A;&#x95E8;&#x69DB; &#x800C;&#x4E14;&#x4F1A;&#x5927;&#x5E45;&#x5EA6;&#x66F4;&#x6539;&#x539F;&#x6709;&#x4EE3;&#x7801;</p>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4F7F;&#x7528;&#x4E86;ByteBuddy&#x53BB;&#x8FD0;&#x884C;&#x65F6;&#x505A;&#x59D4;&#x6258;&#x8F6C;&#x53D1;+BeanPostProcessor&#x66FF;&#x6362;&#x6CE8;&#x5165;&#x7684;controller&#x5BF9;&#x8C61;</p>
+<h3 id="&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x901A;&#x8FC7;&#x7EE7;&#x627F;&#x53BB;&#x505A;&#x589E;&#x5F3A;&#xFF1F;">&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x901A;&#x8FC7;&#x7EE7;&#x627F;&#x53BB;&#x505A;&#x589E;&#x5F3A;&#xFF1F;</h3>
+<p>&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;AOP&#x662F;&#x901A;&#x8FC7;CGLIB&#x7B49;&#x5DE5;&#x5177;&#x4EE5;&#x5B57;&#x8282;&#x7801;&#x53BB;&#x7EE7;&#x627F;&#x539F;&#x6709;&#x7C7B;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x505A;&#x7684;</p>
+<p>&#x4F46;&#x662F;&#x5728;&#x8FD9;&#x4E2A;&#x5305;&#x88F9;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x573A;&#x666F;&#x4E0B;&#xFF0C;&#x7531;&#x4E8E;&#x7EE7;&#x627F;&#x91CD;&#x5199;&#x7684;&#x9650;&#x5236;&#x5BFC;&#x81F4;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x66F4;&#x6539;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;</p>
+<p>&#x6240;&#x4EE5;&#x6211;&#x7684;&#x601D;&#x8DEF;&#x662F;&#x505A;&#x4E00;&#x4E2A;&#x59D4;&#x6258;&#x7C7B;&#x4F3C;&#x4E8E;&#x8FD9;&#x6837;&#xFF1A;</p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x624D;&#x662F;&#x771F;&#x6B63;&#x6CE8;&#x518C;&#x5230;&#x8DEF;&#x7531;&#x4E0A;&#x9762;&#x7684;&#x65B9;&#x6CD5;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">wor1d</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>{
+        System.out.println(Thread.currentThread());
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ADw&quot;</span>;
+    }
+<span class="hljs-function"><span class="hljs-keyword">public</span> DeferredResult&lt;String&gt; <span class="hljs-title">worldProxy</span><span class="hljs-params">()</span></span>{
+     <span class="hljs-keyword">final</span> DeferredResult&lt;String&gt; result = <span class="hljs-keyword">new</span> DeferredResult&lt;&gt;();
+        Thread.startVirtualThread(()-&gt;{
+            result.setResult(world());
+        });
+        <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x540C;&#x6B65;&#x5199;&#x6CD5;&#x968F;&#x4FBF;&#x963B;&#x585E; &#x5806;&#x6808;&#x4E5F;&#x662F;&#x5B8C;&#x6574;&#x4E14;&#x8FDE;&#x7EED;&#x7684;</p>
+<h3 id="&#x83B7;&#x53D6;&#x5305;&#x88C5;&#x597D;&#x7684;&#x7C7B;">&#x83B7;&#x53D6;&#x5305;&#x88C5;&#x597D;&#x7684;&#x7C7B;</h3>
+<p><strong>&#x6CE8;&#x610F;</strong></p>
+<p>&#x7531;&#x4E8E;&#x672C;&#x4EBA;&#x5B57;&#x8282;&#x7801;&#x5B66;&#x7684;&#x7A00;&#x70C2; ByteBuddy&#x4E5F;&#x4E0D;&#x592A;&#x719F;&#x7EC3; &#x6545;&#x53EA;&#x63D0;&#x4F9B;&#x601D;&#x8DEF;&#x548C;&#x793A;&#x4F8B;&#x4EE3;&#x7801;</p>
+<h4 id="&#x5305;&#x88F9;&#x65B9;&#x6CD5;&#x751F;&#x6210;">&#x5305;&#x88F9;&#x65B9;&#x6CD5;&#x751F;&#x6210;</h4>
+<p>&#x7531;&#x4E8E;&#x4EE3;&#x7801;&#x6392;&#x7248;&#x95EE;&#x9898;&#x548C;&#x4E2A;&#x4EBA;&#x6C34;&#x5E73;&#x95EE;&#x9898; &#x4EE3;&#x7801;&#x4EC5;&#x4F9B;&#x53C2;&#x8003;</p>
+<p>&#x5B9E;&#x9645;&#x7684;&#x601D;&#x8DEF;&#x662F;</p>
+<p>1&#xFF0C;&#x628A;&#x539F;&#x6709;&#x7C7B;&#x4E0A;&#x9762;&#x7684;&#x6CE8;&#x89E3;&#x5168;&#x90E8;&#x653E;&#x5230;&#x8FD9;&#x4E2A;&#x8FD0;&#x884C;&#x65F6;&#x751F;&#x4EA7;&#x7684;&#x7C7B;&#x4E0A;&#x9762;&#xFF08;@RestController&#x4E4B;&#x7C7B;&#x7684;&#xFF09;</p>
+<p>2&#xFF0C;&#x8FD4;&#x56DE;&#x503C;&#x5982;&#x679C;&#x4E0D;&#x662F;DeferredResult&#x7C7B;&#x578B; &#x5219;&#x8FDB;&#x884C;&#x5305;&#x88F9;</p>
+<p>3&#xFF0C;&#x65B9;&#x6CD5;&#x540D;&#x7167;&#x6284;</p>
+<p>4&#xFF0C;&#x5BF9;&#x6BCF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x6267;&#x884C;&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;</p>
+<ol>
+<li>&#x200B;     &#x8FC1;&#x79FB;&#x6240;&#x6709;&#x7684;&#x65B9;&#x6CD5;&#x6CE8;&#x89E3;</li>
+<li>&#x53C2;&#x6570;&#x7167;&#x6284;  &#x53C2;&#x6570;&#x6CE8;&#x89E3;&#x7167;&#x6284; &#x53C2;&#x6570;&#x540D;&#x4E5F;&#x8981;&#x7167;&#x6284;</li>
+</ol>
+<p>5&#xFF0C;&#x65B9;&#x6CD5;&#x4F53;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;ControllerInterceptor&#xFF08;&#x4E0B;&#x9762;&#x4F1A;&#x8BB2;&#xFF09;&#x5C06;&#x5B9E;&#x9645;&#x8C03;&#x7528;&#x8F6C;&#x53D1;&#x5230;&#x771F;&#x6B63;&#x505A;&#x5904;&#x7406;&#x7684;&#x65B9;&#x6CD5;&#x91CC;&#x9762;</p>
+<p>&#x603B;&#x7ED3;&#x4E00;&#x4E0B;&#x505A;&#x4E00;&#x4E2A;&#x5C31;&#x662F;&#x9664;&#x4E86;&#x8FD4;&#x56DE;&#x503C;&#x4E0D;&#x4E00;&#x6837; &#x5176;&#x4ED6;&#x90FD;&#x4E00;&#x6837;&#x7684;&#x65B9;&#x6CD5;&#x51FA;&#x6765;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> DynamicType.Builder.<span class="hljs-function">MethodDefinition <span class="hljs-title">copyMethod</span><span class="hljs-params">(Class target, ControllerInterceptor interceptor)</span></span>{
+        DynamicType.Builder.MethodDefinition now = <span class="hljs-keyword">null</span>;
+        DynamicType.Builder&lt;Object&gt; builder = <span class="hljs-keyword">new</span> ByteBuddy()
+                .subclass(Object.class)
+                .annotateType(target.getAnnotations());
+        <span class="hljs-keyword">final</span> List&lt;Method&gt; methodList = Arrays.stream(target.getDeclaredMethods()).filter(m -&gt; Modifier.isPublic(m.getModifiers())).collect(Collectors.toList());
+        <span class="hljs-keyword">for</span> (Method method : methodList) {
+            TypeDescription.Generic returnType;
+            <span class="hljs-keyword">if</span> (method.getReturnType() == DeferredResult.class){
+                returnType = TypeDefinition.Sort.describe(method.getGenericReturnType());
+            }<span class="hljs-keyword">else</span> {
+               returnType = TypeDescription.Generic.Builder.parameterizedType(DeferredResult.class, method.getGenericReturnType()).build();
+            }
+            <span class="hljs-keyword">if</span> (now == <span class="hljs-keyword">null</span>) {
+                now = copyParameters(builder.defineMethod(method.getName(), returnType, Modifier.PUBLIC), method)
+                        .intercept(MethodDelegation.to(interceptor))
+                        .annotateMethod(method.getAnnotations());
+            }<span class="hljs-keyword">else</span> {
+                now = copyParameters(now.defineMethod(method.getName(), returnType, Modifier.PUBLIC), method)
+                        .intercept(MethodDelegation.to(interceptor))
+                        .annotateMethod(method.getAnnotations());
+            }
+
+        }
+        <span class="hljs-keyword">return</span> now;
+    }
+</code></pre>
+<h4 id="&#x8F6C;&#x53D1;&#x4EE3;&#x7406;">&#x8F6C;&#x53D1;&#x4EE3;&#x7406;</h4>
+<pre><code class="lang-java"><span class="hljs-meta">@RuntimeType</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">interceptor</span><span class="hljs-params">(@Origin Method method, @AllArguments Object[] args)</span> <span class="hljs-keyword">throws</span> InvocationTargetException, IllegalAccessException </span>{
+        DeferredResult&lt;Object&gt; result = <span class="hljs-keyword">new</span> DeferredResult&lt;Object&gt;();
+        Thread.startVirtualThread(()-&gt;{
+            <span class="hljs-keyword">try</span> {
+         <span class="hljs-comment">//&#x6CE8;&#x610F;&#x8FD9;&#x4E2A;method&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x6211;&#x8FD0;&#x884C;&#x65F6;&#x751F;&#x6210;&#x7684;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;</span>
+         <span class="hljs-comment">//getTargetMethod&#x662F;&#x901A;&#x8FC7;&#x65B9;&#x6CD5;&#x540D;+&#x53C2;&#x6570;&#x5217;&#x8868;&#x5BFB;&#x627E;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x5BF9;&#x5E94;&#x7684;&#x771F;&#x6B63;&#x9700;&#x8981;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;</span>
+                Object res = getTargetMethod(method).invoke(target, args);
+                result.setResult(res);
+            } <span class="hljs-keyword">catch</span> (Throwable e) {
+                result.setErrorResult(e);
+            }
+        });
+        <span class="hljs-keyword">return</span> result;
+    }
+</code></pre>
+<h4 id="&#x5B9E;&#x9645;&#x751F;&#x6210;&#x5BF9;&#x8C61;">&#x5B9E;&#x9645;&#x751F;&#x6210;&#x5BF9;&#x8C61;</h4>
+<p>&#x539F;&#x672C;&#x65B9;&#x6CD5;</p>
+<p><img src="assets/1626436914227.png" alt="1626436914227"></p>
+<p>&#x751F;&#x6210;&#x7684;&#x65B9;&#x6CD5;&#xFF08;&#x56FE;&#x4E3A;&#x5B57;&#x8282;&#x7801;&#x53CD;&#x7F16;&#x8BD1;&#x7ED3;&#x679C;&#xFF09;</p>
+<p><img src="assets/1626436926374.png" alt="1626436926374"></p>
+<h4 id="&#x5077;&#x6881;&#x6362;&#x67F1;">&#x5077;&#x6881;&#x6362;&#x67F1;</h4>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoomControllerRegister</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanPostProcessor</span> </span>{
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">postProcessBeforeInitialization</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException </span>{
+        <span class="hljs-keyword">if</span> (isRestController(bean)){
+            <span class="hljs-comment">//wrapLoom&#x5C31;&#x662F;&#x7528;&#x52A8;&#x6001;&#x751F;&#x6210;&#x7684;&#x7C7B;&#x53BB;&#x66FF;&#x6362;</span>
+            <span class="hljs-keyword">return</span> wrapLoom(bean);
+        }
+        <span class="hljs-keyword">return</span> BeanPostProcessor.<span class="hljs-keyword">super</span>.postProcessBeforeInitialization(bean, beanName);
+    }
+    <span class="hljs-comment">//...&#x7BC7;&#x5E45;&#x9650;&#x5236;&#x4E0D;&#x5C55;&#x793A;</span>
+}
+</code></pre>
+<p>&#x6700;&#x540E;&#x5728;&#x4F60;&#x7684;&#x5165;&#x53E3;&#x52A0;&#x4E0A;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Import</span>(LoomControllerRegister.class)
+</code></pre>
+<p>&#x628A;&#x8FD9;&#x4E2A;&#x7C7B;&#x5BFC;&#x5165;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;</p>
+<p>&#x8FD9;&#x6837;&#x90FD;&#x4E0D;&#x7528;&#x66F4;&#x6539;&#x539F;&#x6709;&#x4EE3;&#x7801;&#x4E86; &#x540C;&#x65F6;SpringBoot &#x81EA;&#x5DF1;&#x4E5F;&#x6709;&#x4E00;&#x5957;&#x9488;&#x5BF9;DeferredResult&#x7684;&#x5904;&#x7406;&#x673A;&#x5236;</p>
+<p>&#x5B8C;&#x7F8E;&#x5D4C;&#x5165; &#x800C;&#x4E14;&#x4F60;&#x6362;&#x4E2A;servlet&#x5BB9;&#x5668;&#x90FD;&#x53EF;&#x4EE5;&#x517C;&#x5BB9; </p>
+<p>&#x8BE6;&#x7EC6;&#x4EE3;&#x7801;&#x89C1;</p>
+<p><a href="https://gitee.com/dreamlikeocean/loomdemo" target="_blank">loomdemo: &#x91C7;&#x7528;bytebuddy&#x5B57;&#x8282;&#x7801;&#x751F;&#x6210; &#x975E;&#x5165;&#x4FB5;&#x5F0F;&#x4E3A;spring boot&#x6DFB;&#x52A0;loom &#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x652F;&#x6301; servlet&#x5BB9;&#x5668;&#x65E0;&#x5173;&#x6027; (gitee.com)</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="为什么jvm需要有栈协程.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 为什么jvm需要有栈协程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Spring的Loom化改造","level":"1.6.1.1","depth":3,"next":{"title":"为什么jvm需要有栈协程","level":"1.6.1.2","depth":3,"path":"loom/为什么jvm需要有栈协程.md","ref":"loom/为什么jvm需要有栈协程.md","articles":[]},"previous":{"title":"Loom","level":"1.6.1","depth":2,"ref":"","articles":[{"title":"Spring的Loom化改造","level":"1.6.1.1","depth":3,"path":"loom/Spring的loom化改造.md","ref":"loom/Spring的loom化改造.md","articles":[]},{"title":"为什么jvm需要有栈协程","level":"1.6.1.2","depth":3,"path":"loom/为什么jvm需要有栈协程.md","ref":"loom/为什么jvm需要有栈协程.md","articles":[]},{"title":"VitrualThread对于synchronized适配","level":"1.6.1.3","depth":3,"path":"loom/synchronized适配.md","ref":"loom/synchronized适配.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"loom/Spring的loom化改造.md","mtime":"2024-09-21T16:03:24.602Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-21T16:03:49.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,589 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>loom的实现 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../translate/state_of_loom_part2.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="Spring的loom化改造.html">
+            
+                <a href="Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="为什么jvm需要有栈协程.html">
+            
+                <a href="为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="synchronized适配.html">
+            
+                <a href="synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../panama/panama-tutorial-0.html">
+            
+                <a href="../panama/panama-tutorial-0.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.5" data-path="loom的实现.html">
+            
+                <a href="loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >loom的实现</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7F51;&#x7EDC;io&#x5E95;&#x5C42;&#x5B9E;&#x73B0;"><strong>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7F51;&#x7EDC;I/O&#x5E95;&#x5C42;&#x5B9E;&#x73B0;</strong></h2>
+<blockquote>
+<p>&#x672C;&#x6587;&#x662F;&#x5BF9;<a href="http://link.zhihu.com/?target=https%3A//inside.java/2021/05/10/networking-io-with-virtual-threads/" target="_blank">Networking i/o with virtual threads - under the hood &#x2013; Inside.java</a>&#x7684;&#x7FFB;&#x8BD1;</p>
+</blockquote>
+<h2 id="&#x4F7F;&#x7528;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;-io">&#x4F7F;&#x7528;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x7F51;&#x7EDC; IO</h2>
+<p>Project Loom &#x4E3B;&#x8981;&#x76EE;&#x6807;&#x662F;&#x5728; Java &#x5E73;&#x53F0;&#x4E0A;&#x63D0;&#x4F9B;&#x4E00;&#x79CD;<strong>&#x6613;&#x4E8E;&#x4F7F;&#x7528;&#x3001;&#x9AD8;&#x541E;&#x5410;&#x91CF;&#x7684;&#x8F7B;&#x91CF;&#x7EA7;&#x5E76;&#x53D1;&#x6027;&#x548C;&#x65B0;&#x7684;&#x7F16;&#x7A0B;&#x6A21;&#x578B;</strong>&#x7684; JVM &#x7279;&#x6027;&#x548C;API&#x3002;&#x8FD9;&#x5E26;&#x6765;&#x4E86;&#x8BB8;&#x591A;&#x6709;&#x8DA3;&#x548C;&#x4EE4;&#x4EBA;&#x5174;&#x594B;&#x7684;&#x524D;&#x666F;&#xFF0C;&#x5176;&#x4E2D;&#x4E4B;&#x4E00;&#x662F;<strong>&#x7B80;&#x5316;&#x7F51;&#x7EDC;&#x4EA4;&#x4E92;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x540C;&#x65F6;&#x517C;&#x987E;&#x6027;&#x80FD;</strong>&#x3002;&#x73B0;&#x5728;&#x7684;&#x670D;&#x52A1;&#x5668;&#x80FD;&#x591F;&#x5904;&#x7406;&#x6253;&#x5F00;&#x7684;<strong>socket&#x8FDE;&#x63A5;&#x7684;&#x6570;&#x91CF;</strong>&#xFF0C;&#x8FDC;&#x8FDC;<strong>&#x8D85;&#x8FC7;&#x5B83;&#x4EEC;&#x80FD;&#x591F;&#x652F;&#x6301;&#x7684;&#x7EBF;&#x7A0B;&#x6570;&#x91CF;</strong>&#xFF0C;&#x8FD9;&#x65E2;&#x5E26;&#x6765;&#x4E86;&#x673A;&#x9047;&#xFF0C;&#x4E5F;&#x5E26;&#x6765;&#x4E86;&#x6311;&#x6218;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x4E0D;&#x5E78;&#x7684;&#x662F;&#xFF0C;&#x7F16;&#x5199;&#x4E0E;&#x7F51;&#x7EDC;&#x4EA4;&#x4E92;&#x7684;<strong>&#x53EF;&#x4F38;&#x7F29;&#x4EE3;&#x7801;</strong>&#x662F;&#x5F88;&#x56F0;&#x96BE;&#x7684;&#x3002;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x4F7F;&#x7528;&#x540C;&#x6B65; API &#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x7F16;&#x7801;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x8D85;&#x8FC7;&#x4E00;&#x5B9A;&#x9608;&#x503C;&#x4E4B;&#x540E;&#xFF0C;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x5C31;&#x8FCE;&#x6765;&#x4E86;&#x74F6;&#x9888;&#xFF0C;&#x5F88;&#x96BE;&#x8FDB;&#x884C;&#x4F38;&#x7F29;&#x3002;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x7684;API&#x5728;&#x6267;&#x884C; I/O &#x64CD;&#x4F5C;&#x65F6;&#x4F1A;&#x963B;&#x585E;&#xFF0C;&#x800C; I/O &#x64CD;&#x4F5C;&#x53C8;&#x4F1A;&#x5C06;&#x7EBF;&#x7A0B;&#x7ED1;&#x5B9A;&#x8D77;&#x6765;&#xFF0C;&#x76F4;&#x5230;&#x64CD;&#x4F5C;&#x5C31;&#x7EEA;&#xFF0C;&#x4F8B;&#x5982;&#x5C1D;&#x8BD5;&#x4ECE;&#x5957;&#x63A5;&#x5B57;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x4F46;&#x662F;&#x5F53;&#x524D;&#x5E76;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x8981;&#x8BFB;&#x53D6;&#x7684;&#x65F6;&#x5019;&#x3002;&#x76EE;&#x524D;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x5728; Java &#x5E73;&#x53F0;&#x4E2D;&#x662F;&#x4E00;&#x4E2A;<strong>&#x6602;&#x8D35;&#x7684;&#x8D44;&#x6E90;</strong>&#xFF0C;&#x4EE5;&#x81F3;&#x4E8E;&#x65E0;&#x6CD5;&#x7B49;&#x5F85; I/O &#x64CD;&#x4F5C;&#x7684;&#x5B8C;&#x6210;&#x518D;&#x53BB;&#x91CA;&#x653E;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x9650;&#x5236;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x5E38;&#x4F7F;&#x7528;&#x5F02;&#x6B65; I/O &#x6216; Ractor &#x6846;&#x67B6;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x6784;&#x9020;&#x51FA;&#x5728; I/O &#x64CD;&#x4F5C;&#x4E2D;&#x4E0D;&#x7528;&#x7ED1;&#x5B9A;&#x7EBF;&#x7A0B;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x800C;&#x662F;&#x5728; I/O &#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#x6216;&#x51C6;&#x5907;&#x5C31;&#x7EEA;&#x65F6;&#x4F7F;&#x7528;<strong>&#x56DE;&#x8C03;&#x6216;&#x4E8B;&#x4EF6;</strong>&#x901A;&#x77E5;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x5F02;&#x6B65;&#x548C;&#x975E;&#x963B;&#x585E; API &#x6BD4;&#x4F7F;&#x7528;&#x540C;&#x6B65; API &#x66F4;&#x5177;&#x6709;&#x6311;&#x6218;&#x6027;&#xFF0C;&#x90E8;&#x5206;&#x539F;&#x56E0;&#x662F;&#x7528;&#x8FD9;&#x4E9B; API &#x5199;&#x51FA;&#x6765;&#x7684;&#x4EE3;&#x7801;&#x662F;&#x6BD4;&#x8F83;&#x53CD;&#x4EBA;&#x7C7B;&#x7684;&#x3002;&#x540C;&#x6B65;API&#x5728;&#x5F88;&#x5927;&#x7A0B;&#x5EA6;&#x4E0A;&#x66F4;&#x5BB9;&#x6613;&#x4F7F;&#x7528;&#xFF1B;&#x4EE3;&#x7801;&#x66F4;&#x6613;&#x4E8E;&#x7F16;&#x5199;&#x3001;&#x66F4;&#x5BB9;&#x6613;&#x9605;&#x8BFB;&#x548C;&#x66F4;&#x6613;&#x4E8E;&#x8C03;&#x8BD5;&#xFF0C;&#x8C03;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#x5806;&#x6808;&#x91CC;&#x9762;&#x7684;&#x4FE1;&#x606F;&#x5927;&#x90E8;&#x5206;&#x662F;&#x6709;&#x7528;&#x7684;&#x3002;&#x4F46;&#x662F;&#x5982;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x4F7F;&#x7528;&#x540C;&#x6B65; API &#x7684;&#x4EE3;&#x7801;&#x4E0D;&#x80FD;&#x50CF;&#x5F02;&#x6B65;&#x4EE3;&#x7801;&#x90A3;&#x6837;&#x4F38;&#x7F29;&#x6269;&#x5C55;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x505A;&#x4E00;&#x4E2A;&#x8270;&#x96BE;&#x7684;&#x9009;&#x62E9;&#xFF1A;&#x9009;&#x62E9;&#x66F4;&#x7B80;&#x5355;&#x7684;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#xFF0C;&#x5E76;&#x63A5;&#x53D7;&#x5B83;&#x4E0D;&#x4F1A;&#x6269;&#x5C55;&#xFF1B;&#x6216;&#x8005;&#x9009;&#x62E9;&#x66F4;&#x53EF;&#x4F38;&#x7F29;&#x7684;&#x5F02;&#x6B65;&#x4EE3;&#x7801;&#xFF0C;&#x5E76;&#x5904;&#x7406;&#x6240;&#x6709;&#x7684;&#x590D;&#x6742;&#x6027;&#x3002;&#x4E24;&#x4E2A;&#x90FD;&#x4E0D;&#x662F;&#x4E2A;&#x597D;&#x9009;&#x62E9;&#xFF01;Project Loom &#x4E3B;&#x8981;&#x5C31;&#x662F;&#x8981;&#x8BA9;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x4E5F;&#x80FD;&#x7075;&#x6D3B;&#x4F38;&#x7F29;&#x6269;&#x5C55;&#x3002;</p>
+<p>&#x5728;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x91CC;&#x9762;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x4E86;&#x89E3;&#x5728;&#x8C03;&#x7528;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x65F6;&#xFF0C;Java&#x5E73;&#x53F0;&#x7684;&#x7F51;&#x7EDC;api&#x5728;&#x5E95;&#x5C42;&#x662F;&#x5982;&#x4F55;&#x5DE5;&#x4F5C;&#x7684;&#x3002;&#x7EC6;&#x8282;&#x5728;&#x5F88;&#x5927;&#x7A0B;&#x5EA6;&#x4E0A;&#x662F;&#x5B9E;&#x73B0;&#x7684;&#x4EA7;&#x7269;&#xFF0C;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x77E5;&#x9053;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x5728;&#x4E0A;&#x9762;&#x7F16;&#x5199;&#x4EE3;&#x7801;&#xFF0C;&#x4F46;&#x662F;&#x4E86;&#x89E3;&#x5728;&#x5E95;&#x5C42;&#x662F;&#x5982;&#x4F55;&#x5DE5;&#x4F5C;&#x7684;&#x4ECD;&#x7136;&#x662F;&#x5F88;&#x6709;&#x610F;&#x601D;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x800C;&#x4E14;&#x53EF;&#x80FD;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x56DE;&#x7B54;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x7B54;&#x6848;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x518D;&#x6B21;&#x4E0D;&#x5F97;&#x4E0D;&#x505A;&#x51FA;&#x8270;&#x96BE;&#x7684;&#x9009;&#x62E9;&#x3002;</p>
+<h2 id="&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#xFF08;&#x7EA4;&#x7A0B;&#xFF09;">&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#xFF08;<strong>&#x7EA4;&#x7A0B;</strong>&#xFF09;</h2>
+<p>&#x5728;&#x8FDB;&#x4E00;&#x6B65;&#x7814;&#x7A76;&#x4E4B;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;ProjectLoom&#x4E2D;&#x7684;&#x65B0;&#x7EBF;&#x7A0B;--Virtual threads&#x3002;</p>
+<p>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x662F;&#x7528;&#x6237;&#x6001;&#x7EBF;&#x7A0B;&#xFF0C;&#x88AB; JVM &#x7BA1;&#x7406;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x3002;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x5360;&#x7528;&#x7684;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x5F88;&#x5C11;&#xFF0C;&#x4E00;&#x4E2A; JVM &#x53EF;&#x4EE5;&#x5BB9;&#x7EB3;&#x767E;&#x4E07;&#x91CF;&#x7EA7;&#x7684;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x3002;&#x7279;&#x522B;&#x9002;&#x5408;&#x4E8E;&#x7ECF;&#x5E38;&#x6267;&#x884C;&#x963B;&#x585E;&#x65F6;&#x95F4;&#x6BD4;&#x8F83;&#x957F;&#xFF0C;&#x7ECF;&#x5E38;&#x7B49;&#x5F85; IO &#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
+<p><strong>&#x5E73;&#x53F0;&#x7EBF;&#x7A0B;</strong>&#xFF08;&#x5373;&#x76EE;&#x524D; Java &#x5E73;&#x53F0;&#x7684;&#x7EBF;&#x7A0B;&#xFF09;&#xFF0C;&#x662F;&#x548C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#x7EBF;&#x7A0B;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;&#x7684;&#x3002;&#x5E73;&#x53F0;&#x7EBF;&#x7A0B;&#x901A;&#x5E38;&#x62E5;&#x6709;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x5927;&#x7684;&#x6808;&#xFF0C;&#x4EE5;&#x53CA;&#x5176;&#x4ED6;&#x7684;&#x4E00;&#x4E9B;&#x7CFB;&#x7EDF;&#x7EF4;&#x62A4;&#x7684;&#x8D44;&#x6E90;&#x3002;<strong>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;</strong>&#x5219;&#x4F7F;&#x7528;&#x4E00;&#x5C0F;&#x7EC4;&#x7528;&#x4F5C;&#x8F7D;&#x4F53;&#x7EBF;&#x7A0B;&#x7684;&#x5E73;&#x53F0;&#x7EBF;&#x7A0B;&#x3002;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x7684;&#x4EE3;&#x7801;&#x901A;&#x5E38;&#x4E0D;&#x4F1A;&#x77E5;&#x9053;&#x5E95;&#x5C42;&#x627F;&#x8F7D;&#x7684;&#x7EBF;&#x7A0B;&#x3002;&#x9501;&#x548C; I/O &#x64CD;&#x4F5C;&#x662F;&#x5C06;&#x627F;&#x8F7D;&#x7EBF;&#x7A0B;<strong>&#x4ECE;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x91CD;&#x65B0;&#x8C03;&#x5EA6;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7684;&#x8C03;&#x5EA6;&#x70B9;</strong>&#x3002;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x53EF;&#x80FD;&#x4F1A; parked&#xFF08;&#x4F8B;&#x5982;<code>LockSupport.park()</code>&#xFF09;&#xFF0C;&#x4ECE;&#x800C;&#x4F7F;&#x5176;&#x65E0;&#x6CD5;&#x8C03;&#x5EA6;&#x3002;&#x4E00;&#x4E2A;&#x5DF2; parked &#x7684;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x53EF;&#x80FD;&#x88AB;&#x53D6;&#x6D88;&#xFF08;&#x4F8B;&#x5982;<code>LockSupport.unpark(Thread)</code>&#xFF09;&#xFF0C;&#x8FD9;&#x6837;&#x91CD;&#x65B0;&#x542F;&#x7528;&#x4E86;&#x5B83;&#x7684;&#x8C03;&#x5EA6;&#x3002;</p>
+<h2 id="&#x7F51;&#x7EDC;-api">&#x7F51;&#x7EDC; API</h2>
+<p>Java &#x5E73;&#x53F0;&#x4E2D;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x79CD;&#x7F51;&#x7EDC; API&#xFF1A;</p>
+<ol>
+<li>&#x5F02;&#x6B65; - <code>AsynchronousServerSocketChannel</code>&#x3001;<code>AsynchronousSocketChannel</code></li>
+<li>&#x540C;&#x6B65; - <code>java.net.Socket</code>&#x3001;<code>java.net.ServerSocket</code>&#x3001;<code>java.net.DatagramSocket</code>&#x3001;<code>java.nio.channels.SocketChannel</code>&#x3001;<code>java.nio.channels.ServerSocketChannel</code>&#x3001;<code>java.nio.channels.DatagramChannel</code></li>
+</ol>
+<p>&#x7B2C;&#x4E00;&#x7C7B;&#x5F02;&#x6B65; API&#xFF0C;&#x521B;&#x5EFA;&#x542F;&#x52A8;&#x5728;&#x4E4B;&#x540E;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x5B8C;&#x6210;&#x7684; I/O &#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x80FD;&#x5728;&#x542F;&#x52A8; I/O &#x64CD;&#x4F5C;&#x7684;&#x7EBF;&#x7A0B;&#x4E4B;&#x5916;&#x7684;&#x7EBF;&#x7A0B;&#x4E0A;&#x5B8C;&#x6210;&#x3002;&#x6839;&#x636E;&#x5B9A;&#x4E49;&#xFF0C;&#x8FD9;&#x4E9B; API &#x4E0D;&#x4F1A;&#x5BFC;&#x81F4;&#x963B;&#x585E;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x5728;<strong>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x7279;&#x6B8A;&#x5904;&#x7406;</strong></p>
+<p>&#x7B2C;&#x4E8C;&#x7C7B;&#x540C;&#x6B65; API&#xFF0C;&#x4ECE;&#x5B83;&#x4EEC;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x884C;&#x4E3A;&#x89D2;&#x5EA6;&#x6765;&#x770B;&#xFF0C;&#x5B83;&#x4EEC;&#x66F4;&#x6709;&#x8DA3;&#x3002;&#x5728;&#x8FD9;&#x4E9B; API &#x4E2D;&#xFF0C;NIO channel &#x76F8;&#x5173;&#x7684;&#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x6210;&#x4E3A;&#x975E;&#x963B;&#x585E;&#x6A21;&#x5F0F;&#x3002;&#x8FD9;&#x79CD; channel &#x901A;&#x5E38;&#x4F7F;&#x7528; I/O &#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x673A;&#x5236;&#x5B9E;&#x73B0;&#xFF0C;&#x4F8B;&#x5982;&#x6CE8;&#x518C;&#x5230; Selector &#x4E0A;&#x76D1;&#x542C;&#x4E8B;&#x4EF6;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;&#x5F02;&#x6B65;&#x7F51;&#x7EDC; API&#xFF0C;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x4E0D;&#x9700;&#x8981;&#x989D;&#x5916;&#x5904;&#x7406;&#xFF0C;&#x56E0;&#x4E3A; I/O &#x64CD;&#x4F5C;&#x4E0D;&#x81EA;&#x5DF1;&#x8C03;&#x7528;&#x963B;&#x585E;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x8FD9;&#x4E2A;&#x8C03;&#x7528;&#x7559;&#x7ED9;&#x4E86; Selector&#x3002;&#x6700;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;&#x5C06; channel &#x914D;&#x7F6E;&#x6210;&#x4E3A;&#x963B;&#x585E;&#x6A21;&#x5F0F;&#x4EE5;&#x53CA; <code>java.net</code> &#x76F8;&#x5173; API &#x7684;&#x60C5;&#x51B5;&#xFF08;&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x79F0;&#x8FD9;&#x79CD; API &#x4E3A;&#x540C;&#x6B65;&#x963B;&#x585E; API&#xFF09;&#x3002;&#x540C;&#x6B65; API &#x7684;&#x8BED;&#x4E49;&#x8981;&#x6C42; I/O &#x64CD;&#x4F5C;&#x4E00;&#x65E6;&#x542F;&#x52A8;&#xFF0C;&#x5728;&#x8C03;&#x7528;&#x7EBF;&#x7A0B;&#x4E2D;&#x5B8C;&#x6210;&#x6216;&#x5931;&#x8D25;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x63A7;&#x5236;&#x6743;&#x8FD4;&#x56DE;&#x7ED9;&#x8C03;&#x7528;&#x65B9;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5982;&#x679C; I/O &#x64CD;&#x4F5C;&#x201C;&#x5C1A;&#x672A;&#x51C6;&#x5907;&#x597D;&#x201D;&#x600E;&#x4E48;&#x529E;&#x5462;&#xFF1F;&#x4F8B;&#x5982;&#xFF0C;&#x76EE;&#x524D;&#x6CA1;&#x6709;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x8BFB;&#x53D6;&#x3002;</p>
+<h2 id="&#x540C;&#x6B65;&#x963B;&#x585E;-api">&#x540C;&#x6B65;&#x963B;&#x585E; API</h2>
+<p>&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x7684; Java &#x540C;&#x6B65;&#x7F51;&#x7EDC; API &#x4F1A;<strong>&#x5C06;&#x5E95;&#x5C42;&#x539F;&#x751F; Socket &#x5207;&#x6362;&#x5230;&#x975E;&#x963B;&#x585E;&#x6A21;&#x5F0F;</strong>&#x3002;&#x5F53; Java &#x4EE3;&#x7801;&#x542F;&#x7528;&#x4E00;&#x4E2A; I/O &#x8BF7;&#x6C42;&#x5E76;&#x4E14;&#x8FD9;&#x4E2A;&#x8BF7;&#x6C42;&#x6CA1;&#x6709;&#x7ACB;&#x5373;&#x5B8C;&#x6210;&#xFF08;&#x539F;&#x751F; socket &#x8FD4;&#x56DE; EAGAIN - &#x4EE3;&#x8868;&quot;&#x672A;&#x5C31;&#x7EEA;&quot;/&quot;&#x4F1A;&#x963B;&#x585E;&quot;&#xFF09;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x4E2A;&#x5E95;&#x5C42; socket &#x4F1A;&#x88AB;&#x6CE8;&#x518C;&#x5230;&#x4E00;&#x4E2A; JVM &#x5185;&#x90E8;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x673A;&#x5236;(&#x4E00;&#x4E2A;&#x8F6E;&#x8BE2;&#x5668;&#x2014;&#x2014;Poller)&#xFF0C;&#x5E76;&#x4E14;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4F1A;&#x88AB; parked&#x3002;&#x5F53;&#x5E95;&#x5C42; I/O &#x64CD;&#x4F5C;&#x5C31;&#x7EEA;&#x7684;&#x65F6;&#x5019;&#xFF08;&#x6709;&#x76F8;&#x5173;&#x4E8B;&#x4EF6;&#x4F1A;&#x5230;&#x8FBE; Poller&#xFF09;&#xFF0C;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4F1A; unparked &#x5E76;&#x4E14;&#x5E95;&#x5C42;&#x7684; Socket &#x64CD;&#x4F5C;&#x4F1A;&#x88AB;&#x91CD;&#x8BD5;&#x5E95;&#x5C42;&#x7684;socket&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x66F4;&#x8FD1;&#x8DDD;&#x79BB;&#x770B;&#x770B;&#x8FD9;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x8FD9;&#x4E2A;<code>retrieveURLs</code>&#x65B9;&#x6CD5;&#x5C06;&#x4E0B;&#x8F7D;&#x5E76;&#x4E14;&#x8FD4;&#x56DE;&#x591A;&#x4E2A;url&#x5BF9;&#x5E94;&#x7684;&#x54CD;&#x5E94;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x7F16;&#x5199;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-text">//Java 16 &#x4E2D;&#x7684; Record &#x5BF9;&#x8C61;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x6709;&#x5305;&#x542B;&#x4E24;&#x4E2A; final &#x5C5E;&#x6027;&#xFF08;url &#x548C; response&#xFF09;&#x7684;&#x7C7B;
+record URLData (URL url, byte[] response) { }
+List&lt;URLData&gt; retrieveURLs(URL... urls) throws Exception {
+  try (var executor = Executors.newVirtualThreadExecutor()) {
+    var tasks = Arrays.stream(urls)
+            .map(url -&gt; (Callable&lt;URLData&gt;)() -&gt; getURL(url))
+            .toList();
+    return executor.submit(tasks)
+            .filter(Future::isCompletedNormally)
+            .map(Future::join)
+            .toList();
+  }
+}
+</code></pre>
+<p><code>retrieveURLs</code>&#x65B9;&#x6CD5;&#x521B;&#x9020;&#x4E86;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;&#x7684;&#x5217;&#x8868;&#xFF08;&#x4E3A;&#x6BCF;&#x4E2A;URL&#xFF09;&#x7136;&#x540E;&#x628A;&#x4ED6;&#x4EEC;&#x6295;&#x9012;&#x5230;&#x7EBF;&#x7A0B;&#x6C60;&#x4E2D;&#xFF0C;&#x4E4B;&#x540E;&#x7B49;&#x5F85;&#x7ED3;&#x679C;&#x3002;&#x7EBF;&#x7A0B;&#x6C60;&#x4E3A;&#x6BCF;&#x4E2A;&#x4EFB;&#x52A1;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#xFF0C;&#x4ED6;&#x4EEC;&#x4F1A;&#x8C03;&#x7528;<code>getURL</code>.&#x4E3A;&#x7B80;&#x5355;&#x8D77;&#x89C1;&#xFF0C;&#x53EA;&#x8FD4;&#x56DE;&#x6210;&#x529F;&#x5B8C;&#x6210;&#x7684;&#x4EFB;&#x52A1;&#x3002;</p>
+<p><code>getURL</code>&#x65B9;&#x6CD5;&#x7F16;&#x5199;&#x6210;&#x4F7F;&#x7528;&#x540C;&#x6B65;<code>URLConnection</code> API&#x6765;&#x83B7;&#x5F97;&#x54CD;&#x5E94;&#x3002;</p>
+<pre><code class="lang-text">URLData getURL(URL url) throws IOException {
+  try (InputStream in = url.openStream()) {
+    return new URLData(url, in.readAllBytes());
+  }
+}
+</code></pre>
+<p><code>readAllBytes</code>&#x65B9;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x8BFB;&#x53D6;&#x6240;&#x6709;&#x54CD;&#x5E94;&#x5B57;&#x8282;&#x7684;&#x6279;&#x91CF;&#x540C;&#x6B65;&#x8BFB;&#x53D6;&#x64CD;&#x4F5C;&#x3002;&#x5728;&#x5916;&#x58F3;&#x4E4B;&#x4E0B;&#xFF0C;<code>readAllBytes</code>&#x6700;&#x7EC8;&#x5728;<em>java.net.socket</em>&#x8F93;&#x5165;&#x6D41;&#x7684;<code>read</code>&#x65B9;&#x6CD5;&#x4E2D;&#x8FBE;&#x5230;&#x6700;&#x5E95;&#x5C42;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8FD0;&#x884C;&#x4E00;&#x4E2A;&#x5C0F;&#x7A0B;&#x5E8F;&#xFF0C;&#x4F7F;&#x7528;<code>retrieveURLs</code>&#x4E0B;&#x8F7D;&#x4E00;&#x4E2A;HTTP URL&#xFF0C;&#x800C;HTTP&#x670D;&#x52A1;&#x5668;&#x6CA1;&#x6709;&#x63D0;&#x4F9B;&#x5B8C;&#x6574;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x68C0;&#x67E5;&#x7EBF;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x5982;&#x4E0B;:</p>
+<pre><code class="lang-text">$ java Main &amp; echo $!
+89215
+$ jcmd 89215 JavaThread.dump threads.txt
+Created /Users/chegar/threads.txt
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x67E5;&#x770B;<code>threads.txt</code>&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x4E2D;&#x6211;&#x4EEC;&#x5173;&#x5FC3;&#x7684;&#x7EBF;&#x7A0B;&#x4FE1;&#x606F;&#x662F;&#xFF1A;</p>
+<pre><code class="lang-text">$ cat threads.txt
+...
+&quot;&lt;unnamed&gt;&quot; #15 virtual
+  java.base/java.lang.Continuation.yield(Continuation.java:402)
+  java.base/java.lang.VirtualThread.yieldContinuation(VirtualThread.java:367)
+  java.base/java.lang.VirtualThread.park(VirtualThread.java:534)
+  java.base/java.lang.System$2.parkVirtualThread(System.java:2370)
+  java.base/jdk.internal.misc.VirtualThreads.park(VirtualThreads.java:60)
+  java.base/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:184)
+  java.base/sun.nio.ch.NioSocketImpl.park(NioSocketImpl.java:212)
+  java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:320)
+  java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:356)
+  java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:807)
+  java.base/java.net.Socket$SocketInputStream.read(Socket.java:988)
+  java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:255)
+  java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:310)
+  java.base/java.io.BufferedInputStream.lockedRead(BufferedInputStream.java:382)
+  java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:361)
+  java.base/sun.net.www.MeteredStream.read(MeteredStream.java:141)
+  java.base/java.io.FilterInputStream.read(FilterInputStream.java:132)
+  java.base/sun.net.www.protocol.http.HttpURLConnection$HttpInputStream.read(HttpURLConnection.java:3648)
+  java.base/java.io.InputStream.readNBytes(InputStream.java:409)
+  java.base/java.io.InputStream.readAllBytes(InputStream.java:346)
+  Main.getURL(Main.java:24)
+  Main.lambda$retrieveURLs$0(Main.java:13)
+  java.base/java.util.concurrent.FutureTask.run(FutureTask.java:268)
+  java.base/java.util.concurrent.ThreadExecutor$TaskRunner.run(ThreadExecutor.java:385)
+  java.base/java.lang.VirtualThread.run(VirtualThread.java:295)
+  java.base/java.lang.VirtualThread$VThreadContinuation.lambda$new$0(VirtualThread.java:172)
+  java.base/java.lang.Continuation.enter0(Continuation.java:372)
+  java.base/java.lang.Continuation.enter(Continuation.java:365)
+</code></pre>
+<p>&#x4ECE;&#x4E0B;&#x5F80;&#x4E0A;&#x770B;&#x5806;&#x6808;&#x5E27;;&#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x8BB8;&#x591A;&#x4E0E;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x8BBE;&#x7F6E;&#x76F8;&#x5173;&#x7684;&#x5E27;(&#x201C;continuation&#x201D;&#x662F;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x5185;&#x90E8;&#x4F7F;&#x7528;&#x7684;&#x865A;&#x62DF;&#x673A;&#x7684;&#x673A;&#x5236;)&#xFF0C;&#x5B83;&#x4EEC;&#x5BF9;&#x5E94;&#x4E8E;executor&#x670D;&#x52A1;&#x521B;&#x5EFA;&#x7684;&#x65B0;&#x7EBF;&#x7A0B;&#x3002;&#x5176;&#x6B21;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x5E27;&#x5BF9;&#x5E94;&#x4E8E;&#x8C03;&#x7528; <code>retrieveURLs</code>&apos;&#x548C;&apos;<code>getURL</code>&#x7684;&#x6D4B;&#x8BD5;&#x7A0B;&#x5E8F;&#x3002;&#x7B2C;&#x4E09;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x5230;&#x5BF9;&#x5E94;&#x4E8E;HTTP&#x534F;&#x8BAE;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x7684;&#x5E27;&#x4EE5;&#x53CA;socket&#x8F93;&#x5165;&#x6D41;&#x5B9E;&#x73B0;&#x7684;<code>read</code>&#x65B9;&#x6CD5;&#x3002;&#x6700;&#x540E;&#xFF0C;&#x5728;&#x5806;&#x6808;&#x4E2D;&#x8DDF;&#x8E2A;&#x8FD9;&#x4E9B;&#x5E27;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x5DF2;&#x7ECF;<em>&#x6682;&#x505C;</em>&#xFF0C;&#x8FD9;&#x662F;&#x6211;&#x4EEC;&#x6240;&#x671F;&#x671B;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x670D;&#x52A1;&#x5668;&#x6CA1;&#x6709;&#x53D1;&#x9001;&#x5B8C;&#x6574;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x6570;&#x636E;&#x6765;&#x8BFB;&#x53D6;socket&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x6570;&#x636E;&#x5230;&#x8FBE;socket&#x4E0A;&#x65F6;&#xFF0C;&#x5982;&#x4F55;<em>&#x542F;&#x52A8;</em>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;?</p>
+<p>&#x4ED4;&#x7EC6;&#x770B;&#x770B;<em>threads.txt</em>&#x4E2D;&#x7684;&#x5176;&#x4ED6;&#x7CFB;&#x7EDF;&#x7EBF;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;:</p>
+<pre><code class="lang-text">&quot;Read-Poller&quot; #16
+  java.base@17-internal/sun.nio.ch.KQueue.poll(Native Method)
+  java.base@17-internal/sun.nio.ch.KQueuePoller.poll(KQueuePoller.java:65)
+  java.base@17-internal/sun.nio.ch.Poller.poll(Poller.java:195)
+  java.base@17-internal/sun.nio.ch.Poller.lambda$startPollerThread$0(Poller.java:65)
+  java.base@17-internal/sun.nio.ch.Poller$$Lambda$14/0x00000008010579c0.run(Unknown Source)
+  java.base@17-internal/java.lang.Thread.run(Thread.java:1522)
+  java.base@17-internal/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:161)
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x7EBF;&#x7A0B;&#x662F;jvm&#x8303;&#x56F4;&#x7684;&#x8BFB;&#x8F6E;&#x8BE2;&#x5668;&#x3002;&#x5B83;&#x7684;&#x6838;&#x5FC3;&#x662F;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x7684;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#xFF0C;&#x76D1;&#x89C6;&#x6240;&#x6709;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x8C03;&#x7528;&#x65F6;&#x6CA1;&#x6709;&#x7ACB;&#x5373;&#x51C6;&#x5907;&#x597D;&#x7684;&#x540C;&#x6B65;&#x7F51;&#x7EDC;&#x64CD;&#x4F5C;&#xFF1A;<em>read</em>&#xFF0C; <em>connect</em>&#x548C;<em>accept</em>&#x3002;&#x5F53;I/O&#x64CD;&#x4F5C;&#x51C6;&#x5907;&#x597D;&#x65F6;&#xFF0C;&#x5C06;&#x901A;&#x77E5;&#x8F6E;&#x8BE2;&#x5668;&#xFF0C;&#x5E76;&#x968F;&#x540E;<em>&#x542F;&#x52A8;&#x540E;</em>&#x9002;&#x5F53;&#x7684;<em>&#x6682;&#x505C;&#x7684;</em>&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x3002;&#x5BF9;&#x4E8E;<em>write</em>&#x64CD;&#x4F5C;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x7B49;&#x6548;&#x7684;<em>&#x5199;-&#x8F6E;&#x8BE2;&#x5668;</em>&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x7684;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x662F;&#x5728;macOS&#x4E0A;&#x8FD0;&#x884C;&#x6D4B;&#x8BD5;&#x7A0B;&#x5E8F;&#x65F6;&#x6355;&#x83B7;&#x7684;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x6211;&#x4EEC;&#x4F1A;&#x770B;&#x5230;&#x4E0E;macOS&#x4E0A;&#x7684;&#x8F6E;&#x8BE2;&#x5668;&#x5B9E;&#x73B0;&#x76F8;&#x5173;&#x7684;&#x5806;&#x6808;&#x5E27;&#xFF0C;&#x5373;<a href="http://link.zhihu.com/?target=https%3A//www.freebsd.org/cgi/man.cgi%3Fquery%3Dkqueue%26sektion%3D2" target="_blank">kqueue</a>&#x3002;&#x5728;Linux&#x4E0A;&#x8F6E;&#x8BE2;&#x5668;&#x4F7F;&#x7528;<a href="http://link.zhihu.com/?target=https%3A//man7.org/linux/man-pages/man7/epoll.7.html" target="_blank">epoll</a>&#xFF0C;&#x5728;Windows&#x4E0A;&#x662F;<a href="http://link.zhihu.com/?target=https%3A//github.com/piscisaureus/wepoll" target="_blank">wepoll</a>(&#x5B83;&#x5728;Winsock&#x7684;&#x8F85;&#x52A9;&#x529F;&#x80FD;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#x4E0A;&#x63D0;&#x4F9B;&#x4E86;&#x7C7B;&#x4F3C;epoll&#x7684;API)&#x3002;</p>
+<p>&#x8F6E;&#x8BE2;&#x5668;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;<em>&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;</em>&#x5230;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7684;&#x6620;&#x5C04;&#x3002;&#x5F53;&#x5411;&#x8F6E;&#x8BE2;&#x5668;&#x6CE8;&#x518C;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x65F6;&#xFF0C;&#x5C06;&#x5411;&#x8BE5;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x7684;&#x6620;&#x5C04;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x6761;&#x76EE;&#xFF0C;&#x5E76;&#x5C06;&#x6CE8;&#x518C;&#x7EBF;&#x7A0B;&#x4F5C;&#x4E3A;&#x5176;&#x503C;&#x3002;&#x5F53;&#x88AB;&#x4E8B;&#x4EF6;&#x5524;&#x9192;&#x65F6;&#xFF0C;&#x8F6E;&#x8BE2;&#x5668;&#x7684;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x5C06;&#x4F7F;&#x7528;&#x4E8B;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x63CF;&#x8FF0;&#x7B26;&#x6765;&#x67E5;&#x627E;&#x76F8;&#x5E94;&#x7684;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x5E76;&#x5C06;&#x5176;&#x89E3;&#x9664;&#x6682;&#x505C;&#x72B6;&#x6001;&#x3002;</p>
+<h3 id="&#x6269;&#x5C55;"><strong>&#x6269;&#x5C55;</strong></h3>
+<p>&#x5982;&#x679C;&#x4F60;&#x4ED4;&#x7EC6;&#x89C2;&#x5BDF;&#xFF0C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x884C;&#x4E3A;&#x4E0E;&#x5F53;&#x524D;&#x4F7F;&#x7528;NIO channel&#x548C;selector&#x7684;&#x53EF;&#x6269;&#x5C55;&#x4EE3;&#x7801;&#x5E76;&#x6CA1;&#x6709;&#x592A;&#x5927;&#x7684;&#x4E0D;&#x540C;&#x2014;&#x2014;&#x5B83;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8BB8;&#x591A;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x6846;&#x67B6;&#x548C;&#x5E93;&#x4E2D;&#x627E;&#x5230;&#x3002;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7684;&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x5728;&#x4E8E;&#x5411;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x516C;&#x5F00;&#x7684;&#x7F16;&#x7A0B;&#x6A21;&#x578B;&#x3002;&#x524D;&#x8005;&#x66B4;&#x9732;&#x4E86;&#x4E00;&#x4E2A;&#x66F4;&#x590D;&#x6742;&#x7684;&#x6A21;&#x578B;,&#x7528;&#x6237;&#x4EE3;&#x7801;&#x5FC5;&#x987B;&#x5B9E;&#x73B0;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x548C;&#x7EF4;&#x62A4;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x903B;&#x8F91;,&#x800C;&#x540E;&#x8005;&#x66B4;&#x9732;&#x4E86;&#x4E00;&#x79CD;&#x66F4;&#x7B80;&#x5355;&#x548C;&#x66F4;&#x7B80;&#x5355;&#x7684;&#x7F16;&#x7A0B;&#x6A21;&#x6A21;&#x578B;&#x2014;&#x2014;Java&#x5E73;&#x53F0;&#x6765;&#x5904;&#x7406;&#x4EFB;&#x52A1;&#x7684;&#x8C03;&#x5EA6;&#x548C;&#x7EF4;&#x62A4;&#x8DE8;I / O&#x8FB9;&#x754C;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x3002;</p>
+<p>&#x7528;&#x4E8E;&#x8C03;&#x5EA6;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x7684;&#x9ED8;&#x8BA4;&#x8C03;&#x5EA6;&#x5668;&#x662F;fork-join work-stealing&#x8C03;&#x5EA6;&#x5668;&#xFF0C;&#x5B83;&#x975E;&#x5E38;&#x9002;&#x5408;&#x8FD9;&#x9879;&#x5DE5;&#x4F5C;&#x3002;&#x7528;&#x4E8E;&#x76D1;&#x89C6;&#x5C31;&#x7EEA;I/O&#x64CD;&#x4F5C;&#x7684;&#x539F;&#x751F;&#x4E8B;&#x4EF6;&#x901A;&#x77E5;&#x673A;&#x5236;&#x662F;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x7684;&#x4E00;&#x79CD;&#x540C;&#x6837;&#x73B0;&#x4EE3;&#x548C;&#x9AD8;&#x6548;&#x7684;&#x673A;&#x5236;&#x3002;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x6784;&#x5EFA;&#x5728;Java VM&#x4E2D;&#x7684;continuation&#x652F;&#x6301;&#x4E4B;&#x4E0A;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x540C;&#x6B65;&#x7684;Java&#x7F51;&#x7EDC;api&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x7684;&#x89C4;&#x6A21;&#x5E94;&#x8BE5;&#x4E0E;&#x66F4;&#x590D;&#x6742;&#x7684;&#x5F02;&#x6B65;&#x548C;&#x975E;&#x963B;&#x585E;&#x4EE3;&#x7801;&#x6784;&#x9020;&#x7684;&#x89C4;&#x6A21;&#x76F8;&#x5F53;&#x3002;</p>
+<h3 id="&#x7ED3;&#x8BBA;"><strong>&#x7ED3;&#x8BBA;</strong></h3>
+<p>&#x540C;&#x6B65;Java&#x7F51;&#x7EDC;api&#x5DF2;&#x7ECF;&#x7531;<a href="http://link.zhihu.com/?target=https%3A//openjdk.java.net/jeps/353" target="_blank">JEP 353</a>&#x548C;<a href="http://link.zhihu.com/?target=https%3A//openjdk.java.net/jeps/373" target="_blank">JEP 373</a>&#x91CD;&#x65B0;&#x5B9E;&#x73B0;&#xFF0C;&#x4E3A;Project Loom&#x505A;&#x51C6;&#x5907;&#x3002;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FD0;&#x884C;&#x65F6;&#xFF0C;&#x5982;&#x679C;I/O&#x64CD;&#x4F5C;&#x6CA1;&#x6709;&#x7ACB;&#x5373;&#x5B8C;&#x6210;&#xFF0C;&#x5C06;&#x5BFC;&#x81F4;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x88AB;&#x6682;&#x505C;&#x3002;&#x5F53;I/O&#x5C31;&#x7EEA;&#x65F6;&#xFF0C;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x5C06;&#x88AB;&#x542F;&#x52A8;&#x3002;&#x8BE5;&#x5B9E;&#x73B0;&#x4F7F;&#x7528;&#x4E86;&#x6765;&#x81EA;Java VM&#x548C;Core&#x5E93;&#x7684;&#x51E0;&#x4E2A;&#x7279;&#x6027;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x53EF;&#x6269;&#x5C55;&#x7684;&#x3001;&#x9AD8;&#x6548;&#x7684;&#x66FF;&#x4EE3;&#x65B9;&#x6848;&#xFF0C;&#x4E0E;&#x5F53;&#x524D;&#x7684;&#x5F02;&#x6B65;&#x548C;&#x975E;&#x963B;&#x585E;&#x4EE3;&#x7801;&#x6784;&#x9020;&#x76F8;&#x6BD4;&#xFF0C;&#x5B83;&#x66F4;&#x6709;&#x4F18;&#x52BF;&#x3002;</p>
+<p>&#x8BF7;&#x5C1D;&#x8BD5;<a href="http://link.zhihu.com/?target=https%3A//jdk.java.net/loom/" target="_blank">Early Access</a>loom&#x7684;&#x6784;&#x5EFA;&#x7248;&#x672C;&#xFF0C;&#x6211;&#x4EEC;&#x5F88;&#x4E50;&#x610F;&#x542C;&#x5230;&#x4F60;&#x7684;&#x4F53;&#x9A8C;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x53D1;&#x9001;&#x5230;<a href="https://zhuanlan.zhihu.com/&#x90AE;&#x7BB1;:loom-dev@openjdk.java.net" target="_blank">loom-dev</a>&#x90AE;&#x4EF6;&#x5217;&#x8868;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../translate/state_of_loom_part2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: State of Loom - Part 2">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"loom的实现","level":"2.5","depth":1,"previous":{"title":"State of Loom - Part 2","level":"2.4","depth":1,"path":"translate/state_of_loom_part2.md","ref":"translate/state_of_loom_part2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"loom/loom的实现.md","mtime":"2024-09-21T16:03:24.620Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-21T16:03:49.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

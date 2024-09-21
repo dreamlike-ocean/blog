@@ -1,0 +1,704 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>为什么现代的jvm仍然偏爱安全点 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="loom_fiber_continuation.html" />
+    
+    
+    <link rel="prev" href="../panama/Panama浅析.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../panama/panama-tutorial-0.html">
+            
+                <a href="../panama/panama-tutorial-0.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter active" data-level="2.1" data-path="【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="loom_fiber_continuation.html">
+            
+                <a href="loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="state_of_loom_part1.html">
+            
+                <a href="state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="state_of_loom_part2.html">
+            
+                <a href="state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >为什么现代的jvm仍然偏爱安全点</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4E3A;&#x4EC0;&#x4E48;&#x73B0;&#x4EE3;&#x7684;jvm&#x5206;&#x6790;&#x5668;&#x4ECD;&#x7136;&#x504F;&#x7231;&#x5B89;&#x5168;&#x70B9;&#xFF1F;">&#x4E3A;&#x4EC0;&#x4E48;&#x73B0;&#x4EE3;&#x7684;JVM&#x5206;&#x6790;&#x5668;&#x4ECD;&#x7136;&#x504F;&#x7231;&#x5B89;&#x5168;&#x70B9;&#xFF1F;</h1>
+<blockquote>
+<p>&#x672C;&#x6587;&#x7FFB;&#x8BD1;&#x81EA;<a href="https://jpbempel.github.io/2022/06/22/debug-non-safepoints.html" target="_blank">Why JVM modern profilers are still safepoint biased? | It&#x2019;s All Relative (jpbempel.github.io)</a></p>
+<p>&#x6B22;&#x8FCE;&#x65A7;&#x6B63;</p>
+</blockquote>
+<h2 id="&#x7B80;&#x4ECB;">&#x7B80;&#x4ECB;</h2>
+<p>&#x6211;&#x5728;<a href="https://jpbempel.github.io/2022/03/22/jvm-debug-symbols.html" target="_blank">&#x4E4B;&#x524D;&#x7684;&#x535A;&#x5BA2;&#x6587;&#x7AE0;</a>&#x4E2D;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x751F;&#x6210;&#x8C03;&#x8BD5;&#x7B26;&#x53F7;&#x5E76;&#x7528;&#x4E8E;&#x89E3;&#x6790;&#x5F02;&#x5E38;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x4E2D;&#x7684;&#x5E27;&#x3002;&#x9664;&#x4E86;&#x5F02;&#x5E38;&#xFF0C;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x8FD8;&#x5E7F;&#x6CDB;&#x7528;&#x4E8E;&#x5206;&#x6790;&#x5668;&#x4E2D;&#x3002;&#x65E7;&#x7684;&#x5206;&#x6790;&#x5668;&#x7684;&#x751F;&#x6210;&#x662F;&#x57FA;&#x4E8E; JVMTI <code>GetAllStackTraces</code>API&#xFF08;&#x6216;&#x5176;&#x4ED6;&#x7B49;&#x4EF7;&#x7684;&#x5F62;&#x5F0F;&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x6280;&#x672F;&#x5B58;&#x5728;&#x4E00;&#x4E9B;&#x95EE;&#x9898;&#xFF08;<a href="http://psy-lob-saw.blogspot.com/2016/02/why-most-sampling-java-profilers-are.html" target="_blank">&#x5B89;&#x5168;&#x70B9;&#x504F;&#x5DEE;</a>&#xFF09;&#x3002;&#x65B0;&#x7684;&#x5206;&#x6790;&#x5668;&#x5219;&#x662F;&#x57FA;&#x4E8E;<code>AsyncGetCallTrace</code>&#xFF0C;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x6587;&#x6863;&#x8BB0;&#x5F55;&#x7684;&#x7684; API&#xFF0C;&#x5B83;&#x4E0D;&#x9700;&#x8981;&#x6240;&#x6709;&#x7EBF;&#x7A0B;&#x90FD;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#x5C31;&#x53EF;&#x4EE5;&#x6536;&#x96C6;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x3002;Nitsan Wakart &#x5728;<a href="http://psy-lob-saw.blogspot.com/2016/06/the-pros-and-cons-of-agct.html" target="_blank">&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;</a>&#x4E2D;&#x63CF;&#x8FF0;&#x4E86;&#x5B83;&#x7684;&#x539F;&#x7406;&#x3002;&#x5728;&#x672C;&#x6587;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x63A2;&#x8BA8;&#x90A3;&#x4E9B;&#x4F9D;&#x8D56;&#x4E8E;&#x524D;&#x9762;&#x63CF;&#x8FF0;&#x7684;&#x8C03;&#x8BD5;&#x7B26;&#x53F7;&#x89E3;&#x6790;&#x7684;&#x5206;&#x6790;&#x5668;&#x7684;&#x73B0;&#x72B6;&#x3002;</p>
+<h2 id="async-profiler--honest-profiler">Async-Profiler / Honest profiler</h2>
+<p>&#x6700;&#x53D7;&#x6B22;&#x8FCE;&#x7684;&#x57FA;&#x4E8E;<code>AsyncGetCallTrace</code>&#x7684;&#x5206;&#x6790;&#x5668;&#x4E4B;&#x4E00;&#x662F;<a href="https://twitter.com/AndreiPangin" target="_blank">Andrei Pangin</a>&#x7684;<a href="https://github.com/jvm-profiling-tools/async-profiler" target="_blank">Async-Profiler</a>&#x3002;&#x5373;&#x4F7F;&#x7EBF;&#x7A0B;&#x4E0D;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#xFF0C;Async-Profiler &#x4E5F;&#x4F1A;&#x8C03;&#x7528;<a href="https://github.com/openjdk/jdk/blob/5cdb4b196047d4f2d69df0fc73102c102bf042f7/src/hotspot/share/prims/forte.cpp#L509-L660" target="_blank"><code>AsyncGetCallTrace</code></a>&#x4EE5;&#x6536;&#x96C6;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x3002;</p>
+<p><a href="https://twitter.com/RichardWarburto" target="_blank">Richard Warburton</a>&#x7684;<a href="https://github.com/jvm-profiling-tools/honest-profiler" target="_blank">Honest Profiler</a>&#x4E5F;&#x662F;&#x4F7F;&#x7528;&#x76F8;&#x540C;&#x7684;api&#x6765;&#x5B9E;&#x73B0;&#x7684;</p>
+<h2 id="jfr"><strong>JFR</strong></h2>
+<p>JDK Flight Recorder &#x7528;&#x4E8E;&#x91C7;&#x6837;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x60C5;&#x51B5;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x8BA1;&#x65F6;&#x5668;&#x5E76;&#x5728;&#x6BCF;&#x4E2A;&#x56FA;&#x5B9A;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x9009;&#x62E9;&#x6700;&#x591A; 5 &#x4E2A; Java &#x7EBF;&#x7A0B;&#xFF0C;&#x9A8C;&#x8BC1;&#x8FD9;&#x4E9B;&#x7EBF;&#x7A0B;&#x662F;&#x5426;&#x6B63;&#x5728;&#x6267;&#x884C; Java &#x4EE3;&#x7801;&#xFF08;&#x7531; JVM &#x7EF4;&#x62A4;&#x7684;&#x5185;&#x90E8;&#x72B6;&#x6001;&#xFF09;&#x5E76;&#x4E14; &#x5C3D;&#x7BA1;&#x5B83;&#x4EEC;&#x6CA1;&#x6709;&#x5171;&#x4EAB;&#x76F8;&#x540C;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x786E;&#x5B9E;&#x662F;&#x4EE5;&#x548C;<code>AsyncGetCallTrace</code>&#x76F8;&#x4F3C;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x6536;&#x96C6;&#x5806;&#x6808;&#x8FFD;&#x8E2A;&#x3002;JFR &#x80FD;&#x591F;&#x5728;&#x4EE3;&#x7801;&#x7684;&#x4EFB;&#x4F55;&#x70B9;&#x6536;&#x96C6;&#xFF0C;&#x56E0;&#x4E3A;&#x4E0D;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x5B89;&#x5168;&#x70B9;&#x3002;</p>
+<h2 id="&#x89E3;&#x6790;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6808;&#x5E27;">&#x89E3;&#x6790;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6808;&#x5E27;</h2>
+<p>&#x6536;&#x96C6;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x540E;&#xFF0C;&#x5B83;&#x4EEC;&#x5C06;&#x9488;&#x5BF9; JVM&#xFF08;&#x89E3;&#x91CA;&#x5668;&#x6216; JIT&#xFF09;&#x7ED9;&#x51FA;&#x7684;&#x8C03;&#x8BD5;&#x7B26;&#x53F7;&#x8FDB;&#x884C;&#x89E3;&#x6790;&#xFF0C;&#x5982;&#x6211;&#x4E0A;&#x4E00;&#x7BC7;&#x6587;&#x7AE0;&#x4E2D;&#x6240;&#x8FF0;&#x3002;&#x5982;&#x679C;&#x60A8;&#x67E5;&#x770B;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#xFF0C;&#x5806;&#x6808;&#x7684;&#x5E95;&#x90E8;&#x53EA;&#x662F;&#x4E00;&#x7CFB;&#x5217;&#x6808;&#x5E27;&#x3002;&#x6709;&#x4E9B;&#x662F;&#x771F;&#x5B9E;&#x7684;&#x6808;&#x5E27;&#xFF08;&#x5BF9;&#x65B9;&#x6CD5;&#x7684;&#x771F;&#x5B9E;&#x8C03;&#x7528;&#xFF09;&#xFF0C;&#x800C;&#x53E6;&#x4E00;&#x4E9B;&#x662F;&#x865A;&#x62DF;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x800C;&#x4EE3;&#x7801;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5185;&#x8054;&#x5230;&#x8C03;&#x7528;&#x8005;&#x4E2D;&#x7684;&#xFF08;&#x771F;&#x5B9E;&#x7684;&#x6808;&#x5E27;&#xFF09;&#x3002;&#x6B63;&#x5982;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x6240;&#x4E86;&#x89E3;&#x7684;&#xFF0C;&#x8C03;&#x7528;&#x8005;&#x6B63;&#x5728;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x5C06;&#x5B83;&#x4EEC;&#x89E3;&#x6790;&#x4E3A;&#x4E00;&#x5BF9;&#x65B9;&#x6CD5;&#x540D;&#x79F0;&#x548C;&#x884C;&#x53F7;&#x6240;&#x9700;&#x7684;&#x6240;&#x6709;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x3002;&#x5B89;&#x5168;&#x70B9;&#x662F;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x70B9;&#xFF0C;&#x5176;&#x4E2D; &#x6808; &#x53EF;&#x4EE5;&#x88AB;&#x5B89;&#x5168;&#x5730;&#x904D;&#x5386;&#xFF08;&#x8BD1;&#x8005;&#xFF1A;&#x539F;&#x6587;&#x662F;walk&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x8003;j9&#x5F15;&#x5165;&#x7684;StackWalking API&#xFF09;&#xFF0C;&#x5E76;&#x4E14;&#x6240;&#x6709;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x90FD;&#x53EF;&#x7528;&#x5E76;&#x4E14;&#x5BF9;&#x8C61;&#x4E5F;&#x662F;&#x53EF;&#x8FBE;&#x7684;&#x3002;&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x9700;&#x8981;&#x505C;&#x6B62;&#x6240;&#x6709;&#x7EBF;&#x7A0B;&#x7684; VM &#x64CD;&#x4F5C;&#xFF08;&#x5982; GC&#xFF09;&#x548C;&#x5B89;&#x5168;&#x70B9;&#x662F;&#x4E24;&#x4EF6;&#x4E0D;&#x540C;&#x7684;&#x4E8B;&#x60C5;&#x3002;&#x6682;&#x505C;&#x7684;&#x7EBF;&#x7A0B;&#x90FD;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#x4EE5;&#x5B89;&#x5168;&#x5730;&#x6267;&#x884C; VM &#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x53EA;&#x6709;&#x4EE3;&#x7801;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x6700;&#x540E;&#x4E00;&#x5E27;&#x53EF;&#x4EE5;&#x5728;&#x65B9;&#x6CD5;&#x5185;&#x7684;&#x4EFB;&#x4F55;&#x4F4D;&#x7F6E;&#xFF0C;&#x5305;&#x62EC;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#x4E4B;&#x5916;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5728;&#x5B89;&#x5168;&#x70B9;&#x4E4B;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x6CA1;&#x6709;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x6B63;&#x786E;&#x89E3;&#x6790;&#x6700;&#x540E;&#x4E00;&#x5E27;&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x7531;&#x4E8E;&#x4F18;&#x5316;/&#x5185;&#x8054;&#x4EE3;&#x7801;&#x4F1A;&#x6A21;&#x7CCA;&#x884C;&#x53F7;&#xFF0C;&#x56E0;&#x6B64;&#x5F88;&#x96BE;&#x6620;&#x5C04;&#x56DE;&#x5B9E;&#x9645;&#x7684;&#x884C;&#x53F7;&#x4FE1;&#x606F;&#xFF08;&#x53E6;&#x8BF7;&#x53C2;&#x89C1;<a href="http://psy-lob-saw.blogspot.com/2018/07/how-inlined-code-confusing-profiles.html" target="_blank">&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;</a>&#xFF09;&#x3002;</p>
+<p>JFR &#x548C;<code>AsyncGetCallTrace</code>&#x662F;&#x5982;&#x4F55;&#x8BBE;&#x6CD5;&#x83B7;&#x5F97;&#x6700;&#x540E;&#x4E00;&#x5E27;&#x7684;&#xFF1F;&#x4FE1;&#x606F;&#x51C6;&#x786E;&#x5417;&#xFF1F;&#x6211;&#x4EEC;&#x6709;&#x7CBE;&#x786E;&#x7684;&#x884C;&#x53F7;&#x5417;&#xFF1F;</p>
+<h3 id="async-profiler">Async-Profiler</h3>
+<p>Async-Profiler &#x63D0;&#x4F9B;&#x4E86;&#x51E0;&#x79CD;&#x8F93;&#x51FA;&#x683C;&#x5F0F;&#xFF1A;</p>
+<ul>
+<li>&#x706B;&#x7130;&#x56FE; (svg/html)</li>
+<li>text (flat/traces/collapsed)</li>
+<li>JFR</li>
+</ul>
+<p>&#x5BF9;&#x4E8E;<code>AsyncGetCallTrace</code>&#x4F7F;&#x7528;&#x7684;&#x524D; 2 &#x4E2A;&#x683C;&#x5F0F;&#xFF0C;&#x60A8;&#x5C06;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x770B;&#x5230;&#x884C;&#x53F7;&#xFF0C;&#x56E0;&#x4E3A;&#x4F5C;&#x8005;&#x9009;&#x62E9;&#x4E0D;&#x5904;&#x7406;/&#x4E0D;&#x663E;&#x793A;&#x5B83;&#x4EEC;&#x3002;</p>
+<p><img src="assets/AP_flamegraph.png" alt="img"></p>
+<p><img src="assets/AP_flamegraph-16610594678843.png" alt="img"></p>
+<p>&#x5BF9;&#x4E8E;&#x4EE5;JFR&#x683C;&#x5F0F;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x884C;&#x53F7;&#x4ECE;<code>AsyncGetCallTrace</code> &#x4EE5;JFR &#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x4F20;&#x8F93;/&#x4FDD;&#x7559;&#x3002;&#x8FD9;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; JDK Mission Control (JMC) &#x6253;&#x5F00;&#x6587;&#x4EF6;&#xFF0C;&#x4EE5;&#x67E5;&#x770B;&#x6700;&#x540E;&#x4E00;&#x5E27;&#x54EA;&#x4E9B;&#x884C;&#x53F7;&#x88AB;&#x89E3;&#x6790;&#x4E86;</p>
+<p><img src="assets/AP_JFR_JMC.png" alt="img"></p>
+<h3 id="honest-profiler">Honest Profiler</h3>
+<p>Honest Profiler &#x53EF;&#x4EE5;&#x4F7F;&#x7528; flat profiles &#x8F93;&#x51FA;&#x884C;&#x53F7;&#xFF1A;</p>
+<pre><code>Flat Profile (by line):
+    (t  2.6,s  2.6) Profile::noLoopBench @ (bci=291,line=140)
+    (t  2.6,s  2.6) Profile::noLoopBench @ (bci=607,line=164)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=212,line=134)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=370,line=146)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=449,line=152)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=537,line=159)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=181,line=132)
+    (t  2.5,s  2.5) Profile::noLoopBench @ (bci=142,line=129)
+    (t  2.4,s  2.4) Profile::noLoopBench @ (bci=339,line=144)
+    (t  2.4,s  2.4) Profile::noLoopBench @ (bci=528,line=158)
+    (t  2.4,s  2.4) Profile::noLoopBench @ (bci=133,line=128)
+    (t  2.3,s  2.3) Profile::noLoopBench @ (bci=300,line=141)
+    (t  2.3,s  2.3) Profile::noLoopBench @ (bci=616,line=165)
+    (t  2.3,s  2.3) Profile::noLoopBench @ (bci=102,line=126)
+    (t  2.3,s  2.3) Profile::noLoopBench @ (bci=497,line=156)
+    (t  2.3,s  2.3) Profile::noLoopBench @ (bci=260,line=138)
+    (t  2.2,s  2.2) Profile::noLoopBench @ (bci=221,line=135)
+    (t  2.2,s  2.2) Profile::noLoopBench @ (bci=458,line=153)
+    (t  2.2,s  2.2) Profile::noLoopBench @ (bci=576,line=162)
+    (t  2.2,s  2.2) Profile::noLoopBench @ (bci=379,line=147)
+</code></pre><h3 id="jfr">JFR</h3>
+<p>&#x6240;&#x8BB0;&#x5F55;&#x7684;&#x683C;&#x5F0F;&#x5141;&#x8BB8;&#x4E3A;&#x6BCF;&#x4E00;&#x5E27;&#x5B58;&#x50A8;&#x884C;&#x53F7;&#x4FE1;&#x606F;&#x6216;&#x5B57;&#x8282;&#x7801;&#x7D22;&#x5F15;&#xFF0C;&#x5728; JMC &#x4E2D;&#x60A8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x884C;&#x53F7;&#x8FDB;&#x884C;&#x533A;&#x5206;&#x3002;&#x5982;&#x679C;&#x60A8;&#x6709;&#x4E00;&#x4E2A;&#x5BF9;&#x540C;&#x4E00;&#x65B9;&#x6CD5;&#x6709;&#x591A;&#x6B21;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x5F88;&#x6709;&#x7528;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x884C;&#x53F7;&#x4FE1;&#x606F;&#xFF0C;&#x5219;&#x66F4;&#x96BE;&#x4EE5;&#x5173;&#x8054;&#x5230;&#x4EE3;&#x7801;</p>
+<p><img src="assets/JFR_JMC_Lines.png" alt="img"></p>
+<h3 id="&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x548C;&#x5B89;&#x5168;&#x70B9;">&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x548C;&#x5B89;&#x5168;&#x70B9;</h3>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x7531;&#x53D1;&#x51FA;&#x5B89;&#x5168;&#x70B9;&#x7684; JIT &#x8BB0;&#x5F55;&#xFF0C;&#x4F8B;&#x5982;&#x5728;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x65F6;&#xFF0C;&#x8FD9;&#x4FBF;&#x4E8E;&#x4E3A;&#x5F02;&#x5E38;&#x6784;&#x5EFA;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5728;&#x4F7F;&#x7528;<code>AsyncGetCallTrace</code>&#x7684;&#x91C7;&#x6837;&#x5206;&#x6790;&#x624B;&#x6BB5;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x7528;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x89E3;&#x6790;&#x6700;&#x540E;&#x4E00;&#x5E27;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BFB;&#x627E;&#x9644;&#x8FD1;&#x7684;&#x5B89;&#x5168;&#x70B9;&#x3002;&#x5F53; JVM &#x53D1;&#x73B0;&#x5F53;&#x524D; PC &#x5904;&#x4E8E; Java &#x6808;&#x5E27;&#x4E2D;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x5C1D;&#x8BD5;&#x901A;&#x8FC7;<code>CompiledMethod::pc_desc_at()</code>&#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x5230;&#x771F;&#x6B63;&#x7684;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#xFF08;&#x8C03;&#x7528;PCDesc&#xFF09;&#xFF0C;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x662F;&#x4ECE;<a href="https://github.com/openjdk/jdk/blob/affbd72aa3dce80e2ad54ff775c6f7469f38b05b/src/hotspot/share/prims/forte.cpp#L157" target="_blank">&#x8FD9;&#x91CC;</a></p>
+<p>&#x88AB;&#x8C03;&#x7528;&#x4EE5;&#x5E2E;&#x52A9;<code>AsyncGetCallTrace</code>&#x6267;&#x884C;&#x7684;&#x3002;&#x5982;&#x679C;&#x627E;&#x4E0D;&#x5230;<code>PCDesc</code>&#xFF0C;&#x7136;&#x540E;&#xFF0C;&#x5B83;&#x5C06;&#x5C1D;&#x8BD5;&#x901A;&#x8FC7;&#x641C;&#x7D22;&#x65B9;&#x6CD5;&#x7684;&#x672B;&#x5C3E;&#x6765;&#x627E;&#x5230;&#x6700;&#x8FD1;&#x7684;&#x201C;below&#x201D;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;<code>CompiledMethod::pc_desc_near()</code>,&#x5B83;&#x662F;&#x4ECE;<a href="[jdk/forte.cpp%20at%20affbd72aa3dce80e2ad54ff775c6f7469f38b05b%20&#xB7;%20openjdk/jdk%20(github.com">&#x8FD9;&#x91CC;</a>](<a href="https://github.com/openjdk/jdk/blob/affbd72aa3dce80e2ad54ff775c6f7469f38b05b/src/hotspot/share/prims/forte.cpp#L171))&#x8C03;&#x7528;&#x88AB;&#x8C03;&#x7528;&#x4EE5;&#x5E2E;&#x52A9;`AsyncGetCallTrace`&#x6267;&#x884C;&#x548C;" target="_blank">https://github.com/openjdk/jdk/blob/affbd72aa3dce80e2ad54ff775c6f7469f38b05b/src/hotspot/share/prims/forte.cpp#L171))&#x8C03;&#x7528;&#x88AB;&#x8C03;&#x7528;&#x4EE5;&#x5E2E;&#x52A9;`AsyncGetCallTrace`&#x6267;&#x884C;&#x548C;</a> <a href="https://jpbempel.github.io/2022/06/22/[https://github.com/openjdk/jdk/blob/master/src/hotspot/share/jfr/periodic/sampling/jfrCallTrace.cpp#L74](https://github.com/openjdk/jdk/blob/affbd72aa3dce80e2ad54ff775c6f7469f38b05b/src/hotspot/share/jfr/periodic/sampling/jfrCallTrace.cpp#L74" target="_blank">&#x8FD9;&#x91CC;</a>)&#x88AB;&#x8C03;&#x7528;&#x4EE5;&#x5E2E;&#x52A9;&#x6267;&#x884C;JFR</p>
+<p>&#x4E3A;&#x4E86;&#x6F14;&#x793A;&#x8FD9;&#x79CD;&#x884C;&#x4E3A;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x4E3E;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x51FA;&#x6765;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code>L117 public static int noLoopBench(int idx) {
+L118     int res = idx * idx;
+         res += (idx % 7) + idx * 31;
+     res -= (idx * 53) % 13 - idx;
+     res += idx * 1003 - (idx * 13 % 7);
+     res += (idx % 19) + idx * 37;
+     res -= (idx * 71) % 7 - idx;
+     res += idx * 97 - (idx * 53 % 29);
+     res += (idx % 7) + idx * 31;
+     res -= (idx * 53) % 13 - idx;
+     // ... skip for brevity ...
+     res += idx * 1003 - (idx * 13 % 7);
+     res += (idx % 19) + idx * 37;
+     res -= (idx * 71) % 7 - idx;
+     res += idx * 97 - (idx * 53 % 29);
+L167     return res;
+    }
+</code></pre><p>&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#x5728; <a href="https://gist.github.com/jpbempel/b40e5081b98d9021116f845d8adf0be1" target="_blank">&#x8FD9;&#x91CC;</a></p>
+<p>&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x5C06;&#x5206;&#x6790;&#x5668;attach&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x4E0A;&#xFF0C;&#x4F7F;&#x7528;&#x5E26;&#x6709; JFR &#x8F93;&#x51FA;&#x7684; Async-Profiler &#x5206;&#x6790;&#x6B64;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code>java Profile &amp;
+./profiler.sh -d 30 -e itimer -o jfr -f profile_noLoop.jfr &lt;pid&gt;
+</code></pre><p>&#x8FD9;&#x662F;&#x5B83;&#x5728; JMC &#x4E2D;&#x7684;&#x663E;&#x793A;&#xFF1A;</p>
+<p><img src="assets/JMC_Profile_noLoop.png" alt="img"></p>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x51E0;&#x4E4E;&#x6709; 50 &#x884C;&#x957F;&#xFF0C;&#x4F46;&#x5728;&#x51E0;&#x4E4E;&#x6240;&#x6709;&#x91C7;&#x6837;&#x4E2D;&#x6211;&#x4EEC;&#x53EA;&#x6709;&#x7B2C;&#x4E00;&#x884C;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x6574;&#x4E2A;&#x65B9;&#x6CD5;&#x6CA1;&#x6709;&#x751F;&#x6210;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#xFF08;&#x6CA1;&#x6709;&#x5B89;&#x5168;&#x70B9;&#xFF09;&#xFF0C;&#x9664;&#x4E86;&#x5728;&#x5165;&#x53E3;&#x5904;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x6240;&#x671F;&#x671B;&#x7684;&#x662F;&#x91C7;&#x6837;&#x5728;&#x65B9;&#x6CD5;&#x7684;&#x6240;&#x6709;&#x884C;&#x4E2D;&#x7684;&#x5747;&#x5300;&#x5206;&#x5E03;&#x3002;&#x4F46;&#x53D6;&#x800C;&#x4EE3;&#x4E4B;&#x7684;&#x662F;&#xFF0C;&#x5F53;&#x91C7;&#x6837;&#x65F6;&#xFF0C;&#x4F1A;&#x627E;&#x5230;&#x6700;&#x8FD1;&#x7684;&#x5B89;&#x5168;&#x70B9;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x4E0E;&#x4E4B;&#x5173;&#x8054;&#x7684;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x89E3;&#x6790;&#x7B26;&#x53F7;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x8BA9;&#x6211;&#x4EEC;&#x5C1D;&#x8BD5;&#x53E6;&#x4E00;&#x4E2A;&#x5E26;&#x6709;&#x5FAA;&#x73AF;&#x7684;&#x793A;&#x4F8B;&#xFF1A;</p>
+<pre><code>L72 public static int loopsBench(int idx) {
+L73     int res = 0;
+    for (int i = 0; i &lt; 5; i++) {
+        dst[i] = buffer[i];
+    }
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+    for (int i = 0; i &lt; 5; i++) {
+        dst[i] = buffer[i];
+    }
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+    for (int i = 0; i &lt; 5; i++) {
+        dst[i] = buffer[i];
+    }
+    // ... skip for brevity ...
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+L114    return res;
+    }
+</code></pre><p><img src="assets/JMC_Profile_loops.png" alt="img"></p>
+<p>&#x4EC5;&#x62A5;&#x544A;&#x4E86; 2 &#x884C;&#xFF08;73 &#x548C; 77&#xFF09;&#x3002;&#x4F46;&#x5728;&#x6211;&#x4EEC;&#x7684;&#x793A;&#x4F8B;&#x4E2D;&#xFF0C;&#x5FAA;&#x73AF;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7531; JIT &#x4E13;&#x95E8;&#x5904;&#x7406;&#x7684;<a href="http://psy-lob-saw.blogspot.com/2015/12/safepoints.html" target="_blank">&#x6709;&#x9650;&#x5FAA;&#x73AF;&#x4F18;&#x5316;</a>&#xFF0C;&#x5373;&#x4E0D;&#x4F1A;&#x53D1;&#x51FA;&#x5B89;&#x5168;&#x70B9;&#x3002;&#x8BA9;&#x6211;&#x4EEC;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528;<code>long</code>&#x5FAA;&#x73AF;&#xFF1A;</p>
+<pre><code>L72 public static int loopsBench(int idx) {
+L73     int res = 0;
+    for (long i = 0; i &lt; 5; i++) {
+        dst[(int)i] = buffer[(int)i];
+    }
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+    for (long i = 0; i &lt; 5; i++) {
+        dst[(int)i] = buffer[(int)i];
+    }
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+    for (long i = 0; i &lt; 5; i++) {
+        dst[(int)i] = buffer[(int)i];
+    }
+    // ... skip for brevity ...
+    res += dst[buffer.length-1] == 1 ? buffer[0] : buffer[1];
+L114    return res;
+    }
+</code></pre><p><img src="assets/JMC_Profile_loops_long.png" alt="img"></p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6709;&#x4E86;&#x6574;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x5206;&#x5E03;&#x826F;&#x597D;&#x7684;&#x91C7;&#x6837;&#xFF01;&#x4F46;&#x662F;&#x5185;&#x8054;&#x5462;&#xFF1F;</p>
+<p>&#x6211;&#x8FD8;&#x5236;&#x4F5C;&#x4E86;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B; 3 &#x79CD;&#x4E0D;&#x540C;&#x7684;&#x5185;&#x8054;&#x5C0F;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code>  public static int inlinedBench(int idx) {
+L28     int res = 0;
+        res += compute1(idx);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        res += compute1(res);
+        return res;
+    }
+
+    private static int compute1(int value) {
+L61     return (value % 7) + value * 31 + compute2(value);
+    }
+
+    private static int compute2(int value) {
+L65     return (value * 53) % 13 - value + compute3(value);
+    }
+
+    private static int compute3(int value) {
+L69     return value * 1003 - (value * 13 % 7);
+    }
+</code></pre><p><img src="assets/JMC_Profile_inlined.png" alt="img"></p>
+<p>&#x4EC5;&#x62A5;&#x544A;&#x4E00;&#x884C;&#xFF0C;&#x56E0;&#x6B64;&#x5185;&#x8054;&#x65B9;&#x6CD5;&#x65F6;&#x4E0D;&#x4F1A;&#x53D1;&#x51FA;&#x5B89;&#x5168;&#x70B9;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7981;&#x7528;&#x5185;&#x8054;&#xFF1A;</p>
+<pre><code>java -XX:-Inline Profile
+</code></pre><p><img src="assets/JMC_Profile_inlined_noInlining1.png" alt="img"></p>
+<p>&#x6211;&#x4EEC;&#x627E;&#x5230;&#x4E86;&#x6211;&#x4EEC;&#x7684;<code>computeX</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5C55;&#x5F00;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF1A;</p>
+<p><img src="assets/JMC_Profile_inlined_noInlining2.png" alt="img"></p>
+<p>&#x6837;&#x672C;&#x73B0;&#x5728;&#x5206;&#x5E03;&#x5728;&#x6574;&#x4E2A;<code>inlinedBench</code>&#x65B9;&#x6CD5;&#x4E2D;&#x3002;</p>
+<h2 id="&#x8C03;&#x8BD5;&#x975E;&#x5B89;&#x5168;&#x70B9;">&#x8C03;&#x8BD5;&#x975E;&#x5B89;&#x5168;&#x70B9;</h2>
+<p>&#x6709;&#x4E00;&#x4E2A;&#x6709;&#x8DA3;&#x7684;&#x6807;&#x5FD7;&#x53EF;&#x4EE5;&#x7A0D;&#x5FAE;&#x4FEE;&#x6539;&#x4E0A;&#x8FF0;&#x884C;&#x4E3A;&#xFF1A;<code>-XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints</code>. &#x5373;&#x4F7F; PC &#x4E0D;&#x5728;&#x5B89;&#x5168;&#x70B9;&#xFF0C;&#x6B64;&#x6807;&#x5FD7;&#x4E5F;&#x4F1A;&#x6FC0;&#x6D3B;&#x6709;&#x5173; PC &#x7684;&#x66F4;&#x591A;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x7684;&#x8BB0;&#x5F55;&#x3002;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E3A;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x63D0;&#x4F9B;&#x66F4;&#x7CBE;&#x786E;&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x8D8A;&#x591A;&#xFF0C;&#x884C;&#x53F7;&#x5206;&#x8FA8;&#x7387;&#x7684;&#x6837;&#x672C;&#x5C31;&#x8D8A;&#x7CBE;&#x786E;&#x3002;</p>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x7528;&#x6211;&#x4EEC;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x6765;&#x8BD5;&#x8BD5;&#x8FD9;&#x4E2A;&#x6807;&#x5FD7;&#xFF1A;</p>
+<p><img src="assets/JMC_Profile_noLoop_DebugNonSafepoint.png" alt="img"></p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6709;&#x66F4;&#x591A;&#x7684;&#x6837;&#x672C;&#x5206;&#x5E03;&#x5728;<code>noLoopBench</code>&#x65B9;&#x6CD5;&#x4E2D;&#x3002;</p>
+<p>&#x5185;&#x8054;&#x5462;&#xFF1F;</p>
+<p><img src="assets/JMC_Profile_inlined_DebugNonSafepoint.png" alt="img"></p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6709;&#x4E86;&#x5173;&#x4E8E;&#x5185;&#x8054;&#x65B9;&#x6CD5;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#x4EE5;&#x53CA;&#x8C03;&#x7528;&#x5B83;&#x4EEC;&#x7684;&#x884C;&#x53F7;&#x3002;</p>
+<h2 id="&#x81EA;&#x52A8;&#x6FC0;&#x6D3B;-debugnonsafepoint">&#x81EA;&#x52A8;&#x6FC0;&#x6D3B; DebugNonSafepoint</h2>
+<p>&#x6211;&#x4EEC;&#x770B;&#x5230;&#x6709;&#x4E00;&#x4E2A; JVM &#x6807;&#x5FD7;&#x53EF;&#x4EE5;&#x5728;&#x6CA1;&#x6709;&#x5B89;&#x5168;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x542F;&#x7528;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#xFF0C;&#x4F46;&#x4E5F;&#x6709; 2 &#x79CD;&#x60C5;&#x51B5;&#x4E0B;<code>DebugNonSafepoint</code>&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x6FC0;&#x6D3B;&#xFF1A;</p>
+<ul>
+<li><a href="https://github.com/openjdk/jdk/blob/a113e166e91b9b3d3f74a284888a5135b48dad44/src/hotspot/share/code/debugInfoRec.cpp#L107-L113" target="_blank">JVMTI</a></li>
+<li><a href="https://github.com/openjdk/jdk/blob/a113e166e91b9b3d3f74a284888a5135b48dad44/src/hotspot/share/runtime/arguments.cpp#L4157-L4160" target="_blank">PrintAssembly</a> or <a href="https://github.com/openjdk/jdk/blob/a113e166e91b9b3d3f74a284888a5135b48dad44/src/hotspot/share/compiler/compilerDirectives.cpp#L109-L112" target="_blank">CompileCommand</a></li>
+</ul>
+<h3 id="jvmti">JVMTI</h3>
+<p>&#x5982;&#x679C; JVMTI   agent &#x6CE8;&#x518C;&#x4E86;&#x56DE;&#x8C03;<code>CompiledMethodLoad</code>&#xFF0C;&#x5219;&#x8BE5;&#x6807;&#x5FD7;&#x5C06;&#x88AB;&#x6FC0;&#x6D3B;&#x3002;Async-Profiler &#x5728;<a href="https://github.com/jvm-profiling-tools/async-profiler/blob/master/src/profiler.h#L222-L228" target="_blank">&#x8FD9;&#x91CC;</a>&#x6CE8;&#x518C;&#x7684;&#x56DE;&#x8C03;&#x3002;Honest Profiler &#x4E5F;&#x5728;<a href="https://github.com/jvm-profiling-tools/honest-profiler/blob/8a3a2ef206968476b89ac0b9184f0bbd0c6bd2e3/src/main/cpp/agent.cpp#L31-L36" target="_blank">&#x8FD9;&#x91CC;</a>&#x505A;&#x4E86;&#x76F8;&#x4F3C;&#x7684;&#x4E8B;&#x60C5;</p>
+<p>&#x5982;&#x679C;&#x60A8;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E0A;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B; JVMTI agent&#x542F;&#x52A8; JVM &#xFF08;<code>-agentpath:profiler.so</code>&#xFF09;&#xFF0C;&#x8FD9;&#x4E2A;&#x6807;&#x5FD7;&#x5C06;&#x4ECE;&#x4E00;&#x5F00;&#x59CB;&#x5C31;&#x88AB;&#x6FC0;&#x6D3B;&#xFF0C;&#x5E76;&#x4E14;&#x6240;&#x6709;&#x7F16;&#x8BD1;&#x7684;&#x65B9;&#x6CD5;&#x5C06;&#x5728;&#x5B89;&#x5168;&#x70B9;&#x4E4B;&#x5916;&#x751F;&#x6210;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x60A8;&#x5C06;agent&#x9644;&#x52A0;&#x5230;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x5B9E;&#x4F8B;&#x4E0A;&#xFF0C;&#x5219;&#x6807;&#x5FD7;&#x5C06;&#x4EC5;&#x5728;&#x9644;&#x52A0;&#x65F6;&#x5F00;&#x542F;&#x3002;&#x7136;&#x540E;&#xFF0C;&#x53EA;&#x6709;&#x65B0;&#x7F16;&#x8BD1;&#x7684;&#x65B9;&#x6CD5;&#x624D;&#x4F1A;&#x9002;&#x914D;&#x8BE5;&#x6807;&#x5FD7;&#xFF0C;&#x5E76;&#x4E14;&#x5DF2;&#x7ECF;&#x7F16;&#x8BD1;&#x7684;&#x65B9;&#x6CD5;&#x4ECD;&#x7136;&#x53EA;&#x6709;&#x5B89;&#x5168;&#x70B9;&#x7684;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x3002;</p>
+<h3 id="printassemblycompilecommand">PrintAssembly/CompileCommand</h3>
+<p>&#x5982;&#x679C;&#x8981;&#x6253;&#x5370;&#x65B9;&#x6CD5;&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#xFF0C;&#x5B83;&#x8FD8;&#x5C06;&#x6FC0;&#x6D3B;&#x6807;&#x5FD7;&#x4EE5;&#x83B7;&#x5F97;&#x66F4;&#x591A;&#x6709;&#x7528;&#x7684;&#x6C47;&#x7F16;&#x4FE1;&#x606F;&#x4EE5;&#x5339;&#x914D;&#x5B57;&#x8282;&#x7801;/&#x884C;&#x53F7;&#x3002;</p>
+<h3 id="jfr">JFR</h3>
+<p>JFR &#x9ED8;&#x8BA4;&#x4E0D;&#x6FC0;&#x6D3B;<code>DebugNonSafepoint</code>&#x3002;&#x60A8;&#x5FC5;&#x987B;&#x624B;&#x52A8;&#x542F;&#x7528;&#x5B83;&#x3002;&#x8FD9;&#x662F;<a href="https://docs.oracle.com/javacomponents/jmc-5-5/jfr-runtime-guide/about.htm#JFRRT112" target="_blank">JFR doc</a>&#x5728;&#x67D0;&#x4E2A;&#x65F6;&#x5019;&#x63A8;&#x8350;&#x7684;&#x3002;</p>
+<h2 id="&#x6027;&#x80FD;&#x5F71;&#x54CD;">&#x6027;&#x80FD;&#x5F71;&#x54CD;</h2>
+<p>&#x6211;&#x5DF2;&#x5C06;<code>noLoopBench</code>&#x65B9;&#x6CD5;&#x4EE3;&#x7801;&#x653E;&#x5165;&#x5E26;&#x6709;&#x548C;&#x4E0D;&#x5E26;&#x6709;<code>DebugNonSafepoint</code>&#x6807;&#x5FD7;&#x7684; JMH &#x57FA;&#x51C6;&#x6D4B;&#x8BD5;&#x4E2D;&#xFF0C;&#x53D1;&#x73B0;&#x6CA1;&#x6709;&#x663E;&#x7740;&#x5DEE;&#x5F02;&#x3002;</p>
+<pre><code>Benchmark                          Mode  Cnt    Score   Error  Units
+MyBenchmark.testDebugNonSafepoint  avgt   25  156.209 &#xB1; 1.711  ns/op
+MyBenchmark.testDefault            avgt   25  159.069 &#xB1; 2.260  ns/op
+</code></pre><p>&#x6807;&#x5FD7;&#x53EA;&#x4F1A;&#x5728; JIT &#x7F16;&#x8BD1;&#x65F6;&#x751F;&#x6210;&#x66F4;&#x591A;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#xFF08;&#x6620;&#x5C04; PC -&gt; BCI -&gt; &#x884C;&#x53F7;&#xFF09;&#x662F;&#x6709;&#x610F;&#x4E49;&#x7684;&#x3002;&#x5B83;&#x53EA;&#x4F1A;&#x6D88;&#x8017;&#x66F4;&#x591A;&#x7684;&#x672C;&#x673A;&#x5185;&#x5B58;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#xFF0C;&#x4F46;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x5173;&#x4E8E;&#x4F7F;&#x7528;<code>DebugNonSafepoint</code>&#x6709;&#x4E00;&#x4E9B;&#x6CE8;&#x610F;&#x4E8B;&#x9879;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x80FD;&#x6709;&#x5173;&#x4E8E;&#x5728;&#x5B89;&#x5168;&#x70B9;&#x4E4B;&#x5916;&#x7684;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x4F46;&#x662F;&#xFF0C;&#x8FD9;&#x5E76;&#x4E0D;&#x610F;&#x5473;&#x7740;&#x5728;&#x5206;&#x6790;&#x5DE5;&#x5177;&#x62A5;&#x544A;&#x51FA;&#x6765;&#x7684;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x4F1A;&#x66F4;&#x7CBE;&#x786E;&#x3002;&#x8BF7;&#x53C2;&#x9605;<a href="https://bugs.openjdk.java.net/browse/JDK-8201516" target="_blank">JDK-8201516</a>&#x548C;<a href="https://bugs.openjdk.java.net/browse/JDK-8281677" target="_blank">JDK-8281677</a>&#x3002;</p>
+<h2 id="&#x7ED3;&#x8BBA;">&#x7ED3;&#x8BBA;</h2>
+<p>&#x5373;&#x4F7F;&#x4F7F;&#x7528;<code>AsyncGetCallTrace</code>&#x6216;&#x7C7B;&#x4F3C;&#x6280;&#x672F;&#x7684;&#x65B0;&#x5206;&#x6790;&#x5668;&#x4E0D;&#x504F;&#x5411;&#x4E8E;&#x6536;&#x96C6;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x7684;&#x5B89;&#x5168;&#x70B9;&#xFF0C;&#x4F46;&#x6700;&#x540E;&#x4E00;&#x5E27;&#x7684;&#x89E3;&#x6790;&#x4ECD;&#x7136;&#x504F;&#x5411;&#x4E8E;&#x8BB0;&#x5F55;&#x7684;&#x8C03;&#x8BD5;&#x4FE1;&#x606F;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B83;&#x4EEC;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#xFF01;&#x8FD9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x90A3;&#x4E9B;&#x5206;&#x6790;&#x5668;&#x8BD5;&#x56FE;&#x5C3D;&#x5FEB;&#x6FC0;&#x6D3B;&#x6807;&#x5FD7;<code>DebugNonSafepoint</code>&#x4EE5;&#x83B7;&#x5F97;&#x66F4;&#x7CBE;&#x786E;&#x7684;&#x89E3;&#x6790;&#x7ED3;&#x679C;&#x3002;&#x6211;&#x8BA4;&#x4E3A;&#x5373;&#x4F7F;&#x5728;&#x751F;&#x4EA7;&#x4E2D;&#x4E5F;&#x59CB;&#x7EC8;&#x6FC0;&#x6D3B;&#x6807;&#x5FD7;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x672C;&#x673A;&#x5185;&#x5B58;&#x6D88;&#x8017;&#x3002;&#x5B83;&#x5C06;&#x5E2E;&#x52A9;&#x60A8;&#x5728;&#x751F;&#x4EA7;&#x4E2D;&#x6301;&#x7EED;&#x8FDB;&#x884C;&#x5206;&#x6790;&#x3002;</p>
+<h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2>
+<ul>
+<li><a href="http://psy-lob-saw.blogspot.com/2016/06/the-pros-and-cons-of-agct.html" target="_blank">The Pros and Cons of AsyncGetCallTrace Profilers</a> by <a href="https://twitter.com/nitsanw" target="_blank">Nitsan Wakart</a></li>
+<li><a href="http://psy-lob-saw.blogspot.com/2015/12/safepoints.html" target="_blank">Safepoints: Meaning, Side Effects and Overheads</a> by <a href="https://twitter.com/nitsanw" target="_blank">Nitsan Wakart</a></li>
+<li><a href="http://psy-lob-saw.blogspot.com/2016/02/why-most-sampling-java-profilers-are.html" target="_blank">Why (Most) Sampling Java Profilers Are Fucking Terrible</a> by <a href="https://twitter.com/nitsanw" target="_blank">Nitsan Wakart</a></li>
+<li><a href="http://psy-lob-saw.blogspot.com/2018/07/how-inlined-code-confusing-profiles.html" target="_blank">How Inlined Code Makes For Confusing Profiles</a> by <a href="https://twitter.com/nitsanw" target="_blank">Nitsan Wakart</a></li>
+<li><a href="https://github.com/jvm-profiling-tools/honest-profiler" target="_blank">Honest profiler</a></li>
+<li><a href="https://github.com/jvm-profiling-tools/async-profiler" target="_blank">Async-Profiler</a></li>
+<li><a href="https://bugs.openjdk.java.net/browse/JDK-8201516" target="_blank">JDK-8201516</a></li>
+<li><a href="https://bugs.openjdk.java.net/browse/JDK-8281677" target="_blank">JDK-8281677</a></li>
+</ul>
+<p>&#x591A;&#x8C22; <a href="https://twitter.com/chnasarre" target="_blank">Christophe Nasarre</a>, <a href="https://twitter.com/hirt" target="_blank">Marucs Hirt</a> &amp; <a href="https://twitter.com/nitsanw" target="_blank">Nitsan Wakart</a>&#x7684;review</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../panama/Panama浅析.html" class="navigation navigation-prev " aria-label="Previous page: Panama源码浅析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="loom_fiber_continuation.html" class="navigation navigation-next " aria-label="Next page: Java虚拟机的纤程和计算续体">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"为什么现代的jvm仍然偏爱安全点","level":"2.1","depth":1,"next":{"title":"Java虚拟机的纤程和计算续体","level":"2.2","depth":1,"path":"translate/loom_fiber_continuation.md","ref":"translate/loom_fiber_continuation.md","articles":[]},"previous":{"title":"Panama源码浅析","level":"1.6.2.3","depth":3,"path":"panama/Panama浅析.md","ref":"panama/Panama浅析.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.md","mtime":"2024-09-21T16:03:24.655Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-21T16:03:49.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,668 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C++20协程入门 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="async_scope.html" />
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="first.html">
+            
+                <a href="first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="async_scope.html">
+            
+                <a href="async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="../panama/panama-tutorial-0.html">
+            
+                <a href="../panama/panama-tutorial-0.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >C++20协程入门</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c20&#x7684;&#x534F;&#x7A0B;">C++20&#x7684;&#x534F;&#x7A0B;</h1>
+<blockquote>
+<p>&#x672C;&#x6587;&#x975E;&#x79D1;&#x666E;&#x6587;&#x7AE0; &#x800C;&#x662F;&#x5B66;&#x4E60;&#x8BB0;&#x5F55;</p>
+<p>&#x53C2;&#x8003;&#x300A;C++20&#x9AD8;&#x7EA7;&#x7F16;&#x7A0B;&#x300B;&#x548C;<a href="https://www.bennyhuo.com/book/cpp-coroutines/01-intro.html" target="_blank">1. C++ &#x534F;&#x7A0B;&#x6982;&#x89C8; | Benny Huo &#x7684;&#x4E13;&#x680F;</a></p>
+<p>&#x4EE5;Kotlin&#x7684;&#x534F;&#x7A0B;&#x7684;&#x6982;&#x5FF5;&#x6765;&#x8BB2;&#x89E3;</p>
+</blockquote>
+<p>&#x7C7B;&#x4F3C;&#x4E8E;Rust&#x7684;&#x534F;&#x7A0B;&#x5B9E;&#x73B0;&#xFF0C;C++&#x4E5F;&#x662F;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x81EA;&#x5B9A;&#x4E49;&#x7684;<code>Future</code>&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x4F46;C++&#x5E76;&#x975E;&#x901A;&#x8FC7;&#x5B9E;&#x73B0;trait&#x800C;&#x662F;&#x901A;&#x8FC7;&#x9E2D;&#x5B50;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x4E0E;Kt&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;C++&#x7684;&#x534F;&#x7A0B;&#x53EA;&#x9700;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;Future&#x5373;&#x53EF;&#xFF0C;&#x65E0;&#x7279;&#x6B8A;&#x51FD;&#x6570;&#x7B26;&#x53F7;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;Rust&#x7684;async&#x5B9E;&#x9645;&#x4E0A;&#x8FD4;&#x56DE;&#x7684;&#x662F;future&#x4E00;&#x6837;</p>
+<p>&#x5927;&#x6982;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E24;&#x4E2A;&#x4E1C;&#x897F;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;promise&#xFF0C;&#x4E00;&#x4E2A;&#x662F;future&#xFF0C;promise&#x662F;future&#x7684;factory&#xFF0C;&#x5F53;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;future&#x5B9E;&#x73B0;&#x65F6;&#x6574;&#x4E2A;&#x51FD;&#x6570;&#x5C31;&#x6210;&#x4E3A;&#x4E86;&#x4E00;&#x4E2A;&#x534F;&#x7A0B;&#xFF08;&#x8FD9;&#x4E5F;&#x662F;&#x534F;&#x7A0B;&#x7684;&#x4E00;&#x4E2A;&#x6700;&#x51C6;&#x786E;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5B50;&#x4F8B;&#x7A0B;&#xFF09;&#xFF0C;&#x5176;&#x4E2D;&#x53D1;&#x751F;&#x7684;&#x5404;&#x79CD;&#x884C;&#x4E3A;&#x6BD4;&#x5982;&#x8BF4;await&#xFF0C;yield&#xFF0C;return&#x7684;&#x884C;&#x4E3A;&#x90FD;&#x88AB;promise&#x7684;&#x5B9E;&#x73B0;&#x6765;&#x7EA6;&#x675F;</p>
+<p>&#x8FD9;&#x91CC;&#x7ED9;&#x51FA;C++20&#x9AD8;&#x7EA7;&#x7F16;&#x7A0B;&#x4E2D;&#x7684;&#x7EA6;&#x675F;&#x793A;&#x610F; &#x6765;&#x5224;&#x5B9A;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x662F;&#x5426;&#x7B26;&#x5408;Promise&#x7684;&#x6807;&#x51C6;</p>
+<p>&#x5148;&#x5047;&#x8BBE;&#x5B83;&#x8FD4;&#x56DE;&#x7684;&#x662F;int</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> P&gt;
+concept Promise = requires(P p) { 
+    {p.get_return_object()} -&gt; Future; <span class="hljs-comment">//&#x652F;&#x6301;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;Future</span>
+    {p.initial_suspend()}  -&gt; Awaitable;
+    {p.final_suspend()} <span class="hljs-keyword">noexcept</span> = Awaitable;
+    p.unhandled_exception; <span class="hljs-comment">//&#x5904;&#x7406;&#x5F02;&#x5E38;&#x7684;&#x51FD;&#x6570;</span>
+    requires (requires (<span class="hljs-keyword">int</span> v) {p.return_value(v);} || requires {p.return_void();} )  <span class="hljs-comment">//&#x5FC5;&#x987B;&#x5305;&#x542B;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</span>
+}
+
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">typename</span>... Ts&gt; concept one_of = (<span class="hljs-built_in">std</span>::same_as&lt;T, Ts&gt; || ...);
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> A&gt;
+concept Awaitable = requires(A a) {
+  { a.await_ready() } -&gt; <span class="hljs-built_in">std</span>::convertible_to&lt;<span class="hljs-keyword">bool</span>&gt;; <span class="hljs-comment">// &#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x6302;&#x8D77;</span>
+  { a.await_suspend(<span class="hljs-built_in">std</span>::coroutine_handle&lt;&gt;()) } -&gt; one_of&lt;<span class="hljs-keyword">void</span>,<span class="hljs-keyword">bool</span>, <span class="hljs-built_in">std</span>::coroutine_handle&lt;&gt;&gt;;   <span class="hljs-comment">// &#x6302;&#x8D77;&#x65F6;&#x6267;&#x884C;&#x7684;&#x903B;&#x8F91;</span>
+  { a.await_resume() };                             <span class="hljs-comment">// &#x6062;&#x590D;&#x65F6;&#x6267;&#x884C;&#x7684;&#x903B;&#x8F91;</span>
+};
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> F&gt;
+concept Future = requires(F f) {
+  F::promise_type;
+  requires Promise&lt;F::promise_type&gt;;
+};
+</code></pre>
+<p>&#x4ECE;&#x6574;&#x4F53;&#x6765;&#x8BF4;&#x5E94;&#x8BE5;&#x662F;&#x8FD9;&#x6837;&#x7684;</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Future{
+    <span class="hljs-comment">//&#x8FD9;&#x4E2A;struct promise_type&#x4E0D;&#x80FD;&#x53D8; </span>
+    <span class="hljs-keyword">struct</span> promise_type{
+
+        <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">initial_suspend</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> {}; };
+        <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">final_suspend</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span> </span>{ <span class="hljs-keyword">return</span> {}; }
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unhandled_exception</span><span class="hljs-params">()</span> </span>{}&#xFF1B;
+        <span class="hljs-function">Future <span class="hljs-title">get_return_object</span><span class="hljs-params">()</span> </span>{<span class="hljs-keyword">return</span> Future(...)};
+    }
+
+}
+</code></pre>
+<p>&#x5728;&#x6784;&#x9020;promise_type&#x4E4B;&#x540E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;std::coroutine_handle<promise_type>::from_promise(*this)&#x76F4;&#x63A5;&#x83B7;&#x53D6;&#x5230;std::coroutine_handle<promise_type></promise_type></promise_type></p>
+<h2 id="awaitable">Awaitable</h2>
+<p>&#x8FD9;&#x4E2A;&#x6765;&#x63CF;&#x8FF0;&#x5F53;&#x524D;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x7684;&#x72B6;&#x6001;</p>
+<p><img src="assets/image-20230610185844695.png" alt="image-20230610185844695"></p>
+<p>&#x5176;&#x4E2D;&#x53EF;&#x4EE5;&#x5F88;&#x660E;&#x663E;&#x770B;&#x51FA;&#x6765;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8FD9;&#x6837;&#x5B9E;&#x73B0;&#xFF0C;&#x90A3;&#x4E48;&#x5176;&#x5B9E;&#x8DDF;Rust Future&#x4F1A;&#x5DEE;&#x4E0D;&#x591A;</p>
+<pre><code class="lang-cpp"> <span class="hljs-keyword">struct</span> suspend_always
+  {
+    <span class="hljs-keyword">auto</span> res;
+    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">await_ready</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">noexcept</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">void</span> <span class="hljs-title">await_suspend</span><span class="hljs-params">(coroutine_handle&lt;&gt; h)</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">noexcept</span> </span>{
+        async_op([=](<span class="hljs-keyword">auto</span> _res){
+            res = _res;
+            h.resume()
+        });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">auto</span> <span class="hljs-title">await_resume</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">noexcept</span> </span>{
+        <span class="hljs-keyword">return</span> res;
+    }
+  };
+</code></pre>
+<p><strong>&#x4E0B;&#x9762;&#x63D0;&#x5230;&#x7684;&#x6302;&#x8D77;&#x8BB2;&#x7684;&#x662F;&#x534F;&#x7A0B;&#x6302;&#x8D77;&#x7684;&#x542B;&#x4E49;&#xFF0C;&#x5176;&#x6697;&#x542B;&#x8C03;&#x7528;await_suspend&#x7684;&#x542B;&#x4E49;</strong></p>
+<p>&#x5BF9;&#x4E8E;await_ready&#x6765;&#x8BF4;&#x5176;&#x8FD4;&#x56DE;&#x7684;&#x662F; &#x5F53;&#x524D;&#x662F;&#x5426;&#x9700;&#x8981;&#x6302;&#x8D77; &#xFF0C;&#x82E5;&#x6CA1;&#x6709;&#x51C6;&#x5907;&#x597D;&#x5219;&#x662F;&#x76F4;&#x63A5;&#x6302;&#x8D77;&#xFF0C;&#x53CD;&#x4E4B;&#x7EE7;&#x7EED;&#x6267;&#x884C;</p>
+<p>&#x5BF9;&#x4E8E;await_suspend&#x800C;&#x8A00;&#xFF0C;&#x8FD9;&#x4E2A;&#x5219;&#x662F;&#x4EE3;&#x8868;&#x4E86;&#x5F53;&#x524D;&#x7684;&#x8C03;&#x5EA6;&#x903B;&#x8F91;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4F7F;&#x7528;kotlin&#x7684;&#x4E00;&#x4E9B;&#x534F;&#x7A0B;&#x5143;&#x7D20;&#x6765;&#x63CF;&#x8FF0;</p>
+<ul>
+<li><p>&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;void&#xFF0C;&#x8DF3;&#x51FA;&#x5F53;&#x524D;suspend&#x51FD;&#x6570;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;java&#x7684; continuation.yield &#x56DE;&#x5230;continuation::run&#x88AB;&#x8C03;&#x7528;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x5C06;&#x63A7;&#x5236;&#x6D41;&#x8FD4;&#x56DE;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;bool&#xFF0C;&#x5982;&#x679C;&#x8FD4;&#x56DE;true&#xFF0C;&#x5219;&#x8DF3;&#x51FA;&#x5F53;&#x524D;suspend&#x51FD;&#x6570;&#xFF08;&#x540C;&#x4E0A;&#xFF09;&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x6062;&#x590D;&#x5F53;&#x524D;continuation&#xFF0C;&#x76F4;&#x63A5;&#x5411;&#x4E0B;&#x6267;&#x884C;</p>
+</li>
+<li><p>&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;coroutine_handle&#xFF0C;&#x6307;&#x5B9A;&#x6062;&#x590D;&#x54EA;&#x4E2A;continuation&#xFF0C;&#x601D;&#x8003;&#x4E00;&#x4E2A;exchange&#x7684;&#x573A;&#x666F;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x534F;&#x7A0B;&#x5BF9;&#x5E94;&#x7684;coroutine_handle&#x4E3A;h1,&#x5176;&#x5148;&#x8FDB;&#x884C;take&#x53D1;&#x73B0;&#x6CA1;&#x6709;&#xFF0C;&#x5219;&#x628A;&#x81EA;&#x5DF1;&#x6302;&#x8D77;&#x628A;h1&#x627E;&#x5730;&#x65B9;&#x5B58;&#x4E00;&#x4E0B;&#xFF0C;&#x7136;&#x540E;&#x540E;&#x9762;&#x4E00;&#x4E2A;&#x534F;&#x7A0B;&#x6765;push&#x5143;&#x7D20;&#xFF0C;&#x5176;&#x5BF9;&#x5E94;&#x7684;coroutine_handle&#x4E3A;h2&#xFF0C;&#x6B64;&#x65F6;&#x5C31;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;h1&#x8BA9;&#x5176;&#x6062;&#x590D;</p>
+</li>
+</ul>
+<p>&#x5BF9;&#x4E8E;await_resume&#x5219;&#x662F;&#x4EE3;&#x8868;&#x4E86; &#x6062;&#x590D;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x7C7B;&#x4F3C;&#x4E8E;Future<t>.await&#x7684;&#x8FD4;&#x56DE;&#x503C;</t></p>
+<p>&#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x63CF;&#x8FF0;&#x4E86;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x7684;&#x6574;&#x4F53;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;</p>
+<h2 id="promise">Promise</h2>
+<p>&#x8FD9;&#x4E2A;&#x662F;Future&#x5DE5;&#x5382;&#xFF0C;&#x5148;&#x6BCF;&#x6B21;&#x6784;&#x5EFA;Future&#x518D;&#x76F4;&#x63A5;&#x6784;&#x5EFA;Promise</p>
+<p>Promise&#x5305;&#x542B;&#x4E86;&#x5F53;&#x524D;&#x534F;&#x7A0B;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E2D;&#x7684;&#x5404;&#x79CD;&#x884C;&#x4E3A;&#xFF0C;&#x5404;&#x79CD;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;co_await,co_return&#xFF09;&#x7684;&#x884C;&#x4E3A;</p>
+<p>&#x8FD9;&#x91CC;&#x7ED9;&#x51FA;&#x4E00;&#x4E2A;co_wait&#x5B9E;&#x73B0;&#x7684;&#x751F;&#x6210;&#x5668;&#x4EE3;&#x7801;</p>
+<p>&#x539F;&#x7406;&#x662F;promise_type&#x6765;&#x9A71;&#x52A8;&#x4E00;&#x6B21;&#x81EA;&#x589E; &#x7136;&#x540E;&#x628A;&#x7ED3;&#x679C;&#x901A;&#x8FC7;await_transform&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x6765;&#x4EA4;&#x7ED9;promise</p>
+<p>&#x6700;&#x540E;future&#x4ECE;&#x7ED1;&#x5B9A;&#x7684;promise&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x81EA;&#x589E;&#x540E;&#x7684;&#x6570;&#x636E;</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Generator {
+  <span class="hljs-comment">// promise&#x5C31;&#x662F;awaitable&#x7684;factory</span>
+  <span class="hljs-keyword">struct</span> promise_type {
+    <span class="hljs-keyword">int</span> next_value;
+
+    <span class="hljs-comment">// &#x5F00;&#x59CB;&#x6267;&#x884C;&#x65F6;&#x76F4;&#x63A5;&#x6302;&#x8D77;&#x7B49;&#x5F85;&#x5916;&#x90E8;&#x8C03;&#x7528; resume &#x83B7;&#x53D6;&#x4E0B;&#x4E00;&#x4E2A;&#x503C;</span>
+    <span class="hljs-comment">// &#x5FC5;&#x987B;&#x52A0;&#x7684;&#x51FD;&#x6570;</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">initial_suspend</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> {}; };
+    <span class="hljs-comment">/**
+      /// [coroutine.trivial.awaitables]
+  struct suspend_always
+  { &#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x6062;&#x590D;
+    constexpr bool await_ready() const noexcept { return false; }
+
+    &#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;void&#xFF0C;&#x8DF3;&#x51FA;&#x5F53;&#x524D;suspend&#x51FD;&#x6570;&#x3002;
+    &#x2461;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;bool&#xFF0C;&#x5982;&#x679C;&#x8FD4;&#x56DE;true&#xFF0C;&#x5219;&#x8DF3;&#x51FA;&#x5F53;&#x524D;suspend&#x51FD;&#x6570;&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x6062;&#x590D;&#x5F53;&#x524D;continuation&#x3002;
+    &#x2462;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;coroutine_handle&#xFF0C;&#x6307;&#x5B9A;&#x6062;&#x590D;&#x54EA;&#x4E2A;continuation&#x3002;
+    constexpr void await_suspend(coroutine_handle&lt;&gt;) const noexcept {}
+
+    &#x7C7B;&#x4F3C;&#x4E8E;Future&lt;T&gt;.await&#x7684;&#x8FD4;&#x56DE;&#x503C;
+  &#x4EE5;&#x4E0A;&#x8BF4;&#x660E;&#x4E2D;&#x5305;&#x542B;&#x6062;&#x590D;continuation&#x6700;&#x540E;&#x90FD;&#x4F1A;&#x8C03;&#x7528;&#x5230;&#x8FD9;&#x91CC;&#x6765;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x503C; constexpr void
+  await_resume() const noexcept {}
+  };
+    */</span>
+
+    <span class="hljs-comment">// &#x6267;&#x884C;&#x7ED3;&#x675F;&#x540E;&#x9700;&#x8981;&#x6302;&#x8D77; &#x6700;&#x540E;&#x6765;&#x9500;&#x6BC1;</span>
+    <span class="hljs-comment">// &#x5FC5;&#x987B;&#x52A0;&#x7684;&#x51FD;&#x6570;</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">final_suspend</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span> </span>{ <span class="hljs-keyword">return</span> {}; }
+
+    <span class="hljs-comment">// &#x4E3A;&#x4E86;&#x7B80;&#x5355;&#xFF0C;&#x6211;&#x4EEC;&#x8BA4;&#x4E3A;&#x5E8F;&#x5217;&#x751F;&#x6210;&#x5668;&#x5F53;&#x4E2D;&#x4E0D;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF0C;&#x8FD9;&#x91CC;&#x4E0D;&#x505A;&#x4EFB;&#x4F55;&#x5904;&#x7406;</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unhandled_exception</span><span class="hljs-params">()</span> </span>{}
+
+    <span class="hljs-comment">// Promise&#x5BF9;&#x8C61;&#x6784;&#x9020;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x7528;&#x6237;&#x63D0;&#x4F9B;&#x7684;Promise::get_return_object&#x63A5;&#x53E3;&#x6765;&#x6784;&#x9020;Future&#x5BF9;&#x8C61;&#xFF0C;</span>
+    <span class="hljs-comment">// &#x4E5F;&#x5C31;&#x662F;&#x534F;&#x7A0B;&#x7684;&#x8FD4;&#x56DE;&#x5BF9;&#x8C61;&#xFF0C;&#x8BE5;&#x5BF9;&#x8C61;&#x5C06;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x6302;&#x8D77;&#x540E;&#x8FD4;&#x56DE;&#x7ED9;&#x534F;&#x7A0B;&#x7684;&#x8C03;&#x7528;&#x8005;</span>
+    <span class="hljs-function">Generator <span class="hljs-title">get_return_object</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> Generator(
+          <span class="hljs-built_in">std</span>::coroutine_handle&lt;promise_type&gt;::from_promise(*<span class="hljs-keyword">this</span>));
+    }
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">await_transform</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+      <span class="hljs-keyword">this</span>-&gt;next_value = value;
+      <span class="hljs-keyword">return</span> {};
+    }
+    <span class="hljs-comment">// &#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">return_void</span><span class="hljs-params">()</span> </span>{}
+  };
+  <span class="hljs-built_in">std</span>::coroutine_handle&lt;promise_type&gt; handle;
+
+  Generator(<span class="hljs-built_in">std</span>::coroutine_handle&lt;promise_type&gt; h) { handle = h; };
+
+  Generator(Generator &amp;&amp;rhs) : handle(<span class="hljs-built_in">std</span>::exchange(rhs.handle, {})) {}
+  ~Generator() {
+    <span class="hljs-comment">// &#x9500;&#x6BC1;&#x534F;&#x7A0B;</span>
+    <span class="hljs-keyword">if</span> (handle) {
+      handle.destroy();
+    }
+  }
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">next</span><span class="hljs-params">()</span> </span>{
+    handle.resume();
+    <span class="hljs-keyword">return</span> handle.promise().next_value;
+  }
+};
+
+<span class="hljs-function">Generator <span class="hljs-title">sequence</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+    co_await i++;
+  }
+}
+</code></pre>
+<h3 id="initialsuspend">initial_suspend</h3>
+<p>&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5728;&#x534F;&#x7A0B;&#x4F53;&#x6267;&#x884C;&#x4E4B;&#x524D;&#x5C31;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x5176;&#x4E2D;&#x63D2;&#x5165;&#x8C03;&#x5EA6;&#x7684;&#x903B;&#x8F91;</p>
+<h3 id="finalsuspend">final_suspend</h3>
+<p>&#x5F53;&#x534F;&#x7A0B;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x6216;&#x8005;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x4E4B;&#x540E;&#x4F1A;&#x5148;&#x6E05;&#x7406;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#xFF0C;&#x63A5;&#x7740;&#x8C03;&#x7528; final_suspend &#x6765;&#x65B9;&#x4FBF;&#x5F00;&#x53D1;&#x8005;&#x81EA;&#x884C;&#x5904;&#x7406;&#x5176;&#x4ED6;&#x8D44;&#x6E90;&#x7684;&#x9500;&#x6BC1;&#x903B;&#x8F91;&#x3002;</p>
+<p>final_suspend &#x4E5F;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x7B49;&#x5F85;&#x4F53;&#x4F7F;&#x5F97;&#x5F53;&#x524D;&#x534F;&#x7A0B;&#x6302;&#x8D77;&#xFF0C;&#x4F46;&#x4E4B;&#x540E;&#x5F53;&#x524D;&#x534F;&#x7A0B;&#x5E94;&#x5F53;&#x901A;&#x8FC7; coroutine_handle &#x7684; destroy &#x51FD;&#x6570;&#x6765;&#x76F4;&#x63A5;&#x9500;&#x6BC1;&#xFF0C;&#x800C;&#x4E0D;&#x662F; resume&#x3002;</p>
+<h3 id="awaittransform">await_transform</h3>
+<p>&#x8FD9;&#x4E2A;&#x7528;&#x4E8E;&#x5F53;&#x524D;&#x534F;&#x7A0B;&#x4F53;&#x5185;&#x90E8;&#x51FA;&#x73B0;co_await&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x65F6;&#x5019;&#x7684;&#x8F6C;&#x6362;&#x51FD;&#x6570;</p>
+<pre><code class="lang-cpp"> <span class="hljs-comment">/**
+    &#x9996;&#x5148;&#x662F;&#x68C0;&#x67E5;&#x534F;&#x7A0B;&#x7528;&#x6237;&#x5B9A;&#x4E49;&#x7684;Promise&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5B58;&#x5728;&#x6210;&#x5458;&#x51FD;&#x6570;await_transform&#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#xFF0C;
+    &#x5219;&#x4EE4;Awaitable&#x5BF9;&#x8C61;&#x4E3A;await_transform(expr)&#xFF1B;
+    &#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x4EE4;Awaitable&#x5BF9;&#x8C61;&#x4E3A;expr&#xFF0C;&#x8FD9;&#x4E00;&#x6B65;&#x8BA9;&#x534F;&#x7A0B;&#x62E5;&#x6709;&#x63A7;&#x5236;co_await&#x8868;&#x8FBE;&#x5F0F;&#x884C;&#x4E3A;&#x7684;&#x80FD;&#x529B;&#xFF0C;
+    &#x3002;*/</span>
+    <span class="hljs-comment">/**
+    &#x9996;&#x5148;&#x662F;&#x68C0;&#x67E5;&#x534F;&#x7A0B;&#x7528;&#x6237;&#x5B9A;&#x4E49;&#x7684;Promise&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5B58;&#x5728;&#x6210;&#x5458;&#x51FD;&#x6570;await_transform&#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#xFF0C;
+    &#x5219;&#x4EE4;Awaitable&#x5BF9;&#x8C61;&#x4E3A;await_transform(expr)&#xFF1B;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5219;&#x4EE4;Awaitable&#x5BF9;&#x8C61;&#x4E3A;expr&#xFF0C;
+
+    */</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-function">suspend_always <span class="hljs-title">await_transform</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+      <span class="hljs-keyword">this</span>-&gt;next_value = value;
+      <span class="hljs-keyword">return</span> {};
+    }
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 概述">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="async_scope.html" class="navigation navigation-next " aria-label="Next page: async scope和通用回调转协程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C++20协程入门","level":"1.2","depth":1,"next":{"title":"async scope和通用回调转协程","level":"1.3","depth":1,"path":"cpp_coroutine/async_scope.md","ref":"cpp_coroutine/async_scope.md","articles":[]},"previous":{"title":"概述","level":"1.1","depth":1,"path":"Readme.md","ref":"Readme.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"cpp_coroutine/first.md","mtime":"2024-09-21T16:03:24.587Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-21T16:03:49.037Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
