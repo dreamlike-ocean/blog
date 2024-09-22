@@ -1,0 +1,698 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Panama教程-0-Varhandle介绍 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="afterUnsafe.html" />
+    
+    
+    <link rel="prev" href="panama-tutorial-0-A.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" >
+            
+                <span>
+            
+                    
+                    Loom
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.1.3" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" >
+            
+                <span>
+            
+                    
+                    Panama
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="panama-tutorial-0-A.html">
+            
+                <a href="panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.2.2" data-path="panama-tutorial-0-B.html">
+            
+                <a href="panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="afterUnsafe.html">
+            
+                <a href="afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.4" data-path="Panama浅析.html">
+            
+                <a href="Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" >
+            
+                <span>
+            
+                    
+                    随笔
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.3.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Panama教程-0-Varhandle介绍</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="panama&#x6559;&#x7A0B;-0-varhandle&#x4ECB;&#x7ECD;">Panama&#x6559;&#x7A0B;-0-Varhandle&#x4ECB;&#x7ECD;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x4ECB;&#x7ECD;Panama&#x7528;&#x6CD5;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;Varhandle&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;Panama&#x4E2D;&#x5BF9;&#x4E8E;&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x64CD;&#x4F5C;&#x4F1A;&#x5927;&#x91CF;&#x7528;&#x5230;&#x8FD9;&#x4E2A;&#x7C7B;</p>
+<p>Varhandle&#x7684;API&#x770B;&#x8D77;&#x6765;&#x50CF;&#x662F;Reflection API&#x4E2D;&#x7684;Field,&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x4E0A;&#x5B83;&#x4E0E;MethodHandle&#x4E00;&#x6837;&#x662F;&#x4E00;&#x4E2A;&#x66F4;&#x5E95;&#x5C42;&#x7684;API,&#x4ECE;&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x6765;&#x770B;&#x5B83;&#x66F4;&#x8D34;&#x8FD1;&#x4E8E;VM&#x7684;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#xFF0C;&#x4ECE;&#x4F7F;&#x7528;&#x6765;&#x770B;&#x5B83;&#x662F;Unsafe&#x7C7B;&#x4E2D;&#x7684;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x7684;&#x5B89;&#x5168;&#x5C01;&#x88C5;</p>
+<h2 id="&#x4F7F;&#x7528;&#x7B80;&#x4ECB;">&#x4F7F;&#x7528;&#x7B80;&#x4ECB;</h2>
+<h3 id="&#x4F7F;&#x7528;">&#x4F7F;&#x7528;</h3>
+<p>&#x4E0E;Methodhandle&#x4E00;&#x6837;&#xFF0C;Varhandle&#x4E5F;&#x662F;&#x5148;&#x4ECE;Lookup&#x4E2D;&#x83B7;&#x53D6;&#x7684;&#xFF0C;&#x4ECE;Lookup&#x4E5F;&#x770B;&#x5F97;&#x51FA;&#x6765;&#xFF0C;&#x5B83;&#x8DDF;Methohandle&#x7684;&#x6743;&#x9650;&#x63A7;&#x5236;&#x4E5F;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x2014;&#x2014;&#x53EA;&#x6821;&#x9A8C;Lookup&#x5728;find*&#x7684;&#x65F6;&#x5019;&#x662F;&#x5426;&#x5177;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x800C;&#x5728;&#x8C03;&#x7528;&#x65F6;&#x5219;&#x4E0D;&#x6821;&#x9A8C;&#x6743;&#x9650;&#x3002;</p>
+<pre><code class="lang-java">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String a = <span class="hljs-string">&quot;!@3&quot;</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> b;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>{
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        VarHandle staticVarHandle = lookup.findStaticVarHandle(Main.class, <span class="hljs-string">&quot;a&quot;</span>, String.class);
+        VarHandle varHandle = lookup.findVarHandle(Main.class, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-keyword">int</span>.class);
+
+    }
+</code></pre>
+<p>&#x597D;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x4E0B;&#x5177;&#x4F53;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</p>
+<p>&#x8FD9;&#x5C31;&#x662F;&#x6700;&#x7B80;&#x5355;&#x7684;&#x4E00;&#x79CD;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x2014;&#x2014;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x7B49;&#x4EF7;&#x4E8E;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x5728;&#x4EE3;&#x7801;&#x91CC;&#x9762;&#x4F7F;&#x7528;a.c&#x7684;&#x5F62;&#x5F0F;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>{
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        VarHandle staticVarHandle = lookup.findStaticVarHandle(Main.class, <span class="hljs-string">&quot;a&quot;</span>, String.class);
+        String s = (String) staticVarHandle.get();
+        <span class="hljs-comment">//&#x9759;&#x6001;varHandle &#x4E0D;&#x9700;&#x8981;&#x4F20;&#x5165;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;</span>
+        assertEquals(s, Main.a);
+
+        VarHandle varHandle = lookup.findVarHandle(Main.class, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-keyword">int</span>.class);
+        Main main = <span class="hljs-keyword">new</span> Main();
+        main.b = <span class="hljs-number">10</span>;
+        <span class="hljs-comment">//&#x5B9E;&#x4F8B;varHandle&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x5B9E;&#x4F8B;&#x5BF9;&#x8C61;</span>
+        assertEquals(<span class="hljs-number">10</span>, (<span class="hljs-keyword">int</span>) varHandle.get(main));
+    }
+</code></pre>
+<p>Varhandle&#x7684;&#x80FD;&#x529B;&#x4E0D;&#x81F4;&#x4E8E;&#x6B64;&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x6574;&#x5957;&#x539F;&#x6765;&#x53EA;&#x6709;Unsafe&#x624D;&#x80FD;&#x63D0;&#x4F9B;&#x7684;&#x5185;&#x5B58;&#x8BED;&#x4E49;(memory semantics)</p>
+<p>&#x4F8B;&#x5982; <code>VarHandle::setVolatile</code>&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;volatile&#x7684;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x800C;&#x4F60;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x58F0;&#x660E;&#x5BF9;&#x5E94;&#x7684;&#x53D8;&#x91CF;&#x4E3A;volatile&#xFF0C;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7684;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://docs.oracle.com/en/java/javase/22/docs/api/java.base/java/lang/invoke/VarHandle.html" target="_blank">&#x6587;&#x6863;</a>&#x4EE5;&#x53CA;<a href="../jmm.html">&#x672C;blog&#x7684;&#x8FD9;&#x7BC7;&#x4ECB;&#x7ECD;&#x5185;&#x5B58;&#x987A;&#x5E8F;&#x7684;&#x6587;&#x7AE0;</a></p>
+<p>&#x6240;&#x4EE5;&#x4F60;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x4F18;&#x5316;&#x4E0B;DCL&#x7684;&#x4EE3;&#x7801;</p>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TryDCLStableValue</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">StableValue</span>&lt;<span class="hljs-title">T</span>&gt; </span>{
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> VarHandle HANDLE;
+
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> Supplier&lt;T&gt; factory;
+
+        <span class="hljs-keyword">private</span> T cache;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TryDCLStableValue</span><span class="hljs-params">(Supplier&lt;T&gt; factory)</span> </span>{
+            <span class="hljs-keyword">this</span>.factory = factory;
+        }
+
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>{
+            T res = (T) HANDLE.get(<span class="hljs-keyword">this</span>);
+            <span class="hljs-keyword">if</span> (res != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">return</span> res;
+            }
+
+            <span class="hljs-keyword">synchronized</span> (<span class="hljs-keyword">this</span>) {
+                res = (T) HANDLE.getVolatile(<span class="hljs-keyword">this</span>);
+                <span class="hljs-keyword">if</span> (res != <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-keyword">return</span> res;
+                }
+                res = factory.get();
+                HANDLE.setVolatile(<span class="hljs-keyword">this</span>, res);
+                <span class="hljs-keyword">return</span> res;
+            }
+        }
+
+        <span class="hljs-keyword">static</span> {
+            <span class="hljs-keyword">try</span> {
+                HANDLE = MethodHandles.lookup().findVarHandle(TryDCLStableValue.class, <span class="hljs-string">&quot;cache&quot;</span>, Object.class);
+            } <span class="hljs-keyword">catch</span> (NoSuchFieldException | IllegalAccessException e) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+            }
+        }
+    }
+</code></pre>
+<h3 id="&#x770B;&#x770B;&#x5B57;&#x8282;&#x7801;">&#x770B;&#x770B;&#x5B57;&#x8282;&#x7801;</h3>
+<p>&#x5728;&#x770B;&#x5B57;&#x8282;&#x7801;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x8FD8;&#x662F;&#x5148;&#x770B;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E00;&#x4E2A;PolymorphicSignature&#x6CE8;&#x89E3;&#x4E5F;&#x8BC1;&#x660E;&#x4E86; &#x5B83;&#x5176;&#x5B9E;&#x8DDF;Methodhandle&#x4E00;&#x6837;&#x5176;&#x5B9E;&#x662F;&#x5177;&#x6709;&#x4E00;&#x7EC4;&#x7B7E;&#x540D;&#x591A;&#x6001;&#x7684;api&#x7684;</p>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">native</span>
+    <span class="hljs-meta">@MethodHandle</span>.PolymorphicSignature
+    <span class="hljs-meta">@IntrinsicCandidate</span>
+    <span class="hljs-function">Object <span class="hljs-title">get</span><span class="hljs-params">(Object... args)</span></span>;
+</code></pre>
+<p>&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5F53;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7684;&#x65F6;&#x5019; &#x4F1A;&#x6839;&#x636E;&#x5177;&#x4F53;&#x7684;&#x8C03;&#x7528;&#x70B9;&#x7C7B;&#x578B;&#x751F;&#x6210;&#x5BF9;&#x5E94;&#x7684;invokevirtual&#x5B57;&#x8282;&#x7801;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#xFF0C;&#x540C;&#x65F6;VM&#x4F1A;&#x6839;&#x636E;&#x5BF9;&#x5E94;&#x7684;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x9047;&#x5230;&#x7684;&#x65F6;&#x5019;&#x8FDB;&#x884C;&#x94FE;&#x63A5;&#x4E00;&#x4E9B;<strong>&#x4E2D;&#x95F4;&#x5C42;</strong>&#x548C;<strong>&#x9002;&#x914D;&#x5668;</strong></p>
+<p>&#x6CE8;&#x610F;&#x770B;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7684;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x5C06;&#x4E00;&#x4E2A;&#x672C;&#x8BE5;&#x662F;int&#x7684;&#x8FD4;&#x56DE;&#x5C06;&#x5176;&#x8F6C;&#x4E3A;&#x4E86;Integer,&#x8FD9;&#x91CC;&#x4E0D;&#x662F;&#x81EA;&#x52A8;&#x88C5;&#x62C6;&#x7BB1;&#x573A;&#x666F;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x88C5;&#x7BB1;&#x662F;&#x7531;varhandle&#x7684;&#x8FDE;&#x63A5;&#x673A;&#x5236;&#x505A;&#x7684;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>{
+        <span class="hljs-function">record <span class="hljs-title">IntHolder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span> </span>{
+        }
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+        VarHandle handle = lookup.findVarHandle(IntHolder.class, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-keyword">int</span>.class);
+
+        IntHolder intHolder = <span class="hljs-keyword">new</span> IntHolder(<span class="hljs-number">1</span>);
+<span class="hljs-comment">//         INVOKEVIRTUAL java/lang/invoke/VarHandle.get (Lio/github/dreamlike/Main$1IntHolder;)I</span>
+        <span class="hljs-keyword">int</span> res = (<span class="hljs-keyword">int</span>) handle.get(intHolder);
+<span class="hljs-comment">//        INVOKEVIRTUAL java/lang/invoke/VarHandle.get (Lio/github/dreamlike/Main$1IntHolder;)Ljava/lang/Integer;</span>
+        Integer resBoxed = (Integer) handle.get(intHolder);
+    }
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x5728;<code>Integer::valueOf</code>&#x6253;&#x4E2A;&#x65AD;&#x70B9;&#xFF0C;&#x540C;&#x65F6;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;JVM&#x53C2;&#x6570;<code>-XX:+ShowHiddenFrames</code>&#x770B;&#x4E00;&#x4E0B;&#x5177;&#x4F53;&#x53D1;&#x751F;&#x4E86;&#x4EC0;&#x4E48;</p>
+<p>&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x63D2;&#x5165;&#x4E86;&#x4E00;&#x6BB5;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4EE3;&#x7801;&#xFF0C;&#x867D;&#x7136;&#x5F88;&#x667A;&#x80FD; &#x4F46;&#x662F;&#x548C;&#x5728;Methodhandle&#x7BC7;&#x8BB2;&#x5230;&#x7684;&#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x786E;&#x5B9A;&#x7C7B;&#x578B;&#x6700;&#x597D;&#x4E0D;&#x8981;&#x6A21;&#x7CCA;&#x8C03;&#x7528; &#x907F;&#x514D;&#x65E0;&#x610F;&#x4E2D;&#x5F15;&#x5165;&#x5F00;&#x9500;</p>
+<p><img src="assets/image-20240922195456683.png" alt="image-20240922195456683"></p>
+<h3 id="&#x7A0D;&#x5FAE;&#x770B;&#x4E00;&#x773C;&#x5B9E;&#x73B0;">&#x7A0D;&#x5FAE;&#x770B;&#x4E00;&#x773C;&#x5B9E;&#x73B0;</h3>
+<p>&#x4EE5;&#x4E0A;&#x4E00;&#x8282;&#x7684;findVarHandle&#x4E3A;&#x4F8B;&#x770B;&#x4E00;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;JDK&#x4E2D;&#x4E3A;&#x5176;&#x7279;&#x5316;&#x4E86;&#x4E00;&#x4E9B;Varhandle&#x7684;&#x5B50;&#x7C7B;</p>
+<p><img src="assets/image-20240922200028252.png" alt="image-20240922200028252"></p>
+<p>&#x6211;&#x4EEC;&#x4ECE;&#x4E2D;&#x770B;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x5F88;&#x773C;&#x719F;&#x7684;&#x4E1C;&#x897F;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">long</span> foffset = MethodHandleNatives.objectFieldOffset(f);
+</code></pre>
+<p>&#x5176;&#x5B9E;&#x6211;&#x4EEC;&#x94BB;&#x5230;JVM&#x6E90;&#x7801;&#x91CC;&#x9762;&#x4E00;&#x770B; &#x5B83;&#x672C;&#x8D28;&#x4E0A;&#x8DDF;Unsafe&#x4E2D;&#x7684;&#x83B7;&#x53D6;base&#x548C;&#x504F;&#x79FB;&#x91CF;&#x662F;&#x540C;&#x5B97;&#x540C;&#x6E90;&#x7684;.</p>
+<p>&#x6700;&#x540E;&#x4F1A;&#x8D70;&#x5230;<code>java.lang.invke.VarHandleInts$FieldInstanceReadOnly</code> &#x8FD9;&#x4E2A;varhandle&#x5B50;&#x7C7B;&#x7684;get&#x4E2D;&#xFF0C;&#x4F60;&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x5176;&#x5B9E;&#x6700;&#x540E;&#x8FD8;&#x662F;&#x4F1A;&#x8C03;&#x7528;&#x5230;Unsafe&#x4E0A;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x6211;&#x4EEC;&#x8BF4;&#x8FD9;&#x662F;Unsafe&#x7C7B;&#x4E2D;&#x7684;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x7684;&#x5B89;&#x5168;&#x5C01;&#x88C5;</p>
+<pre><code class="lang-java">        <span class="hljs-meta">@ForceInline</span>
+        <span class="hljs-function"><span class="hljs-keyword">static</span> Object <span class="hljs-title">get</span><span class="hljs-params">(VarHandle ob)</span> </span>{
+            FieldStaticReadOnly handle = (FieldStaticReadOnly) ob.target();
+            <span class="hljs-keyword">return</span> UNSAFE.getReference(handle.base,
+                                 handle.fieldOffset);
+        }
+</code></pre>
+<p>&#x5176;&#x5B9E;&#x5982;&#x679C;&#x4F60;&#x628A;&#x65AD;&#x70B9;&#x6253;&#x5728;get&#x4E2D;&#x770B;&#x4E00;&#x4E0B;&#x6808;&#x8FD8;&#x4F1A;&#x53D1;&#x73B0;&#x66F4;&#x597D;&#x73A9;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;VM&#x5728;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x7684;&#x94FE;&#x63A5;&#x529F;&#x80FD;&#xFF0C;&#x6839;&#x636E;&#x6211;&#x4EEC;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x7B7E;&#x540D;&#x591A;&#x6001;&#x6765;&#x751F;&#x6210;&#x5230;&#x771F;&#x5B9E;Varhandle&#x8C03;&#x7528;&#x7684;&#x6865;&#x63A5;</p>
+<p><img src="assets/image-20240922200707408.png" alt="image-20240922200707408"></p>
+<h3 id="&#x6027;&#x80FD;&#x95EE;&#x9898;">&#x6027;&#x80FD;&#x95EE;&#x9898;</h3>
+<p>Varhandle&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x5957;VM&#x7684;&#x94FE;&#x63A5;&#x673A;&#x5236;+Unsafe&#x5C01;&#x88C5;&#xFF0C;&#x76F8;&#x6BD4;&#x4E8E;Unsafe&#x5176;&#x5B9E;&#x662F;&#x66F4;&#x52A0;Safe&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x4EE3;&#x4EF7;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<p>&#x5B83;&#x548C;Methodhandle&#x4E00;&#x6837;&#xFF0C;&#x5728;&#x65E0;&#x6CD5;&#x5185;&#x8054;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x9047;&#x5230;<code>Performance cliff</code>&#xFF0C;&#x6027;&#x80FD;&#x6781;&#x5DEE;&#xFF0C;&#x4E3A;&#x4E86;&#x8FBE;&#x5230;&#x6700;&#x597D;&#x7684;&#x6027;&#x80FD;&#x4F60;&#x9700;&#x8981;&#x505A;&#x4EE5;&#x4E0B;&#x7684;&#x64CD;&#x4F5C;</p>
+<ol>
+<li>&#x786E;&#x4FDD;&#x5B83;&#x662F;const&#x7684;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;static final,&#x6216;&#x8005;&#x6EE1;&#x8DB3;<a href="https://shipilev.net/jvm/anatomy-quarks/17-trust-nonstatic-final-fields/" target="_blank">trusted_final</a>&#xFF08;&#x53EF;&#x4EE5;&#x770B;&#x770B;jdk&#x4E2D;&#x7684;ciField::trust_final_non_static_fields&#x7684;&#x4EE3;&#x7801;&#xFF09;</li>
+<li>&#x8C03;&#x7528;&#x70B9;&#x7C7B;&#x578B;&#x8981;&#x7CBE;&#x51C6;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>VarHandle::withInvokeExactBehavior</code> &#x83B7;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x65B0;&#x7684;Varhandle&#x4ED6;&#x4F1A;&#x5F3A;&#x5236;&#x5728;&#x8C03;&#x7528;&#x65F6;&#x4F7F;&#x7528;&#x6700;&#x7CBE;&#x51C6;&#x7C7B;&#x578B;&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x629B;&#x51FA;&#x9519;&#x8BEF;</li>
+</ol>
+<h3 id="methodhandle&#x517C;&#x5BB9;&#x6027;">Methodhandle&#x517C;&#x5BB9;&#x6027;</h3>
+<p>Varhandle&#x4E0E;Methodhandle&#x672C;&#x6765;&#x5C31;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x7EC4;&#x529F;&#x80FD;&#x5E95;&#x5EA7;&#xFF0C;&#x6240;&#x4EE5;&#x4F60;&#x901A;&#x8FC7;<code>Varhandle::toMethodHandle</code>&#x518D;&#x6307;&#x5B9A;&#x4E0B;AccessMode&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x5730;&#x5C06;Varhandle&#x8F6C;&#x6362;&#x4E3A;Methodhandle,&#x7136;&#x540E;&#x4F7F;&#x7528;Methodhandle&#x5404;&#x79CD;&#x5947;&#x6280;&#x6DEB;&#x5DE7;</p>
+<pre><code class="lang-java"><span class="hljs-function">record <span class="hljs-title">IntHolder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span> </span>{}
+VarHandle handle = lookup.findVarHandle(IntHolder.class, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-keyword">int</span>.class);
+MethodHandle methodHandle = handle.toMethodHandle(VarHandle.AccessMode.GET);
+<span class="hljs-comment">//&#x8FD9;&#x6837;&#x5F97;&#x5230;&#x7684;MH&#x662F;&#x4E00;&#x4E2A;Direct&#x4E14;type&#x4E3A; (IntHolder)int</span>
+</code></pre>
+<p>&#x4F46;&#x662F;&#x6CE8;&#x610F;&#x8FD9;&#x6837;&#x5F97;&#x5230;&#x5230;Methodhandle&#x548C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;<code>Lookup::findGetter</code>&#x5F97;&#x5230;&#x7684;Methodhanle&#x4E0D;&#x592A;&#x4E00;&#x81F4;</p>
+<p>toMethodHandle&#x5F97;&#x5230;&#x7684;mh&#x662F;&#x4E00;&#x7EC4;&#x65B9;&#x6CD5;&#x7684;&#x7EC4;&#x5408; &#x7C7B;&#x4F3C;&#x4E8E;invokestatic,invokebasic&#x4E4B;&#x7C7B;&#x7684;&#x5B57;&#x8282;&#x7801;&#x7EC4;&#x5408;</p>
+<p>findGetter&#x5219;&#x662F;&#x4E00;&#x5957;&#x5B57;&#x6BB5;&#x83B7;&#x53D6;&#x7EC4;&#x7684;&#x7EC4;&#x5408;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;get_field&#x5B57;&#x8282;&#x7801;&#x7684;&#x7EC4;&#x5408;</p>
+<table>
+<thead>
+<tr>
+<th>&#x7279;&#x6027;\MH&#x6765;&#x6E90;</th>
+<th>toMethodHandle</th>
+<th>findGetter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>isCrackable</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr>
+<td>lambdaform</td>
+<td>invoke=Lambda(a0:L/SpeciesData[LL =&gt; BoundMethodHandle$Species_LL],a1:L)=&gt;{     t2:L=BoundMethodHandle$Species_LL.argL1(a0:L);     t3:L=BoundMethodHandle$Species_LL.argL0(a0:L);     t4:I=MethodHandle.invokeBasic(t3:L,t2:L,a1:L);t4:I}</td>
+<td>getInt=Lambda(a0:L,a1:L)=&gt;{     t2:J=DirectMethodHandle.fieldOffset(a0:L);     t3:L=DirectMethodHandle.checkBase(a1:L);     t4:L=MethodHandleStatics.UNSAFE();     t5:I=Unsafe.getInt(t4:L,t3:L,t2:J);t5:I}</td>
+</tr>
+<tr>
+<td>&#x5177;&#x4F53;&#x7C7B;&#x578B;</td>
+<td>BoundMethodHandle$Species_LL</td>
+<td>java.lang.invoke.DirectMethodHandle$Accessor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="&#x53C2;&#x8003;&#x8D44;&#x6599;">&#x53C2;&#x8003;&#x8D44;&#x6599;</h2>
+<p><a href="https://stackoverflow.com/questions/65276625/what-is-the-most-efficient-way-to-reinterpret-underlying-bit-patterns-and-write" target="_blank">https://stackoverflow.com/questions/65276625/what-is-the-most-efficient-way-to-reinterpret-underlying-bit-patterns-and-write</a></p>
+<p><a href="https://cr.openjdk.org/~vlivanov/talks/2015-Indy_Deep_Dive.pdf" target="_blank">https://cr.openjdk.org/~vlivanov/talks/2015-Indy_Deep_Dive.pdf</a></p>
+<p><a href="https://openjdk.org/jeps/193" target="_blank">https://openjdk.org/jeps/193</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="panama-tutorial-0-A.html" class="navigation navigation-prev " aria-label="Previous page: Panama教程-0-MethodHandle介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="afterUnsafe.html" class="navigation navigation-next " aria-label="Next page: 失去了Unsafe内存操作之后该何去何从">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Panama教程-0-Varhandle介绍","level":"1.6.2.2","depth":3,"next":{"title":"失去了Unsafe内存操作之后该何去何从","level":"1.6.2.3","depth":3,"path":"panama/afterUnsafe.md","ref":"panama/afterUnsafe.md","articles":[]},"previous":{"title":"Panama教程-0-MethodHandle介绍","level":"1.6.2.1","depth":3,"path":"panama/panama-tutorial-0-A.md","ref":"panama/panama-tutorial-0-A.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"panama/panama-tutorial-0-B.md","mtime":"2024-09-22T12:46:08.484Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-22T12:46:31.951Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
