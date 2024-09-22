@@ -23,7 +23,7 @@
 
 * [Spring的Loom化改造](loom/Spring的loom化改造.md)
 * [为什么jvm需要有栈协程](loom/为什么jvm需要有栈协程.md)
-* [VitrualThread对于synchronized适配](loom/synchronized适配.md) 
+* [VitrualThread对于synchronized适配](loom/synchronized适配.md)
 
 ### Panama
 
