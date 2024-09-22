@@ -28,6 +28,7 @@
 ## 随笔
 
 * [Java Memory Order和Varhandle](jmm.md)
+* [基于JVM基建优化的单例模式](lazySingleton.md)
 
 ## 翻译
 
