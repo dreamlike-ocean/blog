@@ -1,0 +1,733 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>基于JVM基建优化的单例模式 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html" />
+    
+    
+    <link rel="prev" href="jmm.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="io_uring/io_uring.html">
+            
+                <a href="io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="io_uring/io_uringAndMemory.html">
+            
+                <a href="io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="reactive_lock.html">
+            
+                <a href="reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="loom/Spring的loom化改造.html">
+            
+                <a href="loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="loom/为什么jvm需要有栈协程.html">
+            
+                <a href="loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="loom/synchronized适配.html">
+            
+                <a href="loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="panama/panama-tutorial-0-A.html">
+            
+                <a href="panama/panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="panama/panama-tutorial-0-B.html">
+            
+                <a href="panama/panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="panama/afterUnsafe.html">
+            
+                <a href="panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="panama/Panama浅析.html">
+            
+                <a href="panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="jmm.html">
+            
+                <a href="jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.2" data-path="lazySingleton.html">
+            
+                <a href="lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="translate/loom_fiber_continuation.html">
+            
+                <a href="translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="translate/state_of_loom_part1.html">
+            
+                <a href="translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="translate/state_of_loom_part2.html">
+            
+                <a href="translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="loom/loom的实现.html">
+            
+                <a href="loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="cpp_coroutine/first.html">
+            
+                <a href="cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="cpp_coroutine/async_scope.html">
+            
+                <a href="cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >基于JVM基建优化的单例模式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x57FA;&#x4E8E;jvm&#x4F18;&#x5316;&#x7684;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;">&#x57FA;&#x4E8E;JVM&#x4F18;&#x5316;&#x7684;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;</h2>
+<h3 id="&#x4F20;&#x7EDF;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;">&#x4F20;&#x7EDF;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;</h3>
+<p>&#x6211;&#x4EEC;&#x5F88;&#x591A;&#x65F6;&#x5019;&#x671F;&#x671B;&#x4F7F;&#x7528;&#x5168;&#x5C40;&#x7684;&#x60F0;&#x6027;&#x5355;&#x4F8B;&#x6765;&#x5B9E;&#x73B0;&#x5404;&#x79CD;&#x9700;&#x6C42;&#xFF0C;&#x5176;&#x4E2D;&#x51FA;&#x73B0;&#x4E86;&#x7ECF;&#x5178;&#x7684;&#x57FA;&#x4E8E;DCL&#x548C;&#x7C7B;&#x52A0;&#x8F7D;&#x673A;&#x5236;&#x4E24;&#x79CD;&#x6BD4;&#x8F83;&#x5E38;&#x89C1;&#x7684;&#x6A21;&#x677F;&#x4EE3;&#x7801;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x7ECF;&#x5178;&#x7684;DCL&#x662F;&#x8FD9;&#x6837;&#x7684;</p>
+<pre><code class="lang-SQL">public static class DCLStableValue&lt;T&gt; implements StableValue&lt;T&gt; {
+    public final Supplier&lt;T&gt; factory;
+
+    private volatile T cache;
+
+    public DCLStableValue(Supplier&lt;T&gt; factory) {
+        this.factory = factory;
+    }
+
+
+    @Override
+    public T get() {
+        if (cache != null) {
+            return cache;
+        }
+
+        synchronized (this) {
+            if (cache != null) {
+                return cache;
+            }
+            return cache = factory.get();
+        }
+    }
+}
+</code></pre>
+<p>&#x800C;&#x5BF9;&#x4E8E;&#x7C7B;&#x52A0;&#x8F7D;&#x673A;&#x5236;&#x5B9E;&#x73B0;&#x5168;&#x5C40;&#x7684;&#x60F0;&#x6027;&#x5355;&#x4F8B;&#x5219;&#x662F;</p>
+<pre><code class="lang-SQL">private static final StableValue&lt;String&gt; classLoad = new StableValue&lt;String&gt;() {
+
+    private static class InternalClass {
+        private static final String lazyValue;
+
+        static {
+            LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(1));
+            lazyValue = UUID.randomUUID().toString();
+        }
+    }
+
+    @Override
+    public String get() {
+        return InternalClass.lazyValue;
+    }
+};
+</code></pre>
+<p>&#x5176;&#x4E2D;DCL&#x6D89;&#x53CA;&#x5230;&#x5927;&#x91CF;&#x7684;volatile&#x8BFB;&#xFF0C;&#x663E;&#x7136;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x6709;&#x6027;&#x80FD;&#x635F;&#x5931;&#xFF0C;&#x800C;&#x7C7B;&#x52A0;&#x8F7D;&#x673A;&#x5236;&#x867D;&#x7136;&#x6700;&#x7EC8;&#x76F8;&#x5F53;&#x4E8E;&#x76F4;&#x63A5;plain&#x8BBF;&#x95EE;&#x53D8;&#x91CF;&#xFF08;&#x7531;&#x7C7B;&#x52A0;&#x8F7D;&#x5668;&#x673A;&#x5236;&#x4FDD;&#x8BC1;&#x53EF;&#x89C1;&#x6027;&#xFF09;&#x4F46;&#x662F;&#x4E0D;&#x591F;&#x7075;&#x6D3B;&#xFF0C;&#x65E0;&#x6CD5;&#x50CF;DCL&#x4E00;&#x6837;&#x81EA;&#x7531;&#x9009;&#x62E9; <code>factory</code> &#x3002;</p>
+<p>&#x867D;&#x7136;&#x6211;&#x4EEC;&#x7EB8;&#x9762;&#x5206;&#x6790;&#x4E86;&#x8FD9;&#x4E9B;&#x4F18;&#x52A3;&#xFF0C;&#x4F46;&#x662F;&#x8FD8;&#x5E94;&#x8BE5;&#x901A;&#x8FC7;&#x6570;&#x636E;&#x8BF4;&#x8BDD;&#xFF0C;&#x8DD1;&#x4E2A;&#x5206;&#x770B;&#x4E0B;&#x3002;</p>
+<pre><code class="lang-SQL">Benchmark                                     Mode  Cnt        Score        Error  Units
+StableValueBenchmark.testClassInit           thrpt   10  1522698.845 &#xB1; 236056.147  ops/s
+StableValueBenchmark.testDCL                 thrpt   10   256534.744 &#xB1;  25053.302  ops/s
+StableValueBenchmark.testPlain               thrpt   10  1531563.936 &#xB1; 209274.818  ops/s
+</code></pre>
+<p>&#x5F88;&#x660E;&#x663E;testClassInit&#x548C;&#x76F4;&#x63A5;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x5E38;&#x91CF;&#x7684;&#x6027;&#x80FD;&#x662F;&#x5DEE;&#x4E0D;&#x591A;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x6709;&#x6CA1;&#x6709;&#x7EFC;&#x5408;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;&#x521D;&#x59CB;&#x5316;&#x903B;&#x8F91;&#x800C;&#x4E14;&#x6027;&#x80FD;&#x4E5F;&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x65B9;&#x6848;&#x5462;&#xFF1F;</p>
+<h3 id="invokedynamic">invokedynamic</h3>
+<p>&#x5F88;&#x591A;&#x5199;Java&#x7684;&#x540C;&#x5B66;&#x542C;&#x8BF4;&#x8FC7;invokedynamic&#x8FD9;&#x4E2A;&#x5B57;&#x8282;&#x7801;&#xFF08;&#x4E0B;&#x79F0;indy&#xFF09;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x73B0;&#x5728;&#x7684;Java lambda&#xFF0C;&#x5B57;&#x7B26;&#x4E32;&#x62FC;&#x63A5;&#x751A;&#x81F3;&#x662F;&#x6A21;&#x5F0F;&#x5339;&#x914D;&#x90FD;&#x662F;&#x57FA;&#x4E8E;&#x8FD9;&#x4E1C;&#x897F;&#x505A;&#x7684;&#xFF0C;&#x5B83;&#x7684;&#x6838;&#x5FC3;&#x7279;&#x70B9;&#x5728;&#x4E8E;&#x53EF;&#x4EE5;&#x652F;&#x6301;&#x60F0;&#x6027;&#x7ED1;&#x5B9A;&#x8C03;&#x7528;&#x70B9;&#x800C;&#x4E14;&#x662F;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#x7684;&#xFF0C;&#x53EA;&#x6709;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x5230;&#x5BF9;&#x5E94;&#x7684;indy&#x7684;&#x5B57;&#x8282;&#x7801;&#x65F6;&#x518D;&#x53BB;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x65B9;&#x6CD5;&#xFF08;&#x4E0B;&#x79F0;bootstrapMethod&#xFF0C;BSM&#xFF09;&#x6765;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;CallSite&#x4F5C;&#x4E3A;&#x771F;&#x5B9E;&#x94FE;&#x63A5;&#x5230;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;BSM&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x662F;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x7ED9;&#x4E86;&#x6211;&#x4EEC;&#x5F88;&#x5927;&#x7684;&#x64CD;&#x4F5C;&#x7A7A;&#x95F4;&#xFF0C;&#x4E0B;&#x65B9;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x7B80;&#x5355;&#x7684;BSM&#x5B9E;&#x73B0;&#x3002;</p>
+<pre><code class="lang-SQL">    public static ConstantCallSite indyFactory(MethodHandles.Lookup lookup, String name, MethodType type, Object... args) throws NoSuchFieldException, IllegalAccessException {
+        Class&lt;?&gt; aClass = lookup.lookupClass();
+        Supplier supplier = MethodHandles.classData(lookup, DEFAULT_NAME, Supplier.class)
+        return new ConstantCallSite(MethodHandles.constant(type.returnType(), supplier.get()));
+    }
+</code></pre>
+<p>MethodHandles.<em>constant</em> &#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x8C03;&#x7528;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5E38;&#x91CF;&#x503C;&#x7684;Methodhandle&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x592A;&#x4E86;&#x89E3;&#x4EC0;&#x4E48;&#x662F;Methodhandle&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x53EF;&#x4EE5;&#x7B80;&#x5355;&#x7684;&#x628A;&#x5B83;&#x7406;&#x89E3;&#x6210;Java&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x5B83;&#x672C;&#x8D28;&#x4E0A;&#x5C31;&#x662F;&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;Java&#x65B9;&#x6CD5;&#x662F;&#x600E;&#x4E48;&#x88AB;JVM&#x94FE;&#x63A5;&#x5E76;&#x4E14;&#x8C03;&#x7528;&#x7684;&#x3002;</p>
+<blockquote>
+<p>A ConstantCallSite is a CallSite whose target is permanent, and can never be changed. An invokedynamic instruction linked to a ConstantCallSite is permanently bound to the call site&apos;s target.</p>
+</blockquote>
+<p>ConstantCallSite&#x8FD9;&#x4E2A;&#x4F5C;&#x4E3A;CallSite&#x7684;&#x4E00;&#x4E2A;&#x5B50;&#x7C7B;&#x6709;&#x4E2A;&#x597D;&#x5904;&#x5728;&#x4E8E;&#x53EF;&#x4EE5;&#x5728;&#x8C03;&#x7528;&#x70B9;&#x88AB;JIT&#x76F4;&#x63A5;&#x5185;&#x8054;&#x5C55;&#x5F00;&#xFF0C;&#x76F4;&#x63A5;&#x539F;&#x5730;&#x8BBF;&#x95EE;&#x3002;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x5B57;&#x8282;&#x7801;&#x5DE5;&#x5177;&#xFF08;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;&#x7684;&#x662F;Java21&#x5F15;&#x5165;&#x7684;ClassFile API&#xFF09;&#xFF0C;&#x52A8;&#x6001;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5728;&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x91CC;&#x9762;&#x586B;&#x5165;indy&#x5B57;&#x8282;&#x7801;&#xFF0C;&#x4F7F;&#x5176;&#x5F15;&#x5BFC;&#x5230;&#x6211;&#x4EEC;&#x8FD9;&#x4E2A;BSM&#x4E0A;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x5176;&#x5B9E;&#x8FD9;&#x91CC;&#x8FD8;&#x6709;&#x4E2A;&#x65B0;&#x4E1C;&#x897F;<code>MethodHandles::classData</code>&#x8FD9;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;&#x8FD9;&#x4E2A;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x5E38;&#x91CF;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x8DDF;java.lang.class&#x76F8;&#x7ED1;&#x5B9A;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x901A;&#x8FC7;Lookup&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F20;&#x5165;&#x8FD9;&#x4E2A;&#x4E1C;&#x897F;&#xFF0C;&#x9690;&#x5F0F;&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x8FD0;&#x884C;&#x65F6;&#x5F15;&#x7528;</p>
+<p>&#x518D;&#x901A;&#x8FC7;<code>MethodHandles::classData</code>&#x83B7;&#x53D6;&#x51FA;&#x6765;&#xFF0C;&#x5177;&#x4F53;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x8FD9;&#x4E2A;<a href="https://bugs.openjdk.org/browse/JDK-8256214?attachmentViewMode=list" target="_blank">https://bugs.openjdk.org/browse/JDK-8256214?attachmentViewMode=list</a></p>
+<p><img src="assets/image-20240922232900906.png" alt="image-20240922232900906"></p>
+<p>&#x90A3;&#x4E48;&#x8FD9;&#x6BB5;&#x5B57;&#x8282;&#x7801;&#x8BE5;&#x5982;&#x4F55;&#x5199;&#x5462;&#xFF1F;</p>
+<pre><code class="lang-java">        <span class="hljs-keyword">byte</span>[] classByteCode = classFile.build(ClassDesc.of(className), cb -&gt; {
+            cb.withInterfaceSymbols(ClassDesc.of(StableValue.class.getName()));
+            cb.withMethodBody(ConstantDescs.INIT_NAME, ConstantDescs.MTD_void, AccessFlags.ofMethod(AccessFlag.PUBLIC).flagsMask(), it -&gt; {
+                it.aload(<span class="hljs-number">0</span>);
+                it.invokespecial(CD_Object, INIT_NAME, MTD_void);
+                it.return_();
+            });
+            cb.withMethodBody(
+                    <span class="hljs-string">&quot;get&quot;</span>,
+                    MethodTypeDesc.of(ClassDesc.of(Object.class.getName())),
+                    AccessFlags.ofMethod(AccessFlag.PUBLIC, AccessFlag.SYNTHETIC).flagsMask(),
+                    it -&gt; {
+                        <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x5C31;&#x662F;invokedynamic&#x5B57;&#x8282;&#x7801;</span>
+                        it.invokeDynamicInstruction(
+                                DynamicCallSiteDesc.of(
+                                        MethodHandleDesc.ofMethod(
+                                                DirectMethodHandleDesc.Kind.STATIC, StableValueGenerator.class.describeConstable().get(), <span class="hljs-string">&quot;indyFactory&quot;</span>,
+                                                INDY_MTD
+                                        ),
+                                        <span class="hljs-string">&quot;get&quot;</span>,
+                                        MethodType.methodType(Object.class).describeConstable().get()
+                                )
+                        );
+                        it.returnInstruction(TypeKind.from(Object.class));
+                    }
+            );
+        });
+        MethodHandles.Lookup lookup = MethodHandles.lookup();
+<span class="hljs-comment">//&#x5728;&#x8FD9;&#x91CC;&#x5B9A;&#x4E49;&#x9690;&#x85CF;&#x7C7B;&#x548C;&#x521D;&#x59CB;&#x5316;classdata</span>
+        Class&lt;?&gt; aClass = lookup.defineHiddenClassWithClassData(classByteCode, factory, <span class="hljs-keyword">false</span>).lookupClass()
+
+        <span class="hljs-keyword">return</span> ((StableValue) aClass.newInstance());
+</code></pre>
+<p>&#x5BF9;&#x5E94;&#x4EA7;&#x7269;&#x53CD;&#x7F16;&#x8BD1;&#x5C31;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-Java"><span class="hljs-comment">// class version 66.0 (66)</span>
+<span class="hljs-comment">// access flags 0x1</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">io</span>/<span class="hljs-title">github</span>/<span class="hljs-title">dreamlike</span>/<span class="hljs-title">stableValue</span>/<span class="hljs-title">StableValueImpl0</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">io</span>/<span class="hljs-title">github</span>/<span class="hljs-title">dreamlike</span>/<span class="hljs-title">stableValue</span>/<span class="hljs-title">StableValue</span> </span>{
+
+
+  <span class="hljs-comment">// access flags 0x1</span>
+  <span class="hljs-keyword">public</span> &lt;init&gt;()V
+    ALOAD <span class="hljs-number">0</span>
+    INVOKESPECIAL java/lang/Object.&lt;init&gt; ()V
+    RETURN
+    MAXSTACK = <span class="hljs-number">1</span>
+    MAXLOCALS = <span class="hljs-number">1</span>
+
+  <span class="hljs-comment">// access flags 0x1001</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> synthetic <span class="hljs-title">get</span><span class="hljs-params">()</span>Ljava/lang/Object</span>;
+    <span class="hljs-function">INVOKEDYNAMIC <span class="hljs-title">get</span><span class="hljs-params">()</span>Ljava/lang/Object</span>; [
+      <span class="hljs-comment">// handle kind 0x6 : INVOKESTATIC</span>
+      io/github/dreamlike/stableValue/StableValueGenerator.indyFactory(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;[Ljava/lang/Object;)Ljava/lang/invoke/ConstantCallSite;
+    ]
+    ARETURN
+    MAXSTACK = <span class="hljs-number">1</span>
+    MAXLOCALS = <span class="hljs-number">1</span>
+}
+</code></pre>
+<p>&#x800C;&#x4E14;&#x7528;&#x8D77;&#x6765;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5176;&#x5B9E;&#x9664;&#x4E86;ClassFile API&#x4E4B;&#x5916;&#x90FD;&#x662F;Java8&#x53EF;&#x7528;&#x7684;&#xFF0C;&#x6362;&#x4E2A;&#x5B57;&#x8282;&#x7801;&#x5E93;&#x5C31;&#x80FD;&#x8FD0;&#x884C;&#x5728;Java8&#x4E0A;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x7684;&#x9AD8;&#x6027;&#x80FD;&#x60F0;&#x6027;&#x5355;&#x4F8B;&#x5DE5;&#x5177;</p>
+<pre><code class="lang-SQL">private static final StableValue&lt;String&gt; valueFinal = StableValue.of(() -&gt; {
+    LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(1));
+    return UUID.randomUUID().toString();
+});
+</code></pre>
+<h3 id="constantdynamic">ConstantDynamic</h3>
+<p>ConstantDynamic&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x5B57;&#x8282;&#x7801;&#xFF0C;&#x5176;&#x50A8;&#x5B58;&#x5728;&#x5E38;&#x91CF;&#x6C60;&#x4E2D;&#xFF0C;&#x5F53;&#x88AB;load&#x5230;&#x6808;&#x9876;&#x65F6;&#x4F1A;&#x6267;&#x884C;BootstrapMethod&#xFF0C;&#x7136;&#x540E;&#x88AB;jit&#x5C06;&#x8FD4;&#x56DE;&#x503C;&#x7F13;&#x5B58;&#x8D77;&#x6765;&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6B21;&#x8C03;&#x7528;&#x65F6;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x7F13;&#x5B58;&#x7684;&#x503C;&#xFF0C;&#x8FD9;&#x4E2A;&#x7279;&#x6027;&#x6B63;&#x597D;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x9AD8;&#x6027;&#x80FD;&#x7684;&#x61D2;&#x52A0;&#x8F7D;&#x5355;&#x4F8B;&#x3002;</p>
+<blockquote>
+<p>ConstantDynamic&#x662F;&#x4EC0;&#x4E48;&#x5177;&#x4F53;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://openjdk.org/jeps/309" target="_blank">JEP 309: Dynamic Class-File Constants</a> &#x4EE5;&#x53CA; <a href="https://www.javacodegeeks.com/2018/08/hands-on-java-constantdynamic.html" target="_blank">hands-on-java-constantdynamic</a></p>
+</blockquote>
+<p>&#x5B83;&#x5BF9;&#x5E94;&#x7684;BSM&#x5176;&#x5B9E;&#x8DDF;invokedynamic&#x7684;BSM&#x5F88;&#x50CF;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x628A;MethodType&#x6362;&#x6210;&#x4E86;&#x5BF9;&#x4F4D;&#x7684;Class</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title">condyFactory</span><span class="hljs-params">(MethodHandles.Lookup lookup, String name, Class type)</span> <span class="hljs-keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>{
+        Class&lt;?&gt; aClass = lookup.lookupClass();
+        Supplier supplier = MethodHandles.classData(lookup, DEFAULT_NAME, Supplier.class);
+        <span class="hljs-keyword">return</span> supplier.get();
+    }
+</code></pre>
+<p>&#x5BF9;&#x5E94;&#x7684;&#x5B57;&#x8282;&#x7801;&#x5199;&#x8D77;&#x6765;&#x66F4;&#x7B80;&#x5355;&#x4E86;</p>
+<pre><code class="lang-java">        <span class="hljs-keyword">byte</span>[] classByteCode = classFile.build(ClassDesc.of(className), cb -&gt; {
+            cb.withInterfaceSymbols(ClassDesc.of(StableValue.class.getName()));
+            cb.withMethodBody(ConstantDescs.INIT_NAME, ConstantDescs.MTD_void, AccessFlags.ofMethod(AccessFlag.PUBLIC).flagsMask(), it -&gt; {
+                it.aload(<span class="hljs-number">0</span>);
+                it.invokespecial(CD_Object, INIT_NAME, MTD_void);
+                it.return_();
+            });
+            cb.withMethodBody(
+                    <span class="hljs-string">&quot;get&quot;</span>,
+                    MethodTypeDesc.of(ClassDesc.of(Object.class.getName())),
+                    AccessFlags.ofMethod(AccessFlag.PUBLIC, AccessFlag.SYNTHETIC).flagsMask(),
+                    it -&gt; {
+                        it.constantInstruction(
+                                DynamicConstantDesc.of(
+                                        ConstantDescs.ofConstantBootstrap(StableValueGenerator.class.describeConstable().get(), <span class="hljs-string">&quot;condyFactory&quot;</span>, Object.class.describeConstable().get())
+                                ));
+                        it.returnInstruction(TypeKind.from(Object.class));
+                    }
+            );
+        });
+<span class="hljs-comment">//define&#x548C;classdata&#x90E8;&#x5206;&#x4E0E;invokedynamic&#x5B9E;&#x73B0;&#x4E00;&#x81F4;</span>
+</code></pre>
+<p>&#x751F;&#x6210;&#x51FA;&#x6765;&#x7684;&#x5B57;&#x8282;&#x7801;&#xFF08;&#x8282;&#x9009;&#xFF09;</p>
+<pre><code class="lang-java">  public io.github.dreamlike.stableValue.StableValueImpl2();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #8                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+
+  public java.lang.Object get();
+    descriptor: ()Ljava/lang/Object;
+    flags: (0x1001) ACC_PUBLIC, ACC_SYNTHETIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: ldc           #21                 // Dynamic #0:_:Ljava/lang/Object;
+         2: areturn
+}
+BootstrapMethods:
+  0: #17 REF_invokeStatic io/github/dreamlike/stableValue/StableValueGenerator.condyFactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Object;
+    Method arguments:
+</code></pre>
+<h3 id="&#x6027;&#x80FD;">&#x6027;&#x80FD;</h3>
+<p>&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x53C2;&#x8003;<a href="https://github.com/dreamlike-ocean/StableValue&#x7684;&#x5B9E;&#x73B0;" target="_blank">https://github.com/dreamlike-ocean/StableValue&#x7684;&#x5B9E;&#x73B0;</a></p>
+<pre><code>&#x5E76;&#x53D1;&#x7EBF;&#x7A0B;&#x6570;&#x76EE;&#x4E3A;5
+Benchmark                                                               Mode    Cnt        Score       Error  Units
+stableValue.Benchmark.StableValueBenchmarkCase.testClassInit            thrpt   10  1998369.352 &#xB1; 32731.935  ops/s
+stableValue.Benchmark.StableValueBenchmarkCase.testDCL                  thrpt   10   472392.857 &#xB1; 10495.215  ops/s
+stableValue.Benchmark.StableValueBenchmarkCase.testIndyStabValue        thrpt   10  1996429.795 &#xB1; 32976.993  ops/s
+stableValue.Benchmark.StableValueBenchmarkCase.testIndyStabValueCody    thrpt   10  1998819.221 &#xB1; 29030.771  ops/s
+stableValue.Benchmark.StableValueBenchmarkCase.testIndyStabValueHidden  thrpt   10  2006979.049 &#xB1; 21622.126  ops/s
+stableValue.Benchmark.StableValueBenchmarkCase.testPlain                thrpt   10  2015192.566 &#xB1; 16183.806  ops/s
+</code></pre><h3 id="&#x918B;">&#x918B;</h3>
+<p>&#x5176;&#x5B9E;&#x5199;&#x4E86;&#x8FD9;&#x4E48;&#x591A;&#xFF0C;&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x94FA;&#x57AB;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;Java&#x65B0;&#x7279;&#x6027;&#x2014;&#x2014;StableValue&#xFF0C;&#x4E00;&#x79CD;&#x66F4;&#x65B9;&#x4FBF;&#x4E14;&#x6027;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x7684;&#x60F0;&#x6027;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x8BA9;@Stable&#x8FD9;&#x4E2A;&#x6CE8;&#x89E3;&#x66F4;&#x9002;&#x5408;&#x5F00;&#x53D1;&#x8005;&#x4F7F;&#x7528;</p>
+<p><a href="https://openjdk.org/jeps/8312611" target="_blank">https://openjdk.org/jeps/8312611</a></p>
+<p>&#x671F;&#x5F85;&#x8FD9;&#x4E2A;&#x7279;&#x6027;&#x5408;&#x5165;master&#xFF0C;pr&#x53EF;&#x53C2;&#x8003;<a href="https://github.com/openjdk/jdk/pull/19625" target="_blank">https://github.com/openjdk/jdk/pull/19625</a></p>
+<h3 id=""> </h3>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="jmm.html" class="navigation navigation-prev " aria-label="Previous page: Java Memory Order和Varhandle">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html" class="navigation navigation-next " aria-label="Next page: 为什么现代的jvm仍然偏爱安全点">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"基于JVM基建优化的单例模式","level":"6.2","depth":1,"next":{"title":"为什么现代的jvm仍然偏爱安全点","level":"7.1","depth":1,"path":"translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.md","ref":"translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.md","articles":[]},"previous":{"title":"Java Memory Order和Varhandle","level":"6.1","depth":1,"path":"jmm.md","ref":"jmm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"lazySingleton.md","mtime":"2024-09-22T16:01:03.008Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-09-22T16:01:26.281Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
