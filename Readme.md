@@ -1,14 +1,13 @@
 ### 这里是我写一些blog的地方 👋
 
 **关于我：**
-* dreamlike /Bilibili：[dreamlike - Bilibili](https://space.bilibili.com/8227104)
+
 * dreamlike / e-mail : <a href= "mailto:dreamlike.vertx@gmail.com"> Send Email</a>
-* Twitter : <a href="https://mobile.twitter.com/dreamli60679407">dreamlike-ocean</a>
-* resume  : <a href="https://htmlpreview.github.io/?https://github.com/dreamlike-ocean/resume/blob/master/resume.html">或许你想看看我的简历？</a>
 * 来自上海的响应式开发者，偏向IO侧研究较多，努力探索技术的边界。
 * 头像是<a href="https://kamitsubaki.jp/artist/isekaijoucho/ ">ヰ世界情緒</a>
-* 目前在Bytedance-Lark Business Applications写写CRUD混口饭吃，bytedancer可以搜索Vert.x词条找到贡献人来找到我
-* 本博客托管<a href="https://github.com/dreamlike-ocean/blog"> github地址 </a>
+* 目前在字节CIS-财务写写CRUD混口饭吃，bytedancer可以搜索Vert.x词条找到贡献人来找到我
+* 本博客markdown文档托管于[github](https://github.com/dreamlike-ocean/blog)
+* 在线阅读地址为[dreamlike-blog](https://dreamlike-ocean.github.io/blog/)
 
 
 | <img align="center" src="https://github-readme-stats.vercel.app/api?username=dreamlike-ocean&show_icons=true&include_all_commits=true&theme=buefy&hide_border=true" alt="Anurag's github stats" />| <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=dreamlike-ocean&layout=compact&theme=buefy&hide_border=true" /> |
