@@ -1,0 +1,833 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Panama教程-1-MemorySegment介绍 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="afterUnsafe.html" />
+    
+    
+    <link rel="prev" href="panama-tutorial-0-B.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="panama-tutorial-0-A.html">
+            
+                <a href="panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="panama-tutorial-0-B.html">
+            
+                <a href="panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.3" data-path="panama-tutorial-1-MemorySegment.html">
+            
+                <a href="panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="afterUnsafe.html">
+            
+                <a href="afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="Panama浅析.html">
+            
+                <a href="Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Panama教程-1-MemorySegment介绍</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="panama&#x6559;&#x7A0B;-1-memorysegment&#x4ECB;&#x7ECD;">Panama&#x6559;&#x7A0B;-1-MemorySegment&#x4ECB;&#x7ECD;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5BF9;&#x4E8E;Panama&#x6765;&#x8BF4;&#x5176;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x4E00;&#x90E8;&#x5206;&#x662F;FFM,&#x5373;&#x4E00;&#x4E9B;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#x7684;API,&#x4E00;&#x90E8;&#x5206;&#x662F;FFI,&#x5373;&#x5982;&#x4F55;&#x8C03;&#x7528;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x7684;ABI&#x7684;&#x52A8;&#x6001;&#x5E93;&#x4EE3;&#x7801;</p>
+<p>&#x672C;&#x6587;&#x662F;&#x5BF9;&#x4E8E;FFM&#x90E8;&#x5206;&#x7684;&#x4ECB;&#x7ECD;</p>
+<h2 id="memorysegment&#x57FA;&#x7840;&#x4ECB;&#x7ECD;">MemorySegment&#x57FA;&#x7840;&#x4ECB;&#x7ECD;</h2>
+<p>&#x7C97;&#x770B;MemorySegemnt&#x4E0E;NIO&#x5305;&#x4E0B;&#x7684;Bytebuffer&#x5DEE;&#x4E0D;&#x591A;&#xFF0C;&#x90FD;&#x662F;&#x652F;&#x6301;&#x5C06;byte[]&#x548C;&#x5806;&#x5916;&#x6307;&#x9488;&#x5C01;&#x88C5;&#x4E3A;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x5B9E;&#x73B0;&#x5728;&#x7EDF;&#x4E00;&#x89C6;&#x56FE;&#x4E0B;&#x7684;&#x64CD;&#x4F5C;</p>
+<h3 id="&#x4F7F;&#x7528;">&#x4F7F;&#x7528;</h3>
+<p>&#x5176;&#x5E76;&#x4E0D;&#x63D0;&#x4F9B;&#x4EFB;&#x4F55;&#x5206;&#x914D;&#x5185;&#x5B58;&#x7684;api,&#x800C;&#x662F;&#x4E13;&#x6CE8;&#x4E8E;&#x5305;&#x88C5;&#x5DF2;&#x6709;&#x7684;&#x5185;&#x5B58;&#x6307;&#x9488;</p>
+<p>&#x5176;&#x5806;&#x5916;&#x5185;&#x5B58;&#x7684;&#x5206;&#x914D;&#x6765;&#x4E8E;SegmentAllocator&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#xFF0C;&#x81F3;&#x4E8E;&#x4E3A;&#x4EC0;&#x4E48;&#x9700;&#x8981;Arena&#x7C7B;&#x6211;&#x4EEC;&#x4E0B;&#x9762;&#x518D;&#x5C55;&#x5F00;</p>
+<pre><code class="lang-java"><span class="hljs-comment">// &#x5305;&#x88C5;&#x4E00;&#x4E2A;Java&#x539F;&#x59CB;&#x7C7B;&#x578B;&#x6570;&#x7EC4;</span>
+MemorySegment.ofArray(...); 
+
+<span class="hljs-comment">//&#x5206;&#x914D;&#x4E00;&#x6BB5;&#x5806;&#x5916;&#x5185;&#x5B58;</span>
+Arena arena = Arena.ofConfined();
+MemorySegment allocate = arena.allocate(<span class="hljs-number">8</span>);
+
+<span class="hljs-comment">//&#x5305;&#x88C5;&#x4E00;&#x4E2A;&#x5806;&#x5916;&#x6307;&#x9488;</span>
+MemorySegment.ofAddress(...);
+
+<span class="hljs-comment">//&#x5305;&#x88C5;&#x4E00;&#x4E2A;nio bytebuffer</span>
+MemorySegment.ofBuffer(ByteBuffer.allocate(<span class="hljs-number">8</span>))
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x5185;&#x5B58;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#x4E5F;&#x5F88;&#x7B80;&#x5355;</p>
+<p>&#x5C31;&#x50CF;&#x662F;&#x6307;&#x9488;&#x64CD;&#x4F5C;&#x4E00;&#x6837;&#x76F4;&#x63A5;&#x4ECE;&#x67D0;&#x4E2A;&#x504F;&#x79FB;&#x91CF;&#x83B7;&#x53D6;&#x503C;&#x5373;&#x53EF;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x8DDF;ByteBuffer&#x4E00;&#x4E2A;&#x5F88;&#x5927;&#x7684;&#x4E0D;&#x540C;&#xFF0C;ByteBuffer&#x4F1A;&#x7EF4;&#x62A4;&#x4E00;&#x7EC4;&#x201C;&#x5185;&#x90E8;&#x72B6;&#x6001;&#x201D;&#xFF0C;&#x4F60;&#x9700;&#x8981;&#x5728;&#x5404;&#x79CD;get/put/flip&#x65B9;&#x6CD5;&#x4E4B;&#x95F4;&#x8F97;&#x8F6C;&#x817E;&#x632A;&#x6BD4;&#x8F83;&#x9EBB;&#x70E6;&#xFF0C;&#x800C;MemorySegment&#x7684;api&#x5219;&#x5F88;&#x5E72;&#x51C0;&#xFF0C;&#x53EA;&#x652F;&#x6301;&#x7B80;&#x5355;&#x7684;&#x57FA;&#x4E8E;&#x504F;&#x79FB;&#x91CF;&#x7684;&#x53D6;&#x503C;</p>
+<pre><code class="lang-java">memorySegment.get(ValueLayout.JAVA_INT, <span class="hljs-comment">/*offset*/</span><span class="hljs-number">0</span>);
+memorySegment.set(ValueLayout.JAVA_INT, <span class="hljs-comment">/*offset*/</span><span class="hljs-number">0</span>, <span class="hljs-comment">/*value*/</span><span class="hljs-number">1</span>);
+memorySegment.asSlice(<span class="hljs-comment">/*offset*/</span><span class="hljs-number">0</span>, <span class="hljs-comment">/*newSize*/</span><span class="hljs-number">12</span>);
+</code></pre>
+<h3 id="&#x4E0E;bytebuffer&#x533A;&#x522B;">&#x4E0E;ByteBuffer&#x533A;&#x522B;</h3>
+<h4 id="&#x5806;&#x5916;&#x5185;&#x5B58;&#x751F;&#x547D;&#x5468;&#x671F;">&#x5806;&#x5916;&#x5185;&#x5B58;&#x751F;&#x547D;&#x5468;&#x671F;</h4>
+<blockquote>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x8C08;&#x8BBA;&#x8FD9;&#x91CC;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x7684;&#x65F6;&#x5019;&#x4E00;&#x822C;&#x662F;&#x8C08;&#x8BBA;&#x4ED6;&#x7684;malloc&#x548C;free</p>
+<p>&#x800C;&#x4E14;&#x82E5;&#x65E0;&#x63D0;&#x53CA;&#xFF0C;&#x5747;&#x6307;&#x7684;&#x662F;public api</p>
+</blockquote>
+<p>ByteBuffer&#x7684;&#x5806;&#x5916;&#x5185;&#x5B58;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x5206;&#x914D;&#x662F;&#x4EA4;&#x7531;&#x7528;&#x6237;&#x624B;&#x52A8;&#x5206;&#x914D;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x91CA;&#x653E;&#x5374;&#x662F;&#x4EA4;&#x7531;GC&#x91CA;&#x653E;&#xFF0C;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x80FD;&#x624B;&#x52A8;&#x5E72;&#x6D89;&#x5C06;&#x5176;&#x7ACB;&#x523B;&#x91CA;&#x653E;</p>
+<p>&#x800C;MemorySegment&#x5219;&#x662F;&#x5C06;&#x5176;&#x751F;&#x547D;&#x5468;&#x671F;&#x4E0E;Arena&#x76F8;&#x7ED1;&#x5B9A;&#xFF0C;Arena&#x8FD9;&#x4E2A;&#x8BCD;&#x4E5F;&#x662F;&#x4E2A;&#x61C2;&#x5F97;&#x90FD;&#x61C2;&#x7684;&#x8BCD;&#xFF0C;&#x4E0D;&#x61C2;&#x7684;&#x8FD8;&#x662F;&#x770B;&#x4E0D;&#x61C2;&#x7684;&#x8BCD;&#xFF0C;&#x4ED6;&#x5B9E;&#x9645;&#x4E0A;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E00;&#x4E2A;Scope,&#x5C06;MemorySegment&#x7684;&#x91CA;&#x653E;&#x56DE;&#x8C03;&#x6302;&#x8F7D;&#x5230;&#x8FD9;&#x4E2A;Scope&#x4E0A;&#xFF0C;&#x5F53;&#x8FD9;&#x4E2A;Scope&#x5173;&#x95ED;&#x65F6;&#xFF0C;&#x91CA;&#x653E;&#x6389;&#x7531;&#x5B83;&#x5206;&#x914D;&#x7684;&#x5168;&#x90E8;MemorySegment</p>
+<pre><code class="lang-java">        <span class="hljs-keyword">try</span> (Arena scope = Arena.ofConfined()) {
+            MemorySegment memorySegment = scope.allocate(<span class="hljs-number">1024</span>);
+            <span class="hljs-comment">//do something</span>
+        } <span class="hljs-comment">// &#x5728;&#x8FD9;&#x91CC;&#x9762;&#x88AB;&#x91CA;&#x653E;</span>
+</code></pre>
+<h4 id="&#x5B57;&#x8282;&#x5E8F;">&#x5B57;&#x8282;&#x5E8F;</h4>
+<p>&#x5BF9;&#x4E8E;ByteBuffer&#x800C;&#x8A00;&#x5176;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;&#x5806;&#x5916;&#x5185;&#x5B58;&#xFF0C;&#x5728;&#x4F7F;&#x7528;ByteBuffer API&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#x7684;&#x65F6;&#x5019;&#x5747;&#x4E3A;&#x5927;&#x6BB5;&#x5E8F;</p>
+<p>&#x800C;MemorySegment&#x4E3A;native order&#x3002;</p>
+<p>&#x4EE5;&#x6211;&#x5F53;&#x524D;&#x4F7F;&#x7528;&#x7684;intel x86_64bit&#x7684;Linux&#x4E3B;&#x673A;&#x4E3A;&#x4F8B;&#xFF0C;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x7684;native order&#x4E3A;&#x5C0F;&#x7AEF;&#x5E8F;</p>
+<p>&#x5F53;&#x6211;&#x6307;&#x5B9A;&#x5BF9;&#x5E94;byte order&#x8BBF;&#x95EE;&#x7684;&#x65F6;&#x5019; &#x76F4;&#x63A5;getLong&#x7684;&#x503C;&#x624D;&#x4E0E;MemorySegment&#x4E00;&#x81F4;</p>
+<pre><code class="lang-java">        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(<span class="hljs-number">8</span>);
+        assertEquals(byteBuffer.order(), ByteOrder.BIG_ENDIAN);
+
+        MemorySegment memorySegment = MemorySegment.ofBuffer(byteBuffer);
+        memorySegment.set(ValueLayout.JAVA_LONG, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+        assertEquals((<span class="hljs-keyword">long</span>) <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">56</span>, byteBuffer.getLong(<span class="hljs-number">0</span>));
+        assertEquals(memorySegment.get(ValueLayout.JAVA_LONG, <span class="hljs-number">0</span>), byteBuffer.order(ByteOrder.LITTLE_ENDIAN).getLong(<span class="hljs-number">0</span>));
+</code></pre>
+<h2 id="arena&#x548C;memorysegment">Arena&#x548C;MemorySegment</h2>
+<blockquote>
+<p>&#x82E5;&#x65E0;&#x7279;&#x610F;&#x63D0;&#x53CA;&#x5219;&#x9ED8;&#x8BA4;&#x5747;&#x4E3A;&#x5806;&#x5916;&#x5185;&#x5B58;</p>
+</blockquote>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x7B80;&#x5355;&#x4ECB;&#x7ECD;&#x4E0B;&#x6211;&#x4EEC;&#x521A;&#x624D;&#x8349;&#x8349;&#x7701;&#x7565;&#x8FC7;&#x7684;Arena&#xFF0C;&#x4E5F;&#x5C31;&#x662F;MemorySegment&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x7BA1;&#x7406;</p>
+<h3 id="&#x7EDF;&#x4E00;&#x6982;&#x5FF5;">&#x7EDF;&#x4E00;&#x6982;&#x5FF5;</h3>
+<p>Arena&#x8FD9;&#x91CC;&#x672C;&#x610F;&#x662F;&#x573A;&#x9986;&#x7684;&#x610F;&#x601D;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x6697;&#x793A;&#x5B83;&#x7BA1;&#x7406;&#x4E86;&#x5168;&#x90E8;&#x7531;&#x5176;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#x6BB5;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x867D;&#x7136;Golang&#x4E4B;&#x7C7B;&#x7684;&#x8BED;&#x8A00;&#x4E2D;&#x4E5F;&#x6709;Arena&#x4F46;&#x662F;Java&#x8FD9;&#x91CC;&#x7684;Arena&#x5E76;&#x4E0D;&#x4FDD;&#x8BC1;&#x6BCF;&#x6B21;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;&#x5185;&#x5B58;&#x662F;&#x8FDE;&#x7EED;&#x7684;&#xFF0C;&#x5BF9;&#x4E8E;&#x67D0;&#x4E9B;&#x8BED;&#x8A00;Arena api&#x53EA;&#x662F;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x62FF;&#x51FA;&#x6765;&#x5207;&#x5757;&#x5206;&#x914D;&#xFF0C;&#x6700;&#x540E;&#x7EDF;&#x4E00;&#x56DE;&#x6536;&#xFF0C;&#x4F46;&#x662F;Java&#x4EC5;&#x4EC5;&#x662F;&#x5F3A;&#x8C03;&#x7EDF;&#x4E00;&#x56DE;&#x6536;&#x8FD9;&#x4E00;&#x6982;&#x5FF5;&#x3002;</p>
+<p>&#x9664;&#x4E86;&#x6211;&#x4EEC;&#x5728;&#x4E0A;&#x9762;&#x5C55;&#x793A;&#x7684;&#x901A;&#x8FC7;close&#x56DE;&#x6536;&#x5206;&#x914D;&#x7684;&#x5806;&#x5916;&#x5185;&#x5B58;&#x4E4B;&#x5916;&#xFF0C;&#x8FD8;&#x4F1A;&#x63D0;&#x4F9B;&#x5728;Arena close&#x540E;&#x9650;&#x5236;&#x5BF9;&#x5E94;&#x5185;&#x5B58;&#x6BB5;&#x7684;&#x8BFB;&#x5199;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x4E00;&#x4E2A;&#x5173;&#x8054;&#x4E86;scope&#x7684;&#x5185;&#x5B58;&#x7AEF;&#x65F6;&#xFF0C;&#x5176;scope&#x88AB;&#x5173;&#x95ED;&#x540E;&#xFF0C;&#x4F1A;&#x76F4;&#x63A5;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF0C;&#x907F;&#x514D;&#x51FA;&#x73B0;UAF&#x7684;&#x9AD8;&#x5371;&#x884C;&#x4E3A;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+        Arena localScope = Arena.ofConfined();
+        MemorySegment segment = localScope.allocate(<span class="hljs-number">1024</span>);
+        localScope.close();
+<span class="hljs-comment">//Exception in thread &quot;main&quot; java.lang.IllegalStateException: Already closed</span>
+        segment.get(ValueLayout.JAVA_INT, <span class="hljs-number">0</span>);
+
+    }
+</code></pre>
+<p>Arena&#x6839;&#x636E;&#x5B9E;&#x73B0;&#x4E0D;&#x540C;&#xFF0C;&#x8FD8;&#x80FD;&#x63D0;&#x4F9B;Thread Owner&#x7684;&#x63A7;&#x5236;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x63A5;&#x4E0B;&#x6765;&#x4ECB;&#x7ECD;&#x4E0B;&#x51E0;&#x4E2A;&#x5E38;&#x7528;&#x7684;Arena</p>
+<h3 id="confined-arena">Confined Arena</h3>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x9650;&#x5B9A;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x4E5F;&#x662F;&#x6BD4;&#x8F83;&#x5E38;&#x7528;&#x7684;&#x4E00;&#x4E2A;Arena,&#x5176;&#x8FD4;&#x56DE;&#x7684;Arena&#x662F;&#x4E00;&#x4E2A;&#x53EA;&#x5141;&#x8BB8;&#x5355;&#x7EBF;&#x7A0B;&#x4F7F;&#x7528;&#x7684;&#x4E14;&#x9700;&#x8981;&#x624B;&#x52A8;&#x5173;&#x95ED;&#x7684;Arena</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+        Arena localScope = Arena.ofConfined();
+        MemorySegment segment = localScope.allocate(<span class="hljs-number">1024</span>);
+
+        Thread.startVirtualThread(() -&gt; {
+            <span class="hljs-keyword">try</span> {
+                localScope.allocate(<span class="hljs-number">1024</span>);
+            } <span class="hljs-keyword">catch</span> (Throwable t) {
+                System.out.println(<span class="hljs-string">&quot;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x65E0;&#x6CD5;&#x5206;&#x914D;&quot;</span>);
+            }
+            <span class="hljs-keyword">try</span> {
+                segment.get(ValueLayout.JAVA_INT, <span class="hljs-number">0</span>);
+            } <span class="hljs-keyword">catch</span> (Throwable t) {
+                System.out.println(<span class="hljs-string">&quot;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&quot;</span>);
+            }
+        }).join();
+
+        localScope.close();
+        <span class="hljs-keyword">try</span> {
+            segment.get(ValueLayout.JAVA_INT, <span class="hljs-number">0</span>);
+        } <span class="hljs-keyword">catch</span> (Throwable t) {
+            System.out.println(<span class="hljs-string">&quot;&#x5173;&#x95ED;&#x540E;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&quot;</span>);
+        }
+
+    }
+</code></pre>
+<h3 id="shared-arena">Shared Arena</h3>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x591A;&#x7EBF;&#x7A0B;&#x7248;&#x672C;&#x7684;Confined Arena&#xFF0C;&#x5141;&#x8BB8;&#x5728;&#x5176;&#x4F59;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x662F;&#x9700;&#x8981;&#x624B;&#x52A8;&#x5173;&#x95ED;&#xFF0C;&#x5728;&#x5173;&#x95ED;&#x8FC7;&#x7A0B;&#x4E2D;&#x82E5;&#x4ECD;&#x6709;&#x7EBF;&#x7A0B;&#x5728;&#x4F7F;&#x7528;&#x5176;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;&#x5185;&#x5B58;&#x6BB5;&#x5219;&#x4F1A;&#x5173;&#x95ED;&#x5931;&#x8D25;&#xFF0C;&#x5EFA;&#x8BAE;&#x4E0E;&#x7ED3;&#x6784;&#x5316;&#x5E76;&#x53D1;API&#x4E00;&#x540C;&#x4F7F;&#x7528;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+        MemorySegment uaf = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">try</span> (StructuredTaskScope&lt;Void&gt; currencyScope = <span class="hljs-keyword">new</span> StructuredTaskScope&lt;Void&gt;();
+             Arena arena = Arena.ofShared()
+        ) {
+            StructuredTaskScope.Subtask&lt;Void&gt; task1 = currencyScope.fork(() -&gt; {
+                MemorySegment _ = arena.allocate(<span class="hljs-number">1024</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            });
+
+            StructuredTaskScope.Subtask&lt;Void&gt; task2 = currencyScope.fork(() -&gt; {
+                MemorySegment _ = arena.allocate(<span class="hljs-number">1024</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            });
+            currencyScope.join();
+            assertEquals(task1.state(), StructuredTaskScope.Subtask.State.SUCCESS);
+            assertEquals(task2.state(), StructuredTaskScope.Subtask.State.SUCCESS);
+
+            uaf = arena.allocate(<span class="hljs-number">1024</span>);
+        }
+        <span class="hljs-comment">//&#x629B;&#x51FA;&#x5F02;&#x5E38;</span>
+        uaf.get(ValueLayout.JAVA_BYTE, <span class="hljs-number">0</span>);
+    }
+</code></pre>
+<h3 id="auto-arena">Auto Arena</h3>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4E2A;<strong>&#x4E0D;&#x5141;&#x8BB8;&#x624B;&#x52A8;&#x5173;&#x95ED;</strong>&#x7684;Shared Arena&#xFF0C;&#x5141;&#x8BB8;&#x5728;&#x5176;&#x4F59;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x5176;&#x5206;&#x914D;&#x7684;&#x5185;&#x5B58;&#x7AEF;&#x5747;&#x88AB;&#x81EA;&#x52A8;&#x7BA1;&#x7406;&#x2014;&#x2014;&#x5176;&#x5B9E;&#x5C31;&#x662F;GC&#x673A;&#x5236;+Cleaner&#x7BA1;&#x7406;Auto Arena&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x8FD9;&#x91CC;&#x5E76;&#x4E0D;&#x662F;&#x8BA9;GC&#x7BA1;&#x7406;&#x6BCF;&#x4E00;&#x4E2A;&#x5185;&#x5B58;&#x6BB5;&#x800C;&#x662F;&#x901A;&#x8FC7;&#x53D1;&#x73B0;Auto Arena&#x4E0D;&#x53EF;&#x8FBE;&#x4E4B;&#x540E;&#xFF0C;&#x89E6;&#x53D1;&#x4E00;&#x4E2A;cleaner&#x56DE;&#x8C03;&#x5C06;&#x5176;&#x5206;&#x914D;&#x7684;&#x5168;&#x90E8;&#x5185;&#x5B58;&#x6BB5;&#x56DE;&#x6536;</p>
+<p>&#x5BF9;&#x4E8E;&#x5176;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;MemorySegment&#xFF0C;&#x5747;&#x4F1A;&#x6301;&#x6709;&#x5BF9;&#x5E94;Auto Arena&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5373; MemorySegment &lt;=&gt; Arena&#xFF0C;&#x8FD9;&#x6837;&#x53EA;&#x6709;Arena&#x4E0D;&#x53EF;&#x8FBE;&#xFF0C;&#x4E14;&#x5176;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;MemorySement&#x5747;&#x4E0D;&#x53EF;&#x8FBE; &#x624D;&#x5141;&#x8BB8;&#x5176;&#x7BA1;&#x7406;&#x7684;&#x5168;&#x90E8;MemorySegment&#x88AB;&#x91CA;&#x653E;</p>
+<p>&#x67D0;&#x79CD;&#x7A0B;&#x5EA6;&#x4E0A;&#x8FD9;&#x79CD;&#x7BA1;&#x7406;&#x65B9;&#x6848;&#x4E0E;&#x65E7;&#x6709;&#x7684;ByteBuffer &#x7BA1;&#x7406;&#x65B9;&#x5F0F;&#x4E00;&#x81F4;</p>
+<pre><code>    public static void main(String[] args) throws Throwable {
+        Arena auto = Arena.ofAuto();
+        MemorySegment memorySegment = auto.allocate(ValueLayout.JAVA_INT);
+    }
+</code></pre><h3 id="global-arena">Global Arena</h3>
+<p>&#x8FD9;&#x4E2A;&#x5C31;&#x66F4;&#x7B80;&#x5355;&#x4E86;&#xFF0C;&#x5B83;&#x4E0D;&#x5141;&#x8BB8;&#x5173;&#x95ED;&#xFF0C;&#x53EA;&#x7BA1;&#x5206;&#x914D;&#x4E5F;&#x4E0D;&#x8FDB;&#x884C;&#x4EFB;&#x4F55;&#x56DE;&#x6536;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;Rust&#x7684;`static&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x5176;&#x5206;&#x914D;&#x51FA;&#x6765;&#x7684;&#x5185;&#x5B58;&#x5141;&#x8BB8;&#x8DE8;&#x7EBF;&#x7A0B;&#xFF0C;&#x5141;&#x8BB8;&#x4EFB;&#x610F;&#x4F7F;&#x7528;&#xFF0C;&#x968F;&#x7740;&#x8FDB;&#x7A0B;&#x9500;&#x6BC1;&#x4E00;&#x8D77;&#x56DE;&#x6536;</p>
+<p>&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#x53EF;&#x80FD;&#x6CA1;&#x4EC0;&#x4E48;&#x7528;&#xFF0C;&#x4F46;&#x662F;<code>MemorySegment.ofAddress(0)</code>&#x4E2D;&#xFF0C;&#x5C31;&#x9ED8;&#x8BA4;&#x662F;Global Arena&#xFF0C;&#x5BF9;&#x4E8E;&#x5927;&#x90E8;&#x5206;&#x4ECE;native&#x8FD4;&#x56DE;&#x7684;&#x6307;&#x9488;&#x5747;&#x4E3A;&#x8FD9;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;API&#x6765; &#x201C;&#x64E6;&#x9664;&#x201D; &#x4F5C;&#x7528;&#x57DF;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+        Arena global = Arena.global();
+        System.out.println(global.allocate(<span class="hljs-number">1024</span>).scope());
+        System.out.println(MemorySegment.ofAddress(<span class="hljs-number">0</span>).scope());
+    }
+</code></pre>
+<h3 id="&#x81EA;&#x5B9A;&#x4E49;arena">&#x81EA;&#x5B9A;&#x4E49;Arena</h3>
+<p>&#x4F60;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>java.lang.foreign.SegmentAllocator</code>&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x5C06;&#x4E00;&#x5927;&#x5757;&#x5185;&#x5B58;&#x62FF;&#x51FA;&#x6765;&#x5207;&#x5757;&#x5206;&#x914D;&#xFF0C;&#x6700;&#x540E;&#x7EDF;&#x4E00;&#x56DE;&#x6536;&#x7684;Arena,batch&#x5316;&#x5185;&#x5B58;&#x5206;&#x914D;&#x64CD;&#x4F5C;</p>
+<pre><code class="lang-java">    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SlicingArena</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Arena</span> </span>{
+        <span class="hljs-keyword">final</span> Arena arena = Arena.ofConfined();
+        <span class="hljs-keyword">final</span> SegmentAllocator slicingAllocator;
+
+        SlicingArena(<span class="hljs-keyword">long</span> size) {
+            slicingAllocator = SegmentAllocator.slicingAllocator(arena.allocate(size));
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> MemorySegment <span class="hljs-title">allocate</span><span class="hljs-params">(<span class="hljs-keyword">long</span> byteSize, <span class="hljs-keyword">long</span> byteAlignment)</span> </span>{
+            <span class="hljs-keyword">return</span> slicingAllocator.allocate(byteSize, byteAlignment);
+        }
+
+        <span class="hljs-keyword">public</span> MemorySegment.<span class="hljs-function">Scope <span class="hljs-title">scope</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> arena.scope();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> </span>{
+            arena.close();
+        }
+
+    }
+</code></pre>
+<h3 id="arena&#x5173;&#x95ED;&#x65F6;&#x7684;&#x5185;&#x5B58;&#x5B89;&#x5168;">Arena&#x5173;&#x95ED;&#x65F6;&#x7684;&#x5185;&#x5B58;&#x5B89;&#x5168;</h3>
+<h4 id="&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x6CD5;">&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x6CD5;</h4>
+<p>&#x521A;&#x624D;&#x63D0;&#x5230;&#x4E86;&#x5728;Arena&#x5173;&#x95ED;&#x540E;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;MemorySegment&#x76F8;&#x5173;&#x7684;API&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x6211;&#x4EEC;&#x8DDF;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;API&#x4EA4;&#x4E92;&#x7684;&#x65F6;&#x5019;&#xFF0C;OS&#x65E0;&#x6CD5;&#x611F;&#x77E5;&#x6211;&#x4EEC;&#x8FD9;&#x4E2A;&#x68C0;&#x6D4B;&#x673A;&#x5236;&#xFF0C;&#x90A3;&#x4E48;&#x662F;&#x5426;&#x610F;&#x5473;&#x7740;&#x6211;&#x4EEC;&#x5728;&#x4F7F;&#x7528;Java&#x63D0;&#x4F9B;&#x7684;File IO&#x7B49;FFI&#x8FC7;&#x7A0B;&#x4E2D;&#x5185;&#x5B58;&#x5B58;&#x5728;&#x5B89;&#x5168;&#x95EE;&#x9898;&#x5462;&#xFF1F;</p>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#x5E76;&#x4E0D;&#x4F1A;&#xFF0C;&#x56E0;&#x4E3A;&#x5BF9;&#x4E8E;&#x90A3;&#x4E9B;&#x5141;&#x8BB8;close&#x7684;Arena&#x4ED6;&#x4EEC;&#x8FD8;&#x6709;&#x4E2A;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x6CD5;&#x6765;&#x5728;&#x5173;&#x95ED;&#x65F6;&#x68C0;&#x6D4B;&#x662F;&#x5426;&#x6D3B;&#x8DC3;</p>
+<p>&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#x5BF9;&#x4E8E;FileChannel&#x6765;&#x8BB2; Java&#x901A;&#x8FC7;IOUtil&#x7C7B;&#x7EDF;&#x4E00;&#x5C01;&#x88C5;&#x4E86;&#x8BBF;&#x95EE;&#x65B9;&#x5F0F;&#xFF0C;&#x7EDF;&#x4E00;&#x6536;&#x53E3;&#x5904;&#x589E;&#x52A0;&#x68C0;&#x6D4B;&#x4EE3;&#x7801;&#xFF0C;&#x7528;&#x4F2A;&#x4EE3;&#x7801;&#x5927;&#x6982;&#x662F;&#x8FD9;&#x6837;&#x7684;</p>
+<pre><code class="lang-java">segemnt.arena.count ++;
+file.read(segment);
+segement.arena.count--;
+</code></pre>
+<p>&#x5728;&#x5173;&#x95ED;&#x65F6;&#x5219;&#x76F4;&#x63A5;&#x68C0;&#x6D4B;count&#x7684;&#x503C;&#xFF0C;&#x82E5;&#x4E0D;&#x4E3A;0&#x8BF4;&#x660E;&#x4ECD;&#x5728;&#x6D3B;&#x8DC3;&#xFF0C;&#x4E0D;&#x5E94;&#x8BE5;&#x5173;&#x95ED;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Socket API&#x6784;&#x9020;&#x4E00;&#x4E2A;&#x6C38;&#x4E0D;&#x8FD4;&#x56DE;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x6765;&#x770B;&#x770B;&#x5177;&#x4F53;&#x7684;close&#x6548;&#x679C;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{
+        Thread.startVirtualThread(() -&gt; {
+            <span class="hljs-keyword">try</span>(ServerSocket socket = <span class="hljs-keyword">new</span> ServerSocket(<span class="hljs-number">8300</span>);) {
+                Socket s = socket.accept();
+                System.out.println(<span class="hljs-string">&quot;Accept: &quot;</span> + s);
+                <span class="hljs-comment">//&#x53EA;&#x63A5;&#x53D7;&#x4E0D;&#x8BFB;&#x53D6;</span>
+                LockSupport.park();
+            } <span class="hljs-keyword">catch</span> (IOException e) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+            }
+        });
+        <span class="hljs-comment">//wait listen</span>
+        TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);
+        Arena arena = Arena.ofShared();
+        <span class="hljs-keyword">try</span> (arena) {
+            MemorySegment segment = arena.allocate(<span class="hljs-number">1024</span>);
+            ByteBuffer byteBuffer = segment.asByteBuffer();
+            <span class="hljs-keyword">new</span> Thread(() -&gt; {
+                <span class="hljs-keyword">try</span> {
+                    SocketChannel channel = SocketChannel.open();
+                    <span class="hljs-keyword">boolean</span> connect = channel.connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;127.0.0.1&quot;</span>, <span class="hljs-number">8300</span>));
+                    assertEquals(connect, <span class="hljs-keyword">true</span>);
+                    <span class="hljs-comment">//wait infinite</span>
+                    channel.read(byteBuffer);
+                    System.out.println(<span class="hljs-string">&quot;end read&quot;</span>);
+                    assertEquals(byteBuffer.get(<span class="hljs-number">0</span>), <span class="hljs-number">1</span>);
+                    channel.close();
+                } <span class="hljs-keyword">catch</span> (Throwable e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);
+        }
+    }
+</code></pre>
+<p>&#x6700;&#x540E;clonse&#x4F1A;&#x629B;&#x51FA;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x5F02;&#x5E38;</p>
+<pre><code class="lang-java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.IllegalStateException: Session is acquired by <span class="hljs-number">1</span> clients
+</code></pre>
+<p>&#x6700;&#x540E;&#x4E00;&#x63D0;new Thread&#x8FD9;&#x91CC;&#x4E0D;&#x8981;&#x66FF;&#x6362;&#x4E3A;&#x4F7F;&#x7528;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#xFF0C;&#x7531;&#x4E8E;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x53D1;&#x8D77;read&#x64CD;&#x4F5C;&#x662F;&#x5728;poller&#x5524;&#x9192;&#x7EBF;&#x7A0B;&#x4E4B;&#x540E;&#x800C;&#x4E0D;&#x662F;&#x5728;&#x8C03;&#x7528;read&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6240;&#x4EE5;&#x6362;&#x6210;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x4F60;&#x53EA;&#x80FD;&#x5728;&#x865A;&#x62DF;&#x7EBF;&#x7A0B;&#x90A3;&#x8FB9;&#x62FF;&#x5230;&#x4E00;&#x4E2A;<code>Already closed</code>&#x7684;&#x5F02;&#x5E38;</p>
+<h4 id="&#x7EBF;&#x7A0B;&#x672C;&#x5730;&#x63E1;&#x624B;">&#x7EBF;&#x7A0B;&#x672C;&#x5730;&#x63E1;&#x624B;</h4>
+<p>shared&#x4E0E;confined&#x7684;&#x6700;&#x5927;&#x4E0D;&#x540C;&#x5728;&#x4E0E;&#x524D;&#x8005;&#x5141;&#x8BB8;&#x591A;&#x7EBF;&#x7A0B;&#x8BBF;&#x95EE;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;&#x8BBF;&#x5B58;&#x64CD;&#x4F5C;&#x90FD;&#x53BB;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x663E;&#x7136;&#x662F;&#x4E0D;&#x73B0;&#x5B9E;&#x7684;&#xFF0C;&#x6240;&#x4EE5;shared&#x5728;&#x68C0;&#x6D4B;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x4E4B;&#x540E;&#x82E5;&#x53D1;&#x73B0;&#x5176;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x4E3A;0&#x4E5F;&#x4E0D;&#x4EE3;&#x8868;&#x6CA1;&#x6709;&#x7EBF;&#x7A0B;&#x5728;&#x8BBF;&#x95EE;&#x8FD9;&#x5757;&#x5185;&#x5B58;&#x4E86;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E4B;&#x76F4;&#x63A5;&#x770B;&#x4E0B;ShareSession&#xFF08;&#x8FD9;&#x4E2A;&#x5C31;&#x662F;&#x5177;&#x4F53;&#x7684;&#x5B9E;&#x73B0;&#xFF09;&#x662F;&#x5982;&#x4F55;&#x505A;&#x7684;</p>
+<p>1,&#x7B2C;&#x4E00;&#x6B65;cas&#x4E00;&#x4E0B;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E3A;close&#x8FD9;&#x6837;&#x5728;close&#x4E4B;&#x540E;&#x7684;&#x8BBF;&#x95EE;&#x64CD;&#x4F5C;&#x5C31;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#xFF0C;&#x9650;&#x5236;&#x65B0;&#x589E;</p>
+<p>2,&#x53D1;&#x8D77;closeScope&#x5904;&#x7406;&#x73B0;&#x5B58;&#x7684;&#x5185;&#x5B58;&#x64CD;&#x4F5C;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">justClose</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">int</span> prevState = (<span class="hljs-keyword">int</span>) STATE.compareAndExchange(<span class="hljs-keyword">this</span>, OPEN, CLOSED);
+        <span class="hljs-keyword">if</span> (prevState &lt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">throw</span> alreadyClosed();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (prevState != OPEN) {
+            <span class="hljs-keyword">throw</span> alreadyAcquired(prevState);
+        }
+        SCOPED_MEMORY_ACCESS.closeScope(<span class="hljs-keyword">this</span>, ALREADY_CLOSED);
+    }
+</code></pre>
+<p>&#x90A3;&#x4E48;&#x5982;&#x4F55;&#x627E;&#x51FA;&#x6765;&#x54EA;&#x4E9B;&#x7EBF;&#x7A0B;&#x8FD8;&#x5728;&#x8BBF;&#x95EE;&#x8FD9;&#x6BB5;&#x5185;&#x5B58;&#x5462;&#xFF1F;Java&#x5BF9;&#x5176;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x4F9D;&#x6B21;&#x67E5;&#x770B;JavaThread&#x7684;&#x6808;&#x662F;&#x5426;&#x6B63;&#x5728;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x91CC;&#x5C31;&#x6709;&#x4E24;&#x4E2A;&#x95EE;&#x9898;</p>
+<p>1,&#x5982;&#x4F55;&#x9AD8;&#x6548;&#x4E14;&#x5B89;&#x5168;&#x679A;&#x4E3E;JavaThread</p>
+<p>2,&#x5982;&#x4F55;&#x5224;&#x65AD;&#x67D0;&#x4E2A;&#x7EBF;&#x7A0B;&#x6B63;&#x5728;&#x8BBF;&#x95EE;&#x8FD9;&#x6BB5;&#x5185;&#x5B58;</p>
+<h5 id="&#x5982;&#x4F55;&#x9AD8;&#x6548;&#x4E14;&#x5B89;&#x5168;&#x679A;&#x4E3E;javathread">&#x5982;&#x4F55;&#x9AD8;&#x6548;&#x4E14;&#x5B89;&#x5168;&#x679A;&#x4E3E;JavaThread</h5>
+<p>&#x4E00;&#x4E2A;JavaThread&#x7684;&#x6808;&#x5E27;&#x6700;&#x7A33;&#x5B9A;&#x7684;&#x65F6;&#x5019;&#x662F;&#x5B83;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B89;&#x5168;&#x5730;&#x679A;&#x4E3E;&#x6BCF;&#x4E00;&#x5E27;&#xFF0C;&#x5904;&#x7406;&#x6BCF;&#x4E00;&#x5E27;&#x91CC;&#x9762;&#x7684;oop,&#x4F46;&#x662F;&#x4E3A;&#x4E86;&#x679A;&#x4E3E;&#x67D0;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5C31;&#x4F7F;&#x7528;<strong>&#x5168;&#x5C40;&#x5B89;&#x5168;&#x70B9;</strong>&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x592A;&#x91CD;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x5176;&#x5B9E;&#x5229;&#x7528;&#x7684;&#x673A;&#x5236;&#x53EB;&#x505A;<strong><a href="https://openjdk.org/jeps/312" target="_blank">&#x7EBF;&#x7A0B;&#x672C;&#x5730;&#x63E1;&#x624B;</a></strong>&#xFF0C;&#x4F9D;&#x6B21;&#x53BB;&#x505C;&#x987F;&#x5BF9;&#x5E94;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x67D0;&#x4E2A;&#x7EBF;&#x7A0B;poll&#x7684;&#x5176;&#x5B9E;&#x662F;&#x67D0;&#x4E2A;ThreadLocal&#x7684;&#x5B89;&#x5168;&#x70B9;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x7EC8;&#x7AEF;&#x5904;&#x7406;&#x51FD;&#x6570;&#x4E2D;&#x6267;&#x884C;&#x5BF9;&#x5E94;&#x56DE;&#x8C03;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x56DE;&#x8C03;&#x91CC;&#x9762;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x679A;&#x4E3E;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x6808;&#x4E0A;&#x7684;&#x4E1C;&#x897F;</p>
+<p>&#x5BF9;&#x5E94;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://github.com/openjdk/jdk/blob/7cc7c080b5dbab61914512bf63227944697c0cbe/src/hotspot/share/prims/scopedMemoryAccess.cpp#L131" target="_blank">CloseScopedMemoryClosure</a>&#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x7684;do_thread&#x65B9;&#x6CD5;</p>
+<h5 id="&#x5224;&#x65AD;&#x6B63;&#x5728;&#x8BBF;&#x95EE;&#x8FD9;&#x6BB5;&#x5185;&#x5B58;">&#x5224;&#x65AD;&#x6B63;&#x5728;&#x8BBF;&#x95EE;&#x8FD9;&#x6BB5;&#x5185;&#x5B58;</h5>
+<p>&#x4EE5;getInt&#x4E3A;&#x4F8B;&#x5B50;&#x5B83;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x4E2A;Unsafe&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x88AB;<code>Scoped</code>&#x6807;&#x6CE8;&#xFF0C;&#x8FD9;&#x4E2A;Scope&#x4F1A;&#x88AB;JVM&#x7279;&#x6B8A;&#x5904;&#x7406;&#x7528;&#x4E8E;&#x7ED9;&#x67D0;&#x4E00;&#x6808;&#x5E27;&#x6253;&#x4E0A;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x6807;&#x8BC6;</p>
+<pre><code class="lang-java">    <span class="hljs-meta">@ForceInline</span> <span class="hljs-meta">@Scoped</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getIntInternal</span><span class="hljs-params">(MemorySessionImpl session, Object base, <span class="hljs-keyword">long</span> offset)</span> </span>{
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">if</span> (session != <span class="hljs-keyword">null</span>) {
+                session.checkValidStateRaw();
+            }
+            <span class="hljs-keyword">return</span> UNSAFE.getInt(base, offset);
+        } <span class="hljs-keyword">finally</span> {
+            Reference.reachabilityFence(session);
+        }
+    }
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6765;&#x770B;&#x770B;&#x6838;&#x5FC3;&#x7684;&#x4EE3;&#x7801;&#xFF08;&#x7ECF;&#x8FC7;&#x90E8;&#x5206;&#x4FEE;&#x6539; &#x66F4;&#x5BB9;&#x6613;&#x9605;&#x8BFB;&#xFF09;</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">is_accessing_session</span><span class="hljs-params">(JavaThread* j, <span class="hljs-comment">/*sharedsession&#x5BF9;&#x8C61;*/</span>oop session)</span> </span>{
+  ResourceMark rm;
+  <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> max_critical_stack_depth = <span class="hljs-number">10</span>;
+  <span class="hljs-keyword">int</span> depth = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//&#x904D;&#x5386;&#x6BCF;&#x4E00;&#x5E27;</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-function">vframeStream <span class="hljs-title">stream</span><span class="hljs-params">(jt)</span></span>; !stream.at_end(); stream.next()) {
+    Method* m = stream.method();
+    <span class="hljs-keyword">bool</span> is_scoped = m-&gt;is_scoped(); /&#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x521A;&#x624D;&#x63D0;&#x5230;&#x7684;Scoped&#x6CE8;&#x89E3;&#x6807;&#x6CE8;
+    <span class="hljs-keyword">if</span> (is_scoped) {
+        <span class="hljs-comment">//&#x83B7;&#x53D6;&#x8FD9;&#x4E00;&#x5E27;&#x4E0A;&#x5168;&#x90E8;&#x7684;oops &#x5982;&#x679C;&#x6709;&#x5BF9;&#x5E94;&#x7684;session&#x5219;&#x8BA4;&#x4E3A;&#x627E;&#x5230;&#x4E86;&#x6B63;&#x5728;&#x4F7F;&#x7528;&#x7684;</span>
+        <span class="hljs-comment">//&#x6B64;&#x65F6;&#x4E0D;&#x5E94;&#x8BE5;close</span>
+     StackValueCollection* locals = stream.asJavaVFrame()-&gt;locals();
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; locals-&gt;size(); i++) {
+      StackValue* var = locals-&gt;at(i);
+      <span class="hljs-keyword">if</span> (var-&gt;type() == T_OBJECT) {
+        <span class="hljs-keyword">if</span> (var-&gt;get_obj() == session) {
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+      }
+      }
+     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    depth++;
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x5C31;&#x505A;&#x5230;&#x4E86;&#x5B89;&#x5168;&#x5173;&#x95ED;shared arena&#xFF0C;&#x5173;&#x95ED;&#x589E;&#x91CF;&#xFF0C;&#x63A2;&#x6D4B;&#x5B58;&#x91CF;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="panama-tutorial-0-B.html" class="navigation navigation-prev " aria-label="Previous page: Panama教程-0-Varhandle介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="afterUnsafe.html" class="navigation navigation-next " aria-label="Next page: 失去了Unsafe内存操作之后该何去何从">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Panama教程-1-MemorySegment介绍","level":"5.3","depth":1,"next":{"title":"失去了Unsafe内存操作之后该何去何从","level":"5.4","depth":1,"path":"panama/afterUnsafe.md","ref":"panama/afterUnsafe.md","articles":[]},"previous":{"title":"Panama教程-0-Varhandle介绍","level":"5.2","depth":1,"path":"panama/panama-tutorial-0-B.md","ref":"panama/panama-tutorial-0-B.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"panama/panama-tutorial-1-MemorySegment.md","mtime":"2024-10-01T12:44:40.638Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-10-01T12:45:04.398Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
