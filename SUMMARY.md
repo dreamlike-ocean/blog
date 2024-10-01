@@ -23,6 +23,7 @@
 
 * [Panama教程-0-MethodHandle介绍](panama/panama-tutorial-0-A.md)
 * [Panama教程-0-Varhandle介绍](panama/panama-tutorial-0-B.md)
+* [Panama教程-1-MemorySegment介绍](panama/panama-tutorial-1-MemorySegment.md)
 * [失去了Unsafe内存操作之后该何去何从](panama/afterUnsafe.md)
 * [Panama源码浅析](panama/Panama浅析.md)
 
