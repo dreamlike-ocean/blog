@@ -1,0 +1,1017 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Panama教程-3-FFI介绍 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="afterUnsafe.html" />
+    
+    
+    <link rel="prev" href="panama-tutorial-2-MemoryLayout.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="panama-tutorial-0-A.html">
+            
+                <a href="panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="panama-tutorial-0-B.html">
+            
+                <a href="panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="panama-tutorial-1-MemorySegment.html">
+            
+                <a href="panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="panama-tutorial-2-MemoryLayout.html">
+            
+                <a href="panama-tutorial-2-MemoryLayout.html">
+            
+                    
+                    Panama教程-2-MemoryLayout介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.5" data-path="panama-tutorial-3-FFI.html">
+            
+                <a href="panama-tutorial-3-FFI.html">
+            
+                    
+                    Panama教程-3-FFI介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" data-path="afterUnsafe.html">
+            
+                <a href="afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="Panama浅析.html">
+            
+                <a href="Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Panama教程-3-FFI介绍</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="panama&#x6559;&#x7A0B;-3-ffi&#x4ECB;&#x7ECD;">Panama&#x6559;&#x7A0B;-3-FFI&#x4ECB;&#x7ECD;</h1>
+<blockquote>
+<p>&#x82E5;&#x65E0;&#x7279;&#x522B;&#x63D0;&#x53CA;&#xFF0C;&#x8FD9;&#x91CC;&#x63D0;&#x5230;&#x7684;abi&#x5747;&#x4E3A;x86 64 systemv abi</p>
+<p>&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x4ECE;&#x8FD9;&#x91CC;&#x627E;&#x5230;</p>
+<p><a href="https://github.com/dreamlike-ocean/Panama-tutorial" target="_blank">https://github.com/dreamlike-ocean/Panama-tutorial</a></p>
+</blockquote>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x622A;&#x81F3;&#x76EE;&#x524D;&#x6211;&#x4EEC;&#x5BF9;&#x4E8E;FFM&#x548C;&#x4E00;&#x4E9B;java.invoke.*&#x57FA;&#x5EFA;&#x5DF2;&#x7ECF;&#x4ECB;&#x7ECD;&#x5B8C;&#x6BD5;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x5230;&#x4E86;&#x91CD;&#x5934;&#x620F;&#x2014;&#x2014;&#x5F00;&#x59CB;&#x4ECB;&#x7ECD;Panama&#x5E26;&#x6765;&#x7684;&#x65B0;FFI API,&#x4F7F;&#x7528;&#x7EAF;Java API&#x8C03;&#x7528;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x5E73;&#x53F0;abi&#x7684;&#x51FD;&#x6570;</p>
+<p>&#x90A3;&#x4E48;&#x6211;&#x5148;&#x6765;&#x4ECB;&#x7ECD;&#x4E0B;&#x4EC0;&#x4E48;&#x53EB;&#x505A;&#x201C;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x5E73;&#x53F0;abi&#x201D;&#xFF0C;&#x5B83;&#x6709;&#x4EE5;&#x4E0B;&#x542B;&#x4E49;</p>
+<ul>
+<li>&#x51FD;&#x6570;&#x7B26;&#x53F7;&#x2014;&#x2014;&#x5373;&#x51FD;&#x6570;&#x540D;&#x7A33;&#x5B9A;&#xFF0C;&#x4F8B;&#x5982;&#x6211;&#x4EEC;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x53EB;&#x505A;A,&#x7F16;&#x8BD1;&#x4E3A;&#x52A8;&#x6001;&#x5E93;&#x4E4B;&#x540E;&#x5176;&#x7B26;&#x53F7;&#x4E5F;&#x4E3A;A</li>
+<li>&#x4F20;&#x5165;&#x53C2;&#x6570;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x8C03;&#x7528;&#x7EA6;&#x5B9A;&#xFF0C;&#x4E3E;&#x4E2A;&#x4F8B;&#x5B50;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x8C03;&#x7528;&#x7EA6;&#x5B9A;&#x662F;&#x5C06;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x653E;&#x5728;a&#x5BC4;&#x5B58;&#x5668;&#x4E0A;&#xFF0C;&#x90A3;&#x4E48;&#x5BF9;&#x5E94;&#x52A8;&#x6001;&#x5E93;&#x4E5F;&#x662F;&#x5982;&#x6B64;&#x53D6;&#x503C;</li>
+<li>&#x7ED3;&#x6784;&#x4F53;&#x5E03;&#x5C40;&#x4E00;&#x81F4;&#xFF0C;&#x76F4;&#x89C2;&#x8868;&#x73B0;&#x5C31;&#x662F;&#x4E0E;&#x5F53;&#x524D;&#x5E73;&#x53F0;C&#x8BED;&#x8A00;&#x7F16;&#x8BD1;&#x51FA;&#x6765;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x5E03;&#x5C40;&#x4E00;&#x81F4;&#xFF0C;&#x67D0;&#x4E9B;&#x8BED;&#x8A00;&#x53EF;&#x80FD;&#x4F1A;&#x8FDB;&#x884C;&#x7ED3;&#x6784;&#x4F53;&#x5B57;&#x6BB5;&#x91CD;&#x6392;&#x4EE5;&#x964D;&#x4F4E;&#x7ED3;&#x6784;&#x4F53;&#x5927;&#x5C0F;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x6291;&#x5236;&#x8FD9;&#x4E9B;&#x91CD;&#x6392;</li>
+</ul>
+<h2 id="&#x73AF;&#x5883;&#x51C6;&#x5907;">&#x73AF;&#x5883;&#x51C6;&#x5907;</h2>
+<p>&#x7531;&#x4E8E;C/C++&#x5DE5;&#x5177;&#x94FE;&#x6BD4;&#x8F83;&#x788E;&#x4E14;&#x4E0D;&#x7EDF;&#x4E00;&#xFF0C;&#x6240;&#x4EE5;&#x672C;&#x6587;&#x4F7F;&#x7528;&#x7684;&#x52A8;&#x6001;&#x5E93;&#x662F;&#x7531;Rust&#x7F16;&#x8BD1;&#x800C;&#x6765;&#xFF0C;&#x6D89;&#x53CA;&#x5230;&#x7684;Rust&#x4EE3;&#x7801;&#x4F1A;&#x5C3D;&#x53EF;&#x80FD;&#x7B80;&#x5355;&#x76F4;&#x89C2;</p>
+<p>&#x4E3A;&#x4E86;&#x65B9;&#x4FBF;&#x5BF9;&#x5E94;&#x6D89;&#x53CA;&#x5230;FFI&#x90E8;&#x5206;&#x7684;&#x5185;&#x5BB9;&#x5747;&#x4EE5;Linux x86_64&#x67B6;&#x6784;</p>
+<h3 id="&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#x94FE;&#x5C55;&#x793A;">&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#x94FE;&#x5C55;&#x793A;</h3>
+<p>Rust&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6839;&#x636E;&#x5176;<a href="https://www.rust-lang.org/learn/get-started" target="_blank">&#x5B98;&#x7F51;</a>&#x6307;&#x793A;&#x8FDB;&#x884C;&#x5B89;&#x88C5;&#x5BF9;&#x5E94;&#x5DE5;&#x5177;&#x94FE;</p>
+<p>JDK&#x4F7F;&#x7528;&#x4EFB;&#x610F;&#x53D1;&#x884C;&#x7248;Java22&#x5373;&#x53EF;,&#x7531;&#x4E8E;&#x672C;&#x6587;&#x4F1A;&#x6D89;&#x53CA;&#x90E8;&#x5206;native-image&#x64CD;&#x4F5C;&#x6240;&#x4EE5;&#x6BD4;&#x8F83;&#x63A8;&#x8350;&#x4F7F;&#x7528;GraalVM23</p>
+<pre><code class="lang-java">&#x279C;  Panama-tutorial git:(master) &#x2717; cargo --version 
+cargo <span class="hljs-number">1.81</span>.0 (<span class="hljs-number">2</span>dbb1af80 <span class="hljs-number">2024</span>-<span class="hljs-number">08</span>-<span class="hljs-number">20</span>)
+&#x279C;  Panama-tutorial git:(master) &#x2717; mvn -v      
+Apache Maven <span class="hljs-number">3.9</span>.4 (dfbb324ad4a7c8fb0bf182e6d91b0ae20e3d2dd9)
+Maven home: /home/dreamlike/.sdkman/candidates/maven/current
+Java version: <span class="hljs-number">23</span>, vendor: Oracle Corporation, runtime: /home/dreamlike/jdks/graalvm-jdk-<span class="hljs-number">23</span>_linux-x64_bin/graalvm-jdk-<span class="hljs-number">23</span>+<span class="hljs-number">37.1</span>
+Default locale: zh_CN, platform encoding: UTF-<span class="hljs-number">8</span>
+OS name: <span class="hljs-string">&quot;linux&quot;</span>, version: <span class="hljs-string">&quot;6.8.0-31-generic&quot;</span>, arch: <span class="hljs-string">&quot;amd64&quot;</span>, family: <span class="hljs-string">&quot;unix&quot;</span>
+</code></pre>
+<h3 id="&#x5C06;rust&#x6784;&#x5EFA;&#x4E0E;maven&#x6784;&#x5EFA;&#x6253;&#x901A;">&#x5C06;Rust&#x6784;&#x5EFA;&#x4E0E;Maven&#x6784;&#x5EFA;&#x6253;&#x901A;</h3>
+<h4 id="exec&#x63D2;&#x4EF6;">exec&#x63D2;&#x4EF6;</h4>
+<p>Maven&#x7684;<a href="https://www.mojohaus.org/exec-maven-plugin/" target="_blank">exec&#x63D2;&#x4EF6;</a>&#xFF0C;&#x53EF;&#x4EE5;&#x5141;&#x8BB8;&#x5728;&#x67D0;&#x4E9B;Maven phase&#x6267;&#x884C;&#x4E00;&#x4E9B;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x8FD9;&#x4E2A;&#x63D2;&#x4EF6;&#x5728;compile phase&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;cargo&#x6765;&#x6784;&#x5EFA;&#x6211;&#x4EEC;&#x7684;Rust&#x5199;&#x7684;&#x52A8;&#x6001;&#x5E93;&#x4EE3;&#x7801;</p>
+<pre><code class="lang-java"> &lt;plugin&gt;
+     &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+     &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
+     &lt;version&gt;1.6.0&lt;/version&gt;
+     &lt;executions&gt;
+         &lt;execution&gt;
+             &lt;id&gt;prepare-libPerson&lt;/id&gt;
+             &lt;phase&gt;compile&lt;/phase&gt;
+             &lt;goals&gt;
+                 &lt;goal&gt;exec&lt;/goal&gt;
+             &lt;/goals&gt;
+             &lt;configuration&gt;
+                 &lt;executable&gt;sh&lt;/executable&gt;
+                 &lt;workingDirectory&gt;${project.basedir}/src/main/rust&lt;/workingDirectory&gt;
+                 &lt;arguments&gt;
+                     &lt;argument&gt;build.sh&lt;/argument&gt;
+                 &lt;/arguments&gt;
+             &lt;/configuration&gt;
+         &lt;/execution&gt;
+     &lt;/executions&gt;
+ &lt;/plugin&gt;
+</code></pre>
+<h4 id="&#x6784;&#x5EFA;&#x811A;&#x672C;">&#x6784;&#x5EFA;&#x811A;&#x672C;</h4>
+<p>cargo&#x5176;&#x5B9E;&#x8FD8;&#x4E0D;&#x80FD;&#x5B8C;&#x5168;&#x6EE1;&#x8DB3;&#x6211;&#x4EEC;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x53EA;&#x79FB;&#x52A8;&#x5C11;&#x6570;&#x4EA7;&#x7269;&#x7B49;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x8FD9;&#x91CC;&#x5199;&#x4E86;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x811A;&#x672C;&#x6765;&#x5B8C;&#x6210;</p>
+<pre><code class="lang-shell">rm -f ../../../libperson.so
+cargo build
+mv target/debug/libperson.so ../../../libperson.so
+</code></pre>
+<h4 id="&#x9879;&#x76EE;&#x5E03;&#x5C40;">&#x9879;&#x76EE;&#x5E03;&#x5C40;</h4>
+<pre><code>
+&#x251C;&#x2500;&#x2500; pom.xml
+&#x251C;&#x2500;&#x2500; README.md
+&#x2514;&#x2500;&#x2500; src
+    &#x251C;&#x2500;&#x2500; main
+    &#x2502;   &#x251C;&#x2500;&#x2500; java
+    &#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; io
+    &#x2502;   &#x2502;       &#x2514;&#x2500;&#x2500; github
+    &#x2502;   &#x2502;           &#x2514;&#x2500;&#x2500; dreamlike
+    &#x2502;   &#x2502;               &#x251C;&#x2500;&#x2500; example
+    &#x2502;   &#x2502;               &#x2502;   &#x251C;&#x2500;&#x2500; ComplexMemoryLayoutExample.java
+    &#x2502;   &#x2502;               &#x2502;   &#x251C;&#x2500;&#x2500; MemoryLayoutExample.java
+    &#x2502;   &#x2502;               &#x2502;   &#x2514;&#x2500;&#x2500; UpcallExample.java
+    &#x2502;   &#x2502;               &#x251C;&#x2500;&#x2500; LibLoader.java
+    &#x2502;   &#x2502;               &#x251C;&#x2500;&#x2500; Main.java
+    &#x2502;   &#x2502;               &#x251C;&#x2500;&#x2500; NativeLookup.java
+    &#x2502;   &#x2502;               &#x2514;&#x2500;&#x2500; PanamaFeature.java
+    &#x2502;   &#x251C;&#x2500;&#x2500; resources
+    &#x2502;   &#x2514;&#x2500;&#x2500; rust
+    &#x2502;       &#x251C;&#x2500;&#x2500; build.sh
+    &#x2502;       &#x251C;&#x2500;&#x2500; Cargo.lock
+    &#x2502;       &#x251C;&#x2500;&#x2500; Cargo.toml
+    &#x2502;       &#x251C;&#x2500;&#x2500; clean.sh
+    &#x2502;       &#x251C;&#x2500;&#x2500; src
+    &#x2502;       &#x2502;   &#x2514;&#x2500;&#x2500; lib.rs
+    &#x2502;       &#x2514;&#x2500;&#x2500; tests
+    &#x2502;           &#x2514;&#x2500;&#x2500; test.rs
+    &#x2514;&#x2500;&#x2500; test
+        &#x2514;&#x2500;&#x2500; java
+            &#x251C;&#x2500;&#x2500; ComplexMemoryLayoutTest.java
+            &#x251C;&#x2500;&#x2500; MemoryLayoutTest.java
+            &#x2514;&#x2500;&#x2500; UpcallTest.java
+</code></pre><h2 id="java---native">Java -&gt; Native</h2>
+<p>&#x5BF9;&#x4E8E;&#x5927;&#x90E8;&#x5206;FFI&#x9700;&#x6C42;&#x90FD;&#x662F;&#x4ECE;Java&#x8C03;&#x7528;Native&#xFF0C;&#x8FD9;&#x4E00;&#x6B65;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x79F0;&#x4E4B;&#x4E3A;downcall&#xFF0C;&#x5148;&#x6765;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#x6765;&#x4ECB;&#x7ECD;&#x4E0B;</p>
+<p>&#x9996;&#x5148;&#x662F;Rust&#x90E8;&#x5206;no_mangle&#x4EE3;&#x8868;&#x4E86;&#x8BA9;rustc&#x4E0D;&#x8981;&#x6539;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x540D;&#x79F0;&#xFF0C;&#x4EE5;&#x7A33;&#x5B9A;&#x51FD;&#x6570;&#x7B26;&#x53F7;</p>
+<p>&#x5176;&#x6B21;&#x662F; extern &quot;C&quot; &#x544A;&#x8BC9;rustc&#x8981;&#x4F7F;&#x7528;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x7684;&#x8C03;&#x7528;&#x7EA6;&#x5B9A;&#x5904;&#x7406;&#x5165;&#x53C2;</p>
+<p>&#x6700;&#x540E;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x8FDB;&#x884C;mvn compile&#x7F16;&#x8BD1;&#x51FA;&#x6765;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x5E93;&#x5373;&#x53EF;</p>
+<pre><code class="lang-rust"><span class="hljs-meta">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add</span></span>(i: <span class="hljs-keyword">i32</span>, j: <span class="hljs-keyword">i32</span>) -&gt; <span class="hljs-keyword">i32</span> {
+    i + j
+}
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x5927;&#x6982;&#x5206;&#x4E3A;&#x8FD9;&#x51E0;&#x6B65;&#xFF08;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x770B;&#x770B;&#x8FD9;&#x4E00;&#x7BC7;&#x6E90;&#x7801;&#x89E3;&#x8BFB;<a href="Panama&#x6D45;&#x6790;.html">Panama&#x5B9E;&#x73B0;&#x89E3;&#x8BFB;</a>&#xFF09;</p>
+<ol>
+<li>&#x94FE;&#x63A5;&#x5668;&#x5BFB;&#x627E;&#x5230;&#x51FD;&#x6570;&#x5730;&#x5740;</li>
+<li>&#x8F6C;&#x6362;&#x5165;&#x53C2;&#x5230;&#x5F53;&#x524D;&#x5E73;&#x53F0;&#x7684;&#x8C03;&#x7528;&#x7EA6;&#x5B9A;</li>
+<li>&#x8DF3;&#x8F6C;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x5730;&#x5740;&#x8FDB;&#x884C;&#x6267;&#x884C;</li>
+<li>&#x6839;&#x636E;&#x8C03;&#x7528;&#x7EA6;&#x5B9A;&#x83B7;&#x53D6;&#x8FD4;&#x56DE;&#x503C;&#x8FD4;&#x56DE;</li>
+</ol>
+<h3 id="&#x5BFB;&#x627E;&#x51FD;&#x6570;&#x7B26;&#x53F7;&#x5730;&#x5740;">&#x5BFB;&#x627E;&#x51FD;&#x6570;&#x7B26;&#x53F7;&#x5730;&#x5740;</h3>
+<h4 id="&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x52A8;&#x6001;&#x5E93;">&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x52A8;&#x6001;&#x5E93;</h4>
+<p>&#x9996;&#x5148;&#x8FD8;&#x662F;&#x8DDF;&#x4EE5;&#x524D;JNI&#x4E00;&#x6837;&#x4F7F;&#x7528;System&#x4E0B;&#x7684;load*&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x52A0;&#x8F7D;&#x5373;&#x53EF;</p>
+<pre><code class="lang-java"> System.load(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;libperson.so&quot;</span>).getAbsolutePath());
+</code></pre>
+<p>&#x901A;&#x8FC7;SymbolLookup&#x5C31;&#x53EF;&#x4EE5;&#x4ECE;&#x52A0;&#x8F7D;&#x7684;&#x52A8;&#x6001;&#x5E93;&#x91CC;&#x9762;&#x89E3;&#x6790;&#x5904;&#x7406;&#x51FA;&#x6765;&#x7684;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x7B26;&#x53F7;&#x5730;&#x5740;</p>
+<pre><code class="lang-java">Optional&lt;MemorySegment&gt; fp = SymbolLookup.loaderLookup()
+        .find(<span class="hljs-string">&quot;add&quot;</span>)
+</code></pre>
+<h4 id="&#x5F53;&#x524D;libc&#x4E2D;&#x51FD;&#x6570;&#x5730;&#x5740;">&#x5F53;&#x524D;libc&#x4E2D;&#x51FD;&#x6570;&#x5730;&#x5740;</h4>
+<p>&#x67D0;&#x4E9B;&#x51FD;&#x6570;&#x5728;libc&#x4E2D;&#x5C31;&#x5B58;&#x5728;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x8981;&#x7528;&#x52A0;&#x8F7D;&#x989D;&#x5916;&#x7684;&#x52A8;&#x6001;&#x5E93;&#x4E86;</p>
+<pre><code class="lang-java">Optional&lt;MemorySegment&gt; fp = Linker.nativeLinker().defaultLookup().find(<span class="hljs-string">&quot;getpagesize&quot;</span>)
+</code></pre>
+<h4 id="&#x5C06;&#x4E24;&#x8005;&#x7ED3;&#x5408;&#x8D77;&#x6765;&#x4F7F;&#x7528;">&#x5C06;&#x4E24;&#x8005;&#x7ED3;&#x5408;&#x8D77;&#x6765;&#x4F7F;&#x7528;</h4>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.lang.foreign.Linker;
+<span class="hljs-keyword">import</span> java.lang.foreign.MemorySegment;
+<span class="hljs-keyword">import</span> java.lang.foreign.SymbolLookup;
+<span class="hljs-keyword">import</span> java.util.Optional;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NativeLookup</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SymbolLookup</span> </span>{
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> NativeLookup INSTANCE = <span class="hljs-keyword">new</span> NativeLookup();
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Optional&lt;MemorySegment&gt; <span class="hljs-title">find</span><span class="hljs-params">(String name)</span> </span>{
+        <span class="hljs-keyword">return</span> SymbolLookup.loaderLookup()
+                .find(name)
+                .or(() -&gt; Linker.nativeLinker().defaultLookup().find(name));
+    }
+}
+</code></pre>
+<h3 id="&#x58F0;&#x660E;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x65B9;&#x5F0F;">&#x58F0;&#x660E;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x65B9;&#x5F0F;</h3>
+<h4 id="&#x7B80;&#x5355;&#x7684;&#x8C03;&#x7528;">&#x7B80;&#x5355;&#x7684;&#x8C03;&#x7528;</h4>
+<p>&#x6211;&#x4EEC;&#x76EE;&#x524D;&#x53EA;&#x627E;&#x5230;&#x4E86;&#x51FD;&#x6570;&#x7B26;&#x53F7;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x7C7B;&#x6BD4;&#x4E3A;&#x6211;&#x4EEC;&#x53EA;&#x4E3A;c&#x8BED;&#x8A00;&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x8D4B;&#x503C;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x8FD8;&#x6CA1;&#x51B3;&#x5B9A;&#x4ED6;&#x7684;&#x7C7B;&#x578B;</p>
+<p>&#x90A3;&#x4E48;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x4F7F;&#x7528;FunctionDescriptor.of&#x6765;&#x58F0;&#x660E;&#x5BF9;&#x5E94;&#x7684;&#x7C7B;&#x578B;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+        <span class="hljs-keyword">try</span> {
+            MemorySegment fp = NativeLookup.INSTANCE.find(<span class="hljs-string">&quot;add&quot;</span>).get();
+            <span class="hljs-comment">//&#x5B9E;&#x9645;&#x4F7F;&#x7528;&#x7684;&#x65F6;&#x5019;&#x52A1;&#x5FC5;&#x8981;const&#x5316;</span>
+            MethodHandle addMH = Linker.nativeLinker().downcallHandle(
+                    fp,
+                <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x58F0;&#x660E;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x53C2;&#x6570;&#x5217;&#x8868;</span>
+                    FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+            );
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) addMH.invokeExact(a, b);
+        } <span class="hljs-keyword">catch</span> (Throwable e) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+        }
+    }
+</code></pre>
+<h4 id="&#x8FDB;&#x9636;&#x8C03;&#x7528;&#x65B9;&#x6CD5;">&#x8FDB;&#x9636;&#x8C03;&#x7528;&#x65B9;&#x6CD5;</h4>
+<p>&#x5BF9;&#x4E8E;add&#x51FD;&#x6570;&#x8FD9;&#x79CD;&#x7B80;&#x5355;&#x7684;&#x51FD;&#x6570;&#x4F3C;&#x4E4E;&#x6211;&#x4EEC;&#x7684;ffi&#x8C03;&#x7528;&#x901F;&#x5EA6;&#x4E0D;&#x591F;&#x5FEB;&#xFF0C;&#x90A3;&#x4E48;&#x80FD;&#x4E0D;&#x80FD;&#x518D;&#x5FEB;&#x4E00;&#x4E9B;</p>
+<p>&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x5728;&#x540E;&#x9762;&#x52A0;&#x5165;Option&#x4E86;&#xFF0C;<code>Linker.Option.critical</code>&#x53EF;&#x4EE5;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x8DF3;&#x8FC7;&#x4E00;&#x4E9B;&#x6821;&#x9A8C;&#x548C;&#x72B6;&#x6001;&#x8F6C;&#x6362;&#xFF0C;&#x751A;&#x81F3;&#x8DF3;&#x8FC7;&#x5B89;&#x5168;&#x70B9;&#x8F6E;&#x8BE2;</p>
+<p>&#x5927;&#x5927;&#x52A0;&#x5FEB;&#x4E86;&#x8C03;&#x7528;&#x901F;&#x5EA6;&#xFF0C;&#x4F46;&#x662F;&#x8BF7;&#x6CE8;&#x610F;&#x7531;&#x4E8E;&#x8DF3;&#x8FC7;&#x4E86;&#x5F88;&#x591A;&#x6821;&#x9A8C;&#x548C;&#x5B89;&#x5168;&#x63AA;&#x65BD;&#xFF0C;&#x6240;&#x4EE5;&#x82E5;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x6267;&#x884C;&#x65F6;&#x95F4;&#x8FC7;&#x957F;&#x4F1A;&#x5BFC;&#x81F4;&#x4EA7;&#x751F;&#x5DE8;&#x5927;&#x7684;&#x6027;&#x80FD;&#x52A3;&#x5316;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;GC&#x5B89;&#x5168;&#x70B9;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x8FC7;&#x957F;</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">addFast</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+        <span class="hljs-keyword">try</span> {
+            MemorySegment fp = NativeLookup.INSTANCE.find(<span class="hljs-string">&quot;add&quot;</span>).get();
+            <span class="hljs-comment">//&#x5B9E;&#x9645;&#x4F7F;&#x7528;&#x7684;&#x65F6;&#x5019;&#x52A1;&#x5FC5;&#x8981;const&#x5316;</span>
+            MethodHandle addMH = Linker.nativeLinker().downcallHandle(
+                    fp,
+                    FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.JAVA_INT, ValueLayout.JAVA_INT),
+                    Linker.Option.critical(<span class="hljs-keyword">false</span>)
+            );
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) addMH.invokeExact(a, b);
+        } <span class="hljs-keyword">catch</span> (Throwable e) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+        }
+    }
+</code></pre>
+<p>&#x505A;&#x4E86;&#x4E2A;&#x7C97;&#x7CD9;&#x7684;benchmark &#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x6765;critical&#x8FD8;&#x662F;&#x6709;&#x6548;&#x679C;&#x7684;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">rawBenchmark</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">//add rawBenchmark: 5</span>
+    <span class="hljs-comment">//addFast rawBenchmark: 3</span>
+    <span class="hljs-keyword">long</span> start = System.currentTimeMillis();
+    <span class="hljs-keyword">long</span> count = <span class="hljs-number">10_0000</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) {
+        add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+    }
+    System.out.println(<span class="hljs-string">&quot;add rawBenchmark: &quot;</span> + (System.currentTimeMillis() - start));
+    start = System.currentTimeMillis();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) {
+        addFast(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+    }
+    System.out.println(<span class="hljs-string">&quot;addFast rawBenchmark: &quot;</span> + (System.currentTimeMillis() - start));
+}
+</code></pre>
+<h4 id="&#x4F20;&#x9012;java-heap-array&#x5230;native">&#x4F20;&#x9012;Java Heap Array&#x5230;Native</h4>
+<p>&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;Java&#x7684;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x4F20;&#x9012;&#x5230;Native&#xFF0C;&#x6B64;&#x65F6;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x4F7F;&#x7528;<code>Linker.Option.critical(true)</code>&#x4E86;</p>
+<p>&#x5BF9;&#x4E8E;&#x8FD9;&#x6837;&#x7684;&#x4E00;&#x4E2A;native&#x51FD;&#x6570;</p>
+<pre><code class="lang-rust"><span class="hljs-meta">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">unsafe</span>  <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">get_array_by_index</span></span>(java_heap_array: *<span class="hljs-keyword">mut</span> <span class="hljs-keyword">i64</span>, index: <span class="hljs-keyword">i32</span>) -&gt; <span class="hljs-keyword">i64</span>{
+    java_heap_array.add(index <span class="hljs-keyword">as</span> usize).read()
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x8FD9;&#x6837;&#x58F0;&#x660E;&#x5373;&#x53EF;&#xFF0C;&#x6CE8;&#x610F;&#x7531;&#x4E8E;&#x4F20;&#x5165;&#x4E86; Linker.Option.critical &#x52A1;&#x5FC5;&#x7262;&#x8BB0;&#x521A;&#x624D;&#x63D0;&#x5230;&#x7684;&#x5BF9;JVM&#x6027;&#x80FD;&#x7684;&#x5F71;&#x54CD;</p>
+<p>&#x8FD9;&#x4E2A;&#x4F20;&#x5165;&#x7684;&#x539F;&#x7406;&#x539F;&#x7406;&#x662F;&#xFF0C;&#x7531;&#x4E8E;&#x6B64;&#x65F6;&#x5E76;&#x4E0D;&#x5904;&#x4E8E;&#x5B89;&#x5168;&#x70B9;&#x6240;&#x4EE5;Java&#x5BF9;&#x8C61;&#x7684;&#x4F4D;&#x7F6E;&#x662F;&#x7A33;&#x5B9A;&#x7684;&#xFF08;&#x6CA1;&#x6709;&#x88AB;gc&#x79FB;&#x52A8;&#xFF09;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5BF9;&#x8C61;&#x5730;&#x5740;&#x548C;&#x6570;&#x7EC4;&#x5934;&#x5927;&#x5C0F;&#x83B7;&#x53D6;&#x5230;&#x771F;&#x5B9E;&#x7684;&#x6570;&#x7EC4;&#x5F00;&#x59CB;&#x5730;&#x5740;&#xFF0C;&#x5373;&#x4F20;&#x9012;&#x7684;&#x5730;&#x5740;&#x5B9E;&#x9645;&#x4E3A; &amp;array + long_array_offset</p>
+<pre><code class="lang-java"> getArrayByIndexMH = Linker.nativeLinker().downcallHandle(
+         NativeLookup.INSTANCE.find(<span class="hljs-string">&quot;get_array_by_index&quot;</span>).get(),
+         FunctionDescriptor.of(ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.JAVA_INT),
+         Linker.Option.critical(<span class="hljs-keyword">true</span>)
+ );
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">getByIndex</span><span class="hljs-params">(<span class="hljs-keyword">long</span>[] array, <span class="hljs-keyword">int</span> index)</span> </span>{
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">long</span>) getArrayByIndexMH.invokeExact(MemorySegment.ofArray(array), index);
+    } <span class="hljs-keyword">catch</span> (Throwable e) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+    }
+}
+</code></pre>
+<h3 id="&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7279;&#x6B8A;&#x4F8B;&#x5B50;">&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7279;&#x6B8A;&#x4F8B;&#x5B50;</h3>
+<h4 id="&#x8FC7;&#x5927;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;">&#x8FC7;&#x5927;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;</h4>
+<p>x86_64 SystemV&#x7684;abi&#x4E3A;&#x4F8B;&#x5B50;&#xFF0C;&#x82E5;&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x4E14;&#x5176;&#x5927;&#x5C0F;&#x5927;&#x4E8E;&#x4E24;&#x4E2A;&#x516B;&#x5B57;&#x8282;&#x6216;&#x5305;&#x542B;&#x672A;&#x5BF9;&#x9F50;&#x7684;&#x5B57;&#x6BB5;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x4E00;&#x4E9B;&#x7279;&#x6B8A;&#x7684;&#x65B9;&#x6848;&#x4E86;</p>
+<blockquote>
+<p>&#x5982;&#x679C;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x7C7B;&#x662F; MEMORY&#xFF0C;&#x5219;&#x8C03;&#x7528;&#x8005;&#x4E3A;&#x8FD4;&#x56DE;&#x63D0;&#x4F9B;&#x7A7A;&#x95F4;&#x5E76;&#x628A;&#x6307;&#x5411;&#x8FD9;&#x5757;&#x7A7A;&#x95F4;&#x7684;&#x6307;&#x9488;&#x503C;&#x653E;&#x5728;<code>%rdi</code>&#x4E2D;&#x4F20;&#x9012;&#xFF0C;&#x5373;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x4E2A;&#x9690;&#x85CF;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x8FD4;&#x56DE;&#x65F6; <code>%rax</code> &#x7684;&#x503C;&#x4E3A;&#x5728; <code>%rdi</code> &#x4E2D;&#x4F20;&#x5165;&#x7684;&#x6307;&#x9488;&#x503C;</p>
+</blockquote>
+<p>&#x4EE5;&#x8FD9;&#x4E2A;&#x4E3A;&#x4F8B;&#x5B50;</p>
+<pre><code class="lang-rust"><span class="hljs-meta">#[repr(C)]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">big_struct</span></span> {
+    <span class="hljs-keyword">pub</span> a: <span class="hljs-keyword">i64</span>,
+    <span class="hljs-keyword">pub</span> b: <span class="hljs-keyword">i64</span>,
+    <span class="hljs-keyword">pub</span> c: <span class="hljs-keyword">i64</span>,
+    <span class="hljs-keyword">pub</span> d: <span class="hljs-keyword">i64</span>,
+}
+<span class="hljs-meta">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new_big_struct</span></span>() -&gt; big_struct {
+    big_struct {
+        a: <span class="hljs-number">1</span>,
+        b: <span class="hljs-number">2</span>,
+        c: <span class="hljs-number">3</span>,
+        d: <span class="hljs-number">4</span>,
+    }
+}
+</code></pre>
+<p>&#x90A3;&#x4E48;&#x6211;&#x53EF;&#x4EE5;&#x5F88;&#x5FEB;&#x5730;&#x5199;&#x51FA;&#x6765;&#x5BF9;&#x5E94;&#x7684;&#x7ED1;&#x5B9A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> StructLayout BigStructLayout = MemoryLayout.structLayout(
+        ValueLayout.JAVA_LONG.withName(<span class="hljs-string">&quot;a&quot;</span>),
+        ValueLayout.JAVA_LONG.withName(<span class="hljs-string">&quot;b&quot;</span>),
+        ValueLayout.JAVA_LONG.withName(<span class="hljs-string">&quot;c&quot;</span>),
+        ValueLayout.JAVA_LONG.withName(<span class="hljs-string">&quot;d&quot;</span>)
+);
+var newBigStructMH = Linker.nativeLinker().downcallHandle(
+        NativeLookup.INSTANCE.find(<span class="hljs-string">&quot;new_big_struct&quot;</span>).get(),
+        FunctionDescriptor.of(BigStructLayout)
+);
+<span class="hljs-comment">// X&#x8FD9;&#x91CC;&#x662F;&#x8DD1;&#x4E0D;&#x901A;&#x7684;</span>
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> MemorySegment <span class="hljs-title">newBigStruct</span><span class="hljs-params">()</span> </span>{
+     <span class="hljs-keyword">try</span> {
+         <span class="hljs-keyword">return</span> (MemorySegment) newBigStructMH.invokeExact();
+     } <span class="hljs-keyword">catch</span> (Throwable e) {
+         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+     }
+ }
+</code></pre>
+<p>&#x771F;&#x6B63;&#x8DD1;&#x8D77;&#x6765;&#x4E4B;&#x540E;&#x4F1A;&#x53D1;&#x73B0;&#x629B;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x5F02;&#x5E38;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6309;&#x7167;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x5206;&#x914D;&#x5668;</p>
+<pre><code class="lang-java">java.lang.RuntimeException: java.lang.invoke.WrongMethodTypeException: handle&apos;s method type (SegmentAllocator)MemorySegment but found ()MemorySegment
+
+    at io.github.dreamlike.example.DowncallExample.newBigStruct(DowncallExample.java:100)
+    at DowncallTest.testBigStruct(DowncallTest.java:25)
+    ... more
+Caused by: java.lang.invoke.WrongMethodTypeException: handle&apos;s method type (SegmentAllocator)MemorySegment but found ()MemorySegment
+    at java.base/java.lang.invoke.Invokers.newWrongMethodTypeException(Invokers.java:521)
+    at java.base/java.lang.invoke.Invokers.checkExactType(Invokers.java:530)
+    at io.github.dreamlike.example.DowncallExample.newBigStruct(DowncallExample.java:98)
+    ... 26 more
+</code></pre>
+<p>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8FD9;&#x6837;&#x4E00;&#x6539;</p>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> MemorySegment <span class="hljs-title">newBigStruct</span><span class="hljs-params">(SegmentAllocator segmentAllocator)</span> </span>{
+     <span class="hljs-keyword">try</span> {
+         <span class="hljs-keyword">return</span> (MemorySegment) newBigStructMH.invokeExact(segmentAllocator);
+     } <span class="hljs-keyword">catch</span> (Throwable e) {
+         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+     }
+ }
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7A0D;&#x5FAE;&#x4ECE;&#x5806;&#x6808;&#x770B;&#x4E00;&#x773C;&#x53D1;&#x751F;&#x4E86;&#x4EC0;&#x4E48;&#xFF0C;&#x5728;&#x771F;&#x5B9E;&#x8C03;&#x7528;&#x4E4B;&#x524D;&#x5148;&#x8C03;&#x7528;&#x4F20;&#x5165;&#x7684;&#x5206;&#x914D;&#x5668;&#x5206;&#x914D;&#x51FA;&#x6765;&#x4E00;&#x6BB5;&#x5185;&#x5B58;&#xFF0C;&#x7136;&#x540E;&#x624D;&#x6309;&#x7167;abi&#x8FDB;&#x884C;&#x8C03;&#x7528;</p>
+<p><img src="assets/PQ6XDN90pe.jpg" alt="PQ6XDN90pe"></p>
+<h4 id="errorno">errorno</h4>
+<p>&#x67D0;&#x4E9B;syscall&#x5728;&#x51FA;&#x9519;&#x7684;&#x65F6;&#x5019;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;-1&#x7136;&#x540E;&#x8BBE;&#x7F6E;errorno,&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5728;&#x65B0;&#x7684;ffi&#x4E2D;&#x5982;&#x4F55;&#x83B7;&#x53D6;&#x8FD9;&#x4E2A;errorno&#x5462;&#xFF1F;</p>
+<p>&#x9996;&#x5148;&#x8BA9;&#x6211;&#x4EEC;&#x6A21;&#x62DF;&#x4E00;&#x4E2A;errorno</p>
+<pre><code class="lang-rust"><span class="hljs-meta">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">unsafe</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">error_syscall</span></span>(errono: usize) -&gt; <span class="hljs-keyword">i32</span> {
+    libc::__errno_location().write(-(errono <span class="hljs-keyword">as</span> <span class="hljs-keyword">i32</span>));
+     -<span class="hljs-number">1</span>
+}
+</code></pre>
+<p>&#x90A3;&#x4E48;&#x5BF9;&#x5E94;&#x7684;&#x7ED1;&#x5B9A;&#x662F;</p>
+<p>&#x9700;&#x8981;&#x901A;&#x8FC7;&#x7279;&#x6B8A;&#x7684;Linker option&#x548C;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x524D;&#x5BFC;&#x53C2;&#x6570;&#x5B8C;&#x6210;</p>
+<pre><code class="lang-java"> errorSyscallMH = Linker.nativeLinker().downcallHandle(
+         NativeLookup.INSTANCE.find(<span class="hljs-string">&quot;error_syscall&quot;</span>).get(),
+         FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT),
+         Linker.Option.captureCallState(<span class="hljs-string">&quot;errno&quot;</span>)
+ );
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">errorSyscall</span><span class="hljs-params">(<span class="hljs-keyword">int</span> errorno)</span> </span>{
+    <span class="hljs-keyword">try</span> (Arena arena = Arena.ofConfined()) {
+        StructLayout capturedStateLayout = Linker.Option.captureStateLayout();
+        VarHandle errnoHandle = capturedStateLayout.varHandle(MemoryLayout.PathElement.groupElement(<span class="hljs-string">&quot;errno&quot;</span>));
+        MemorySegment capturedState = arena.allocate(capturedStateLayout);
+        var _ = (<span class="hljs-keyword">int</span>) errorSyscallMH.invokeExact(capturedState, errorno);
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) errnoHandle.get(capturedState, <span class="hljs-number">0L</span>);
+    } <span class="hljs-keyword">catch</span> (Throwable e) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+    }
+}
+</code></pre>
+<h4 id="&#x4EE5;&#x4E0A;&#x4E24;&#x79CD;&#x7ED3;&#x5408;&#x8D77;&#x6765;">&#x4EE5;&#x4E0A;&#x4E24;&#x79CD;&#x7ED3;&#x5408;&#x8D77;&#x6765;</h4>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> MemorySegment <span class="hljs-title">newBigStructErrorNo</span><span class="hljs-params">(SegmentAllocator segmentAllocator)</span> </span>{
+     <span class="hljs-keyword">try</span> (Arena arena = Arena.ofConfined()) {
+         StructLayout capturedStateLayout = Linker.Option.captureStateLayout();
+         VarHandle errnoHandle = capturedStateLayout.varHandle(MemoryLayout.PathElement.groupElement(<span class="hljs-string">&quot;errno&quot;</span>));
+         MemorySegment capturedState = arena.allocate(capturedStateLayout);
+         <span class="hljs-comment">//&#x5148;&#x653E;&#x5206;&#x914D;&#x5668; &#x518D;&#x653E;capturedState</span>
+         <span class="hljs-keyword">return</span>  (MemorySegment) newBigStructErrorNoMH.invokeExact(segmentAllocator, capturedState);
+     } <span class="hljs-keyword">catch</span> (Throwable e) {
+         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(e);
+     }
+ }
+</code></pre>
+<h2 id="native---java">Native -&gt; Java</h2>
+<p>&#x6709;&#x4E9B;&#x65F6;&#x5019;&#x53EF;&#x80FD;&#x9700;&#x8981;&#x4ECE;Native&#x53CD;&#x8FC7;&#x6765;&#x8C03;&#x7528;Java&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;qsort&#x5C31;&#x9700;&#x8981;&#x4F60;&#x4F20;&#x5165;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x79F0;&#x4E4B;&#x4E3A;upcall</p>
+<h3 id="&#x7B80;&#x5355;upcall">&#x7B80;&#x5355;upcall</h3>
+<p>&#x6211;&#x8FD9;&#x91CC;&#x6709;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x6D89;&#x53CA;&#x5230;upcall&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x5F88;&#x7B80;&#x5355;&#x5C31;&#x662F;&#x5C06;i+j+&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x7ED3;&#x679C; &#x7136;&#x540E;&#x8FD4;&#x56DE;</p>
+<pre><code class="lang-rust"><span class="hljs-meta">#[no_mangle]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">callback</span></span>(i: <span class="hljs-keyword">i32</span>, j: <span class="hljs-keyword">i32</span>, f: <span class="hljs-keyword">extern</span> <span class="hljs-function"><span class="hljs-keyword">fn</span></span>(<span class="hljs-keyword">i32</span>, <span class="hljs-keyword">i32</span>) -&gt; <span class="hljs-keyword">i32</span>) -&gt; <span class="hljs-keyword">i32</span> {
+    i + j + f(i, j)
+}
+</code></pre>
+<p>&#x90A3;&#x4E48;downcall&#x7684;&#x90E8;&#x5206;&#x5148;&#x7701;&#x7565;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;&#x5982;&#x4F55;&#x5C06;&#x4E00;&#x4E2A;Java&#x51FD;&#x6570;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x4F20;&#x5165;</p>
+<pre><code class="lang-java">MemorySegment upcallStub = Linker.nativeLinker().upcallStub(
+        MethodHandles.lookup().findStatic(Math.class, <span class="hljs-string">&quot;addExact&quot;</span>, MethodType.methodType(<span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">int</span>.class)),
+        FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT),
+        Arena.global()
+);
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x8BB2;</p>
+<p>&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x662F;Methodhanle,&#x5373;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x63D0;&#x5230;&#x7684;Java&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5219;&#x662F;&#x8981;&#x4F20;&#x9012;&#x7ED9;Native&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7C7B;&#x578B;&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5219;&#x662F;&#x8FD9;&#x4E2A;upcallStub&#x5BF9;&#x5E94;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x5141;&#x8BB8;&#x91CA;&#x653E;</p>
+<p>&#x5B83;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x4F7F;&#x7528;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5206;&#x914D;&#x7A7A;&#x95F4;&#xFF0C;&#x7136;&#x540E;&#x539F;&#x5730;&#x751F;&#x6210;&#x4E00;&#x6BB5;&#x673A;&#x5668;&#x7801;&#x5B58;&#x653E;&#x8D77;&#x6765;&#xFF0C;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A;&#x5757;&#x7A7A;&#x95F4;&#x7684;&#x9996;&#x5730;&#x5740;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x503C;</p>
+<p>&#x81F3;&#x4E8E;&#x8FD9;&#x6BB5;&#x673A;&#x5668;&#x7801;&#x53EA;&#x662F;&#x505A;&#x4E86;&#x5F53;&#x524D;abi&#x5230;java abi&#x7684;&#x8C03;&#x7528;&#x8F6C;&#x6362;&#xFF0C;&#x7136;&#x540E;&#x627E;&#x5230;&#x5BF9;&#x5E94;java&#x51FD;&#x6570;&#xFF08;methodstub&#xFF09;&#x8FDB;&#x884C;&#x8C03;&#x7528;</p>
+<p>&#x90A3;&#x4E48;&#x6700;&#x540E;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x8FD9;&#x6837;&#x8C03;&#x7528;&#x5C31;&#x597D;&#x4E86;</p>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">callBackNative</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+     <span class="hljs-keyword">try</span> {
+         <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) callbackMH.invokeExact(a, b, upcallStub);
+     } <span class="hljs-keyword">catch</span> (Throwable t) {
+         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(t);
+     }
+ }
+</code></pre>
+<h3 id="downcall&#x5BF9;&#x63A5;">downcall&#x5BF9;&#x63A5;</h3>
+<p>upcall&#x4EA7;&#x751F;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x662F;&#x5B8C;&#x5168;&#x7B26;&#x5408;&#x5F53;&#x524D;&#x5E73;&#x53F0;abi&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4F60;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;downcall api&#x6765;&#x8C03;&#x7528;&#x4F60;&#x751F;&#x6210;&#x7684;&#x8FD9;&#x4E2A;upcall stub</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">z</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    MethodHandle callUpcall = Linker.nativeLinker()
+            .downcallHandle(
+        <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x4F60;upcall&#x83B7;&#x5F97;&#x7684;&#x6307;&#x9488;</span>
+                    upcallStub,
+                    FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+            );
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) callUpcall.invokeExact(a, b);
+    } <span class="hljs-keyword">catch</span> (Throwable t) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(t);
+    }
+}
+</code></pre>
+<p>&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x88AB;call&#x7684;Java&#x51FD;&#x6570;&#x91CC;&#x9762;&#x6253;&#x4E2A;&#x65AD;&#x70B9;&#x770B;&#x5230;&#x6E05;&#x6670;&#x7684;&#x5806;&#x6808;</p>
+<p><img src="assets/image-20241003200307954.png" alt="image-20241003200307954"></p>
+<h3 id="&#x4F7F;&#x7528;&#x5E26;&#x6355;&#x83B7;&#x7684;lambda&#x4F5C;&#x4E3A;upcall">&#x4F7F;&#x7528;&#x5E26;&#x6355;&#x83B7;&#x7684;Lambda&#x4F5C;&#x4E3A;upcall</h3>
+<p>&#x5728;&#x5F88;&#x591A;&#x8BED;&#x8A00;&#x91CC;&#x9762;&#xFF0C;&#x4E0D;&#x5E26;&#x6709;&#x6355;&#x83B7;&#x7684;lambda&#x662F;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;Java&#x6765;&#x8BF4;&#x5E26;&#x6355;&#x83B7;&#x7684;&#x4ECD;&#x65E7;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;</p>
+<p>&#x53EA;&#x9700;&#x8981;&#x4E00;&#x70B9;&#x70B9;Methodhandle&#x7684;&#x5C0F;&#x6280;&#x5DE7;&#x5373;&#x53EF;&#xFF0C;&#x4ECE;&#x8FD9;&#x91CC;&#x4E5F;&#x80FD;&#x770B;&#x51FA;&#x6765;upcall&#x4E0D;&#x5728;&#x4E4E;methodhandle&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x53EA;&#x8981;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#x5BF9;&#x7684;&#x4E0A;&#x5C31;&#x597D;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">capturedLambdaUpcall</span><span class="hljs-params">(String someString)</span> </span>{
+    <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Add</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;
+    }
+    <span class="hljs-keyword">try</span> {
+        MethodHandle methodHandle = MethodHandles.lookup().findVirtual(Add.class, <span class="hljs-string">&quot;add&quot;</span>, MethodType.methodType(<span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">int</span>.class));
+        <span class="hljs-comment">//bindTo&#x76F8;&#x5F53;&#x4E8E;&#x628A;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;Add&#x7ED9;&#x4E86;&#x9ED8;&#x8BA4;&#x503C;</span>
+        methodHandle = methodHandle.bindTo((Add) (a, b) -&gt; {
+            System.out.println(someString);
+            <span class="hljs-keyword">return</span> someString.length();
+        });
+        var capturedLambdaUpcallStub = Linker.nativeLinker().upcallStub(
+                methodHandle,
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT),
+                Arena.global()
+        );
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) Linker.nativeLinker()
+                .downcallHandle(
+                        capturedLambdaUpcallStub,
+                        FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+                ).invokeExact(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+    } <span class="hljs-keyword">catch</span> (Throwable r) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(r);
+    }
+}
+</code></pre>
+<h2 id="native-image">Native-image</h2>
+<p>&#x8FD9;&#x91CC;&#x4F7F;&#x7528;Graal23&#x8FDB;&#x884C;&#x793A;&#x8303;&#xFF0C;&#x5177;&#x4F53;&#x4E0D;&#x540C;&#x5E73;&#x53F0;native-image&#x517C;&#x5BB9;&#x6027;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<a href="https://www.graalvm.org/latest/reference-manual/native-image/native-code-interoperability/foreign-interface/" target="_blank">&#x6587;&#x6863;</a></p>
+<p>&#x4E3A;&#x4E86;&#x5FEB;&#x901F;&#x770B;&#x5230;&#x7ED3;&#x679C;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x8FD9;&#x8FB9;&#x9009;&#x62E9;&#x4E86;&#x51E0;&#x4E4E;&#x65E0;&#x4F18;&#x5316;</p>
+<p><img src="assets/image-20241003201709294.png" alt="image-20241003201709294"></p>
+<p>&#x6CE8;&#x610F;&#x7EA2;&#x6846;&#x7684;&#x53C2;&#x6570;&#x975E;&#x5E38;&#x91CD;&#x8981;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5728;graal&#x7684;feature&#x4E2D;&#x539F;&#x5C01;&#x4E0D;&#x52A8;&#x6CE8;&#x518C;&#x5BF9;&#x5E94;&#x7684;downcall&#x548C;upcall&#x7684;&#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#x548C;option</p>
+<p>&#x6211;&#x4EEC;&#x4EE5;&#x521A;&#x624D;&#x7684;&#x4F8B;&#x5B50;&#x5BF9;&#x5176;native-image</p>
+<p><img src="assets/image-20241003202651373.png" alt="image-20241003202651373"></p>
+<p>&#x5BF9;&#x5E94;&#x7684;feature&#x4E3A;</p>
+<pre><code class="lang-java">
+<span class="hljs-keyword">import</span> org.graalvm.nativeimage.hosted.Feature;
+<span class="hljs-keyword">import</span> org.graalvm.nativeimage.hosted.RuntimeForeignAccess;
+
+<span class="hljs-keyword">import</span> java.lang.foreign.FunctionDescriptor;
+<span class="hljs-keyword">import</span> java.lang.foreign.Linker;
+<span class="hljs-keyword">import</span> java.lang.foreign.ValueLayout;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PanamaFeature</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Feature</span> </span>{
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">duringSetup</span><span class="hljs-params">(DuringSetupAccess access)</span> </span>{
+        RuntimeForeignAccess.registerForDowncall(
+                FunctionDescriptor.of(ValueLayout.JAVA_LONG, ValueLayout.ADDRESS, ValueLayout.JAVA_INT),
+                Linker.Option.critical(<span class="hljs-keyword">true</span>)
+        );
+
+        RuntimeForeignAccess.registerForDowncall(
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+        );
+
+        RuntimeForeignAccess.registerForUpcall(
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)
+        );
+    }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="panama-tutorial-2-MemoryLayout.html" class="navigation navigation-prev " aria-label="Previous page: Panama教程-2-MemoryLayout介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="afterUnsafe.html" class="navigation navigation-next " aria-label="Next page: 失去了Unsafe内存操作之后该何去何从">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Panama教程-3-FFI介绍","level":"5.5","depth":1,"next":{"title":"失去了Unsafe内存操作之后该何去何从","level":"5.6","depth":1,"path":"panama/afterUnsafe.md","ref":"panama/afterUnsafe.md","articles":[]},"previous":{"title":"Panama教程-2-MemoryLayout介绍","level":"5.4","depth":1,"path":"panama/panama-tutorial-2-MemoryLayout.md","ref":"panama/panama-tutorial-2-MemoryLayout.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"panama/panama-tutorial-3-FFI.md","mtime":"2024-10-03T12:32:06.546Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-10-03T12:32:30.322Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
