@@ -11,6 +11,7 @@
 ## reactive
 
 * [响应式的锁](reactive_lock.md)
+* [Netty4.2模型变化简介](netty-4-2.md)
 
 ## Loom
 
