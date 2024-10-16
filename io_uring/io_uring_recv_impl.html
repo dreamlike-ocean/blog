@@ -1,0 +1,682 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>io_uring_recv是怎么实现的 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../reactive_lock.html" />
+    
+    
+    <link rel="prev" href="io_uringAndMemory.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="io_uring.html">
+            
+                <a href="io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="io_uringAndMemory.html">
+            
+                <a href="io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.3" data-path="io_uring_recv_impl.html">
+            
+                <a href="io_uring_recv_impl.html">
+            
+                    
+                    io_uring_recv是怎么实现的
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../netty-4-2.html">
+            
+                <a href="../netty-4-2.html">
+            
+                    
+                    Netty4.2模型变化简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../panama/panama-tutorial-0-A.html">
+            
+                <a href="../panama/panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../panama/panama-tutorial-0-B.html">
+            
+                <a href="../panama/panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                <a href="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                <a href="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                    
+                    Panama教程-2-MemoryLayout介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="../panama/panama-tutorial-3-FFI.html">
+            
+                <a href="../panama/panama-tutorial-3-FFI.html">
+            
+                    
+                    Panama教程-3-FFI介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >io_uring_recv是怎么实现的</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="&#x5728;iouring&#x4E2D;&#x8BBE;&#x7F6E;block&#x7684;socket&#x662F;&#x5426;&#x6709;&#x610F;&#x4E49;&#xFF1F;">&#x5728;io_uring&#x4E2D;&#x8BBE;&#x7F6E;block&#x7684;socket&#x662F;&#x5426;&#x6709;&#x610F;&#x4E49;&#xFF1F;</h3>
+<p>&#x5148;&#x770B;IORING_OP_RECVMSG pdef &#x5176;&#x652F;&#x6301;pollin </p>
+<pre><code class="lang-C++">    [IORING_OP_RECVMSG] = {
+        .needs_file     = <span class="hljs-number">1</span>,
+        .unbound_nonreg_file    = <span class="hljs-number">1</span>,
+        .pollin         = <span class="hljs-number">1</span>,
+        .buffer_select      = <span class="hljs-number">1</span>,
+        .ioprio         = <span class="hljs-number">1</span>,
+        .manual_alloc       = <span class="hljs-number">1</span>,
+        .name           = <span class="hljs-string">&quot;RECVMSG&quot;</span>,
+<span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> defined(CONFIG_NET)</span>
+        .async_size     = <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> io_async_msghdr),
+        .prep           = io_recvmsg_prep,
+        .issue          = io_recvmsg,
+        .prep_async     = io_recvmsg_prep_async,
+        .cleanup        = io_sendmsg_recvmsg_cleanup,
+        .fail           = io_sendrecv_fail,
+</code></pre>
+<p>&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x5904;&#x7406;sqe&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5F3A;&#x5236;&#x4F7F;&#x7528;IO_URING_F_NONBLOCK&#x8C03;&#x7528;io_recvmsg</p>
+<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">io_queue_sqe</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> io_kiocb *req)</span>
+    __<span class="hljs-title">must_hold</span><span class="hljs-params">(&amp;req-&gt;ctx-&gt;uring_lock)</span>
+</span>{
+    <span class="hljs-keyword">int</span> ret;
+
+    ret = io_issue_sqe(req, IO_URING_F_NONBLOCK|IO_URING_F_COMPLETE_DEFER);
+
+    <span class="hljs-comment">/*
+     * We async punt it if the file wasn&apos;t marked NOWAIT, or if the file
+     * doesn&apos;t support non-blocking read/write attempts
+     */</span>
+    <span class="hljs-keyword">if</span> (likely(!ret))
+        io_arm_ltimeout(req);
+    <span class="hljs-keyword">else</span>
+        io_queue_async(req, ret);
+}
+</code></pre>
+<p>&#x5BF9;&#x4E8E;recv&#x7684;&#x5B9E;&#x73B0; &#x5982;&#x679C;&#x4F20;&#x5165;&#x4E86;IO_URING_F_NONBLOCK&#x9ED8;&#x8BA4;&#x5C31;&#x4F1A;&#x8D70;MSG_DONTWAIT&#x653E;&#x8FDB;flag&#x91CC;&#x9762;&#xFF0C;&#x5BF9;&#x4E8E;recvmsg&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FD9;&#x4E2A;flag&#x4F1A;&#x975E;&#x963B;&#x585E;&#x5C1D;&#x8BD5;&#x4E0B;&#x770B;&#x770B;&#x6709;&#x6CA1;&#x6709;&#x6570;&#x636E;</p>
+<p>&#x6240;&#x4EE5;&#x7B2C;&#x4E00;&#x6B21;&#x7684;&#x975E;&#x963B;&#x585E;&#x5C1D;&#x8BD5;&#x4E0E;&#x662F;&#x4E0D;&#x662F;block&#x7684;<strong>socket&#x6CA1;&#x5173;&#x7CFB;</strong></p>
+<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">io_recvmsg</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> io_kiocb *req, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> issue_flags)</span>
+</span>{
+   <span class="hljs-comment">//....</span>
+    <span class="hljs-keyword">bool</span> force_nonblock = issue_flags &amp; IO_URING_F_NONBLOCK;
+   <span class="hljs-comment">//....</span>
+    flags = sr-&gt;msg_flags;
+    <span class="hljs-keyword">if</span> (force_nonblock)
+        flags |= MSG_DONTWAIT;
+
+    <span class="hljs-comment">//....</span>
+    ret = __sys_recvmsg_sock(sock, &amp;kmsg-&gt;msg, sr-&gt;umsg,
+                     kmsg-&gt;uaddr, flags);
+    <span class="hljs-comment">//....                     </span>
+ }
+</code></pre>
+<p>&#x82E5;&#x53D6;&#x4E0D;&#x5230;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8D70;&#x4E86;io_queue_async -&gt; io_arm_poll_handler -&gt; __io_arm_poll_handler</p>
+<pre><code class="lang-C++"><span class="hljs-keyword">if</span> (def-&gt;pollin) {
+<span class="hljs-comment">//&#x8FD9;&#x91CC;&#x7684;recv op&#x662F;&#x652F;&#x6301; poll in&#x7684;</span>
+<span class="hljs-comment">//&#x6700;&#x540E;&#x4F1A;&#x76F4;&#x63A5;&#x6302;&#x8F7D;&#x5230;vfs&#x7684;poll&#x4E0A;&#x53BB;</span>
+        mask |= EPOLLIN | EPOLLRDNORM;
+
+        <span class="hljs-comment">/* If reading from MSG_ERRQUEUE using recvmsg, ignore POLLIN */</span>
+        <span class="hljs-keyword">if</span> (req-&gt;flags &amp; REQ_F_CLEAR_POLLIN)
+            mask &amp;= ~EPOLLIN;
+    } <span class="hljs-keyword">else</span> {
+        mask |= EPOLLOUT | EPOLLWRNORM;
+    }
+    <span class="hljs-keyword">if</span> (def-&gt;poll_exclusive)
+        mask |= EPOLLEXCLUSIVE;
+
+    apoll = io_req_alloc_apoll(req, issue_flags);
+    <span class="hljs-keyword">if</span> (!apoll)
+        <span class="hljs-keyword">return</span> IO_APOLL_ABORTED;
+    req-&gt;flags &amp;= ~(REQ_F_SINGLE_POLL | REQ_F_DOUBLE_POLL);
+    req-&gt;flags |= REQ_F_POLLED;
+    ipt.pt._qproc = io_async_queue_proc;
+
+    io_kbuf_recycle(req, issue_flags);
+<span class="hljs-comment">//&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x5C31;&#x662F; mask = vfs_poll(req-&gt;file, &amp;ipt-&gt;pt) &amp; poll-&gt;events;</span>
+    ret = __io_arm_poll_handler(req, &amp;apoll-&gt;poll, &amp;ipt, mask, issue_flags);
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="io_uringAndMemory.html" class="navigation navigation-prev " aria-label="Previous page: io_uring,Memory以及Procator的Socket IO">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../reactive_lock.html" class="navigation navigation-next " aria-label="Next page: 响应式的锁">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"io_uring_recv是怎么实现的","level":"2.3","depth":1,"next":{"title":"响应式的锁","level":"3.1","depth":1,"path":"reactive_lock.md","ref":"reactive_lock.md","articles":[]},"previous":{"title":"io_uring,Memory以及Procator的Socket IO","level":"2.2","depth":1,"path":"io_uring/io_uringAndMemory.md","ref":"io_uring/io_uringAndMemory.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"io_uring/io_uring_recv_impl.md","mtime":"2024-10-16T07:13:42.159Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-10-16T07:14:05.881Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
