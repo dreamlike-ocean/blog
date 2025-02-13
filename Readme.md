@@ -5,7 +5,6 @@
 * dreamlike / e-mail : <a href= "mailto:dreamlike.vertx@gmail.com"> Send Email</a>
 * 来自上海的响应式开发者，偏向IO侧研究较多，努力探索技术的边界。
 * 头像是<a href="https://kamitsubaki.jp/artist/isekaijoucho/ ">ヰ世界情緒</a>
-* 目前在字节CIS-财务写写CRUD混口饭吃，bytedancer可以搜索Vert.x词条找到贡献人来找到我
 * 本博客markdown文档托管于[github](https://github.com/dreamlike-ocean/blog)
 * 在线阅读地址为[dreamlike-blog](https://dreamlike-ocean.github.io/blog/)
 
