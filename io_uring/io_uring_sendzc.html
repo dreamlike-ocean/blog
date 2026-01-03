@@ -1,0 +1,737 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>io_uring_sendzc相关分享 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../reactive_lock.html" />
+    
+    
+    <link rel="prev" href="io_uring_recv_impl.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="io_uring.html">
+            
+                <a href="io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="io_uringAndMemory.html">
+            
+                <a href="io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="io_uring_recv_impl.html">
+            
+                <a href="io_uring_recv_impl.html">
+            
+                    
+                    io_uring_recv是怎么实现的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.4" data-path="io_uring_sendzc.html">
+            
+                <a href="io_uring_sendzc.html">
+            
+                    
+                    io_uring_sendzc相关分享
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../netty-4-2.html">
+            
+                <a href="../netty-4-2.html">
+            
+                    
+                    Netty4.2模型变化简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../panama/panama-tutorial-0-A.html">
+            
+                <a href="../panama/panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../panama/panama-tutorial-0-B.html">
+            
+                <a href="../panama/panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                <a href="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                <a href="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                    
+                    Panama教程-2-MemoryLayout介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="../panama/panama-tutorial-3-FFI.html">
+            
+                <a href="../panama/panama-tutorial-3-FFI.html">
+            
+                    
+                    Panama教程-3-FFI介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >io_uring_sendzc相关分享</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="iouring-&#x96F6;&#x62F7;&#x8D1D;&#x53D1;&#x9001;&#xFF08;tcp&#xFF09;">io_uring &#x96F6;&#x62F7;&#x8D1D;&#x53D1;&#x9001;&#xFF08;TCP&#xFF09;</h1>
+<p>note: &#x672C;&#x6587;&#x5185;&#x5BB9;&#x57FA;&#x4E8E; Linux 6.1&#xFF0C;&#x76EE;&#x6807;&#x534F;&#x8BAE;&#x4E3A; TCP&#x3002;</p>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x4E0E;&#x5185;&#x6838;&#x4E4B;&#x95F4;&#x590D;&#x5236;&#x5927;&#x7F13;&#x51B2;&#x533A;&#x901A;&#x5E38;&#x4EE3;&#x4EF7;&#x4E0D;&#x4F4E;&#x3002;Linux &#x63D0;&#x4F9B;&#x4E86; sendfile&#x3001;splice &#x7B49;&#x201C;&#x7ED5;&#x8FC7;&#x62F7;&#x8D1D;&#x201D;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x4F46;&#x5B83;&#x4EEC;&#x66F4;&#x9002;&#x7528;&#x4E8E;&#x6587;&#x4EF6;/&#x7BA1;&#x9053;&#x8DEF;&#x5F84;&#xFF1B;&#x5982;&#x679C;&#x9700;&#x8981;&#x76F4;&#x63A5;&#x53D1;&#x9001;&#x7528;&#x6237;&#x6001;&#x5185;&#x5B58;&#xFF0C;&#x5B9E;&#x8DF5;&#x4E2D;&#x66F4;&#x5E38;&#x89C1;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x4F7F;&#x7528; <code>send(2)</code> &#x5E76;&#x914D;&#x5408; <code>MSG_ZEROCOPY</code>&#xFF08;&#x540C;&#x65F6;&#x5F00;&#x542F; <code>SO_ZEROCOPY</code>&#xFF09;&#xFF0C;&#x5B9E;&#x73B0;&#x7528;&#x6237;&#x6001;&#x5230;&#x7F51;&#x7EDC;&#x6808;&#x7684;&#x6570;&#x636E;&#x96F6;&#x62F7;&#x8D1D;&#x3002;</p>
+<p>&#x4F46;&#x201C;&#x907F;&#x514D;&#x62F7;&#x8D1D;&#x201D;&#x5E76;&#x975E;&#x514D;&#x8D39;&#x3002;&#x5F53;&#x524D;&#x5B9E;&#x73B0;&#x4F9D;&#x8D56;&#x9875;&#x9762;&#x56FA;&#x5B9A;&#xFF08;page pinning&#xFF09;&#x4E0E;&#x5B8C;&#x6210;&#x901A;&#x77E5;&#xFF1A;&#x7528; pin/&#x5F15;&#x7528;&#x8BA1;&#x6570;/&#x901A;&#x77E5;&#x5904;&#x7406;&#x7684;&#x6210;&#x672C;&#xFF0C;&#x4EA4;&#x6362;&#x6389;&#x6309;&#x5B57;&#x8282;&#x62F7;&#x8D1D;&#x7684;&#x6210;&#x672C;&#x3002;&#x7ECF;&#x9A8C;&#x4E0A;&#xFF0C;<code>MSG_ZEROCOPY</code> &#x66F4;&#x5BB9;&#x6613;&#x5728;&#x5199;&#x5165;&#x89C4;&#x6A21;&#x8FBE;&#x5230;&#x7EA6; 10KB &#x4EE5;&#x4E0A;&#x65F6;&#x4F53;&#x73B0;&#x6536;&#x76CA;&#xFF08;&#x5B9E;&#x9645;&#x9608;&#x503C;&#x4E0E; NIC/&#x9A71;&#x52A8;&#x3001;GSO/TSO&#x3001;&#x53D1;&#x9001;&#x6A21;&#x5F0F;&#x76F8;&#x5173;&#xFF09;&#x3002;</p>
+<p>&#x9875;&#x9762;&#x56FA;&#x5B9A;&#x8FD8;&#x4F1A;&#x6539;&#x53D8;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x7684;&#x8BED;&#x4E49;&#x3002;&#x8BE5;&#x673A;&#x5236;&#x4F1A;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x4F7F;&#x8FDB;&#x7A0B;&#x4E0E;&#x7F51;&#x7EDC;&#x6808;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x7F13;&#x51B2;&#x533A;&#x3002;&#x4E0E;&#x4F20;&#x7EDF;&#x590D;&#x5236;&#x8BED;&#x4E49;&#x4E0D;&#x540C;&#xFF0C;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x540E;&#xFF0C;&#x8FDB;&#x7A0B;&#x4E0D;&#x80FD;&#x7ACB;&#x5373;&#x91CD;&#x7528;&#x8BE5;&#x7F13;&#x51B2;&#x533A;&#xFF0C;&#x5426;&#x5219;&#x53EF;&#x80FD;&#x4F1A;&#x4FEE;&#x6539;&#x4ECD;&#x5728;&#x4F20;&#x8F93;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002;&#x867D;&#x7136;&#x5185;&#x6838;&#x7684;&#x5B8C;&#x6574;&#x6027;&#x4E0D;&#x4F1A;&#x53D7;&#x5230;&#x5F71;&#x54CD;&#xFF0C;&#x4F46;&#x5B9E;&#x73B0;&#x4E0D;&#x5F53;&#x7684;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x53EF;&#x80FD;&#x4F1A;&#x7834;&#x574F;&#x81EA;&#x8EAB;&#x7684;&#x6570;&#x636E;&#x6D41;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x7528;&#x6CD5;&#x4E3A;(&#x7701;&#x7565;&#x5177;&#x4F53;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7684;short-send&#x5904;&#x7406;)</p>
+<pre><code class="lang-c">setsockopt(fd, SOL_SOCKET, SO_ZEROCOPY, &amp;one...)
+
+send(fd, buf, <span class="hljs-keyword">sizeof</span>(buf), MSG_ZEROCOPY);
+
+pfd.fd = fd;
+pfd.events = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">if</span> (poll(&amp;pfd, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>) != <span class="hljs-number">1</span> || pfd.revents &amp; POLLERR == <span class="hljs-number">0</span>)
+        error(<span class="hljs-number">1</span>, errno, <span class="hljs-string">&quot;poll&quot;</span>);
+
+ret = recvmsg(fd, &amp;msg, MSG_ERRQUEUE);
+
+release(buf)
+</code></pre>
+<p>&#x8FD9;&#x91CC;&#x975E;&#x5E38;&#x590D;&#x6742; </p>
+<ol>
+<li>&#x9700;&#x8981;&#x5728; socket &#x4E0A;&#x5F00;&#x542F; <code>SO_ZEROCOPY</code>&#xFF0C;&#x5E76;&#x5728; <code>send()</code> &#x4E0A;&#x643A;&#x5E26; <code>MSG_ZEROCOPY</code>&#xFF1B;</li>
+<li>&#x9700;&#x8981;&#x4ECE; error queue&#xFF08;<code>MSG_ERRQUEUE</code>&#xFF09;&#x8BFB;&#x53D6;&#x201C;&#x5141;&#x8BB8;&#x590D;&#x7528;/&#x91CA;&#x653E;&#x201D;&#x7684;&#x901A;&#x77E5;&#xFF1B;</li>
+<li>&#x901A;&#x5E38;&#x8FD8;&#x9700;&#x8981; <code>poll/epoll</code> + <code>recvmsg(MSG_ERRQUEUE)</code> &#x7B49;&#x989D;&#x5916;&#x6D41;&#x7A0B;&#x6765;&#x9A71;&#x52A8;&#x901A;&#x77E5;&#x83B7;&#x53D6;&#x3002;</li>
+</ol>
+<p>&#x5982;&#x679C;&#x5E94;&#x7528;&#x672C;&#x8EAB;&#x5DF2;&#x7ECF;&#x6709; epoll/reactor&#xFF0C;&#x90A3;&#x4E48; poll/recvmsg &#x8FD9;&#x5957;&#x6D41;&#x7A0B;&#x53EF;&#x4EE5;&#x5F02;&#x6B65;&#x5316;&#x3002;&#x628A;&#x540C;&#x6837;&#x7684;&#x8BED;&#x4E49;&#x6620;&#x5C04;&#x5230; io_uring &#x4E0A;&#x66F4;&#x81EA;&#x7136;&#xFF1A;&#x63D0;&#x4EA4; <code>SEND_ZC</code> &#x8D70;&#x53D1;&#x9001;&#x8DEF;&#x5F84;&#xFF0C;&#x91CA;&#x653E;&#x901A;&#x77E5;&#x7531;&#x5185;&#x6838;&#x5728;&#x5408;&#x9002;&#x65F6;&#x673A;&#x4EE5; CQE&#xFF08;NOTIF&#xFF09;&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#x3002;</p>
+<h2 id="iouringsendzc">io_uring_send_zc</h2>
+<h3 id="sendzc&#x6D41;&#x7A0B;">send_zc&#x6D41;&#x7A0B;</h3>
+<p>io_uring_send_zc&#x5728;&#x6574;&#x4F53;&#x6D41;&#x7A0B;&#x4E0A;&#x975E;&#x5E38;&#x76F4;&#x89C2;&#x81EA;&#x7136;&#xFF0C;&#x4E00;&#x6B21;IORING_OP_SEND_ZC&#x7684;&#x6295;&#x9012;&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x89E6;&#x53D1;&#x4E24;&#x6B21;cqe&#x7684;&#x6295;&#x9012;&#xFF0C;&#x5747;&#x5229;&#x7528;&#x5DF2;&#x6709;&#x7684;socket&#x53D1;&#x9001;&#x8DEF;&#x5F84;&#x8FDB;&#x884C;&#x5B9E;&#x73B0;</p>
+<ol>
+<li>&#x7B2C;&#x4E00;&#x4E2A; CQE&#xFF1A;&#x5177;&#x6709;&#x6B63;&#x5E38; <code>res</code> &#x8BED;&#x4E49;&#xFF0C;&#x901A;&#x5E38;&#x5E26; <code>IORING_CQE_F_MORE</code>&#xFF0C;&#x8868;&#x793A;&#x4E00;&#x6B21; <code>send</code> &#x8BED;&#x4E49;&#x5B8C;&#x6210;&#xFF1B;</li>
+<li>&#x7B2C;&#x4E8C;&#x4E2A; CQE&#xFF1A;<code>res=0</code> &#x4E14;&#x5E26; <code>IORING_CQE_F_NOTIF</code>&#xFF0C;&#x8868;&#x793A;&#x8BE5;&#x6279; zero-copy &#x5173;&#x8054;&#x7684; buffer &#x5DF2;&#x53EF;&#x5B89;&#x5168;&#x590D;&#x7528;/&#x91CA;&#x653E;&#x3002;
+<img src="assets/io_uring_send_cqes.png" alt="io_uring_send_zc"></li>
+</ol>
+<p>&#x7531;&#x4E8E;&#x8BE5;&#x6D41;&#x7A0B;&#x5728;&#x5185;&#x6838;&#x5185;&#x95ED;&#x73AF;&#x5B8C;&#x6210;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684; <code>poll/recvmsg(MSG_ERRQUEUE)</code> &#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#xFF0C;&#x5E76;&#x4E14;&#x5185;&#x6838;&#x53EF;&#x4EE5;&#x505A;&#x901A;&#x77E5;&#x5408;&#x5E76;&#x7B49;&#x4F18;&#x5316;&#xFF0C;&#x56E0;&#x6B64; io_uring &#x7684; zero-copy &#x53D1;&#x9001;&#x5728;&#x5F88;&#x591A;&#x573A;&#x666F;&#x4E0B;&#x66F4;&#x5BB9;&#x6613;&#x201C;&#x5212;&#x7B97;&#x201D;&#xFF08;&#x66F4;&#x4F4E;&#x7684;&#x4F7F;&#x7528;&#x95E8;&#x69DB;&#x3001;&#x66F4;&#x5C11;&#x7684;&#x7528;&#x6237;&#x6001;&#x5F00;&#x9500;&#xFF09;&#x3002;</p>
+<p>&#x5177;&#x4F53;&#x7684;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x53C2;&#x8003;</p>
+<pre><code class="lang-c">sqe = io_uring_get_sqe(ring);
+io_uring_prep_send_zc(sqe, sock_tx, tx_buffer, payload_size, msg_flags, zc_flags);
+
+ret = io_uring_submit_and_wait(ring);
+
+io_uring_cqe_seen(ring, cqe);
+
+ret = io_uring_submit_and_wait(ring, &amp;cqe);
+
+assert(!ret);
+assert(cqe-&gt;user_data == <span class="hljs-number">1</span>);
+assert(cqe-&gt;flags &amp; IORING_CQE_F_NOTIF);
+assert(!(cqe-&gt;flags &amp; IORING_CQE_F_MORE));
+io_uring_cqe_seen(ring, cqe);
+</code></pre>
+<p>&#x6027;&#x80FD;&#x8868;&#x73B0;&#xFF1A;
+note: flush&#x6307;&#x7684;&#x662F;&#x662F;&#x5426;&#x4F1A;&#x53D1;&#x5E03;&#x5185;&#x5B58;&#x91CA;&#x653E;&#x7684;&#x901A;&#x77E5;&#xFF08;&#x5373;cqe&#x7B2C;&#x4E8C;&#x6BB5;&#xFF09;
+<img src="assets/zc_benchmark.png" alt="alt text"></p>
+<p>&#x5177;&#x4F53;&#x7684;&#x6267;&#x884C;&#x8DEF;&#x5F84;</p>
+<p>send&#x8DEF;&#x5F84;&#xFF1A;
+&#x63D0;&#x4EA4;&#x7EBF;&#x7A0B; issue &#x5BF9;&#x5E94;&#x7684;sqe&#xFF0C;&#x5728;&#x5F53;&#x524D;&#x7684;&#x8DEF;&#x5F84;&#x8FDB;&#x884C;&#x5185;&#x8054;&#x8C03;&#x7528;socket_sendmsg&#x8D70;&#x5B8C;&#x5B8C;&#x6574;&#x6D41;&#x7A0B;&#x540E;&#x751F;&#x6210;&#x4E00;&#x4E2A;cqe&#x653E;&#x5230;cq&#x4E2D;</p>
+<p>&#x5185;&#x5B58;&#x91CA;&#x653E;&#x7684;&#x901A;&#x77E5;&#xFF1A;</p>
+<p>TX &#x91CA;&#x653E;/&#x56DE;&#x9000;&#x65F6;&#x901A;&#x8FC7; <code>ubuf_info-&gt;callback</code> &#x901A;&#x77E5;&#xFF1A;&#x5728;&#x8F6F;&#x4E2D;&#x65AD;/&#x5E95;&#x534A;&#x90E8;&#x9012;&#x51CF; <code>uarg-&gt;refcnt</code>&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x4E2A; skb &#x91CA;&#x653E;&#x65F6;&#x8BBE;&#x7F6E; <code>notif-&gt;io_task_work.func = __io_notif_complete_tw</code> &#x5E76; <code>io_req_task_work_add(notif)</code>&#xFF1B;&#x968F;&#x540E; <code>__io_notif_complete_tw()</code> &#x5728; task_work &#x4E2D;&#x8C03;&#x7528; <code>io_req_task_complete()</code>&#xFF0C;&#x751F;&#x6210;&#x5E26; <code>IORING_CQE_F_NOTIF</code> &#x7684; CQE&#x3002;</p>
+<p>task_work &#x7ED1;&#x5B9A;&#x5728;&#x63D0;&#x4EA4;&#x8BE5;&#x8BF7;&#x6C42;&#x7684; task &#x4E0A;&#xFF1A;task &#x8FD4;&#x56DE;&#x7528;&#x6237;&#x6001;&#x6216;&#x5728; io-wq &#x4E0A;&#x8FD0;&#x884C;&#x65F6;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF1B;&#x5982;&#x679C;&#x65E0;&#x6CD5;&#x6302;&#x5165;&#x5219;&#x56DE;&#x9000;&#x5230; <code>fallback_work</code>&#x3002;
+&#x5F53;&#x8BBE;&#x7F6E; <code>IORING_SETUP_DEFER_TASKRUN</code> &#x65F6;&#xFF0C;task_work &#x4F1A;&#x5148;&#x8FDB;&#x5165; ctx &#x7684; <code>work_llist</code>&#xFF0C;&#x5E76;&#x5728;&#x540E;&#x7EED; <code>io_uring_enter()</code>&#xFF08;&#x7B49;&#x5F85;/&#x6536;&#x5272;&#x4E8B;&#x4EF6;&#xFF09;&#x65F6;&#x96C6;&#x4E2D;&#x6267;&#x884C;&#xFF0C;&#x4ECE;&#x800C;&#x628A; task_work &#x7684;&#x6267;&#x884C;&#x8282;&#x594F;&#x6536;&#x655B;&#x5230;&#x5E94;&#x7528;&#x7684; event loop&#x3002;</p>
+<p><img src="assets/sendzc_flame.jpg" alt="alt text"></p>
+<h3 id="sendzc&#x4F7F;&#x7528;&#x6761;&#x4EF6;">send_zc&#x4F7F;&#x7528;&#x6761;&#x4EF6;</h3>
+<p>&#x867D;&#x7136;send&#x8C03;&#x7528;&#x770B;&#x8D77;&#x6765;&#x53EA;&#x662F;&#x53D1;&#x9001;&#x4E00;&#x4E2A;Buffer&#x5230;&#x5BF9;&#x7AEF;&#xFF0C;&#x4F46;&#x662F;&#x5B9E;&#x9645;&#x4E0A;&#x8FD8;&#x9700;&#x8981;&#x5185;&#x6838;&#x505A;&#x4E00;&#x4E9B;&#x534F;&#x8BAE;&#x5934;&#x62FC;&#x63A5;&#xFF0C;checksum&#x8BA1;&#x7B97;&#x7B49;&#x5DE5;&#x4F5C;&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;zero copy&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x8FD9;&#x4E9B;&#x5185;&#x6838;&#x5C31;&#x5E2E;&#x4E0D;&#x4E0A;&#x5FD9;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x9700;&#x8981;&#x5378;&#x8F7D;&#x7ED9;&#x7F51;&#x5361;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528;sendzc&#x7684;&#x524D;&#x63D0;&#x662F;&#x6709;&#x4E00;&#x5757;&#x529F;&#x80FD;&#x9F50;&#x5168;&#x7684;&#x7F51;&#x5361;&#x5426;&#x5219;&#x4F1A;&#x56DE;&#x9000;&#x5230;&#x5185;&#x6838;&#x62F7;&#x8D1D;&#x7684;&#x5F62;&#x5F0F;</p>
+<p>&#x7F51;&#x5361;&#x7279;&#x6027;&#xFF1A;
+&#x7F51;&#x5361;&#x80FD;&#x529B;&#x4E0A;&#xFF0C;<code>scatter-gather</code>&#xFF08;&#x6216; <code>tx-scatter-gather</code> / <code>tx-scatter-gather-fraglist</code>&#xFF09;&#x9700;&#x8981;&#x5F00;&#x542F;&#x3002;&#x8FD9;&#x662F; TCP zero-copy &#x7684;&#x5173;&#x952E;&#x95E8;&#x69DB;&#x4E4B;&#x4E00;&#xFF1B;&#x65E0; SG &#x65F6; <code>sk-&gt;sk_route_caps</code> &#x7F3A;&#x5C11; <code>NETIF_F_SG</code>&#xFF0C;<code>MSG_ZEROCOPY</code> &#x4F1A;&#x76F4;&#x63A5;&#x8D70;&#x62F7;&#x8D1D;&#x8DEF;&#x5F84;&#x3002;
+GSO/TSO &#x4E0D;&#x662F;&#x786C;&#x6027;&#x8981;&#x6C42;&#xFF0C;&#x4F46;&#x5927;&#x591A;&#x6570;&#x9A71;&#x52A8;&#x5728;&#x652F;&#x6301; SG &#x7684;&#x540C;&#x65F6;&#x4E5F;&#x652F;&#x6301;&#x786C;&#x4EF6; checksum/TSO&#xFF0C;&#x4ECE;&#x800C;&#x4FDD;&#x6301; zerocopy &#x517C;&#x5BB9;&#x3002;&#x9A71;&#x52A8;&#x4F1A;&#x5728; TX &#x5B8C;&#x6210;&#x65F6;&#x89E6;&#x53D1; MSG_ZEROCOPY &#x56DE;&#x8C03;&#xFF08;skb_zcopy/uarg&#xFF09;&#xFF0C;&#x5426;&#x5219; zerocopy &#x4E5F;&#x4F1A;&#x88AB;&#x89C6;&#x4E3A;&#x4E0D;&#x652F;&#x6301;</p>
+<p>&#x7C7B;&#x4F3C;&#x4E8E;</p>
+<pre><code class="lang-shell">$ ethtool -k eth0
+scatter-gather: on
+tx-scatter-gather: on
+tx-scatter-gather-fraglist: on
+tx-checksumming: on
+    tx-checksum-ipv4: on
+    tx-checksum-ip-generic: on
+    tx-checksum-ipv6: on
+tcp-segmentation-offload: on
+    tx-tcp-segmentation: on
+    tx-tcp6-segmentation: on
+generic-segmentation-offload: on
+...
+</code></pre>
+<p>Buffer&#x7279;&#x6027;
+&#x7528;&#x6237;&#x7F13;&#x51B2;&#x9875;&#x4F1A;&#x88AB; iov_iter_get_pages2 &#x9488;&#x5BF9;&#x96F6;&#x62F7;&#x8D1D; pin &#x4F4F;&#x5E76;&#x6302;&#x6210; skb frags&#xFF08;datagram.c (lines 621-715)&#xFF0C;&#x88AB; skb_zerocopy_iter_stream() &#x8C03;&#x7528;&#x4E8E; tcp_sendmsg_locked&#xFF09;&#xFF0C;&#x65E0;&#x7279;&#x5B9A;&#x5BF9;&#x9F50;&#x8981;&#x6C42;&#xFF0C;&#x4EFB;&#x610F;&#x8D77;&#x59CB;&#x5730;&#x5740;&#x90FD;&#x884C;&#x3002;&#x5355;&#x4E2A; skb &#x53D7; MAX_SKB_FRAGS &#x9650;&#x5236;&#xFF08;&#x4E0D;&#x8DB3;&#x5219;&#x5207;&#x65B0; skb&#xFF0C;&#x4ECD;&#x4FDD;&#x6301;&#x96F6;&#x62F7;&#x8D1D;&#xFF0C;&#x4E0D;&#x56DE;&#x9000;&#x62F7;&#x8D1D;&#xFF09;&#x3002;</p>
+<p>&#x5BF9;&#x9F50;/&#x9875;&#x5927;&#x5C0F;&#xFF1A;&#x4E0D;&#x8981;&#x6C42;&#x9875;&#x5BF9;&#x9F50;&#xFF1B;&#x8DE8;&#x9875;&#x4F1A;&#x88AB;&#x62C6;&#x6210;&#x591A;&#x4E2A; frag&#x3002;&#x552F;&#x4E00;&#x8F6F;&#x9650;&#x5236;&#x662F; frag &#x6570;&#x3001;sk-&gt;sk_wmem_alloc &#x914D;&#x989D;&#x4EE5;&#x53CA;&#x7F51;&#x5361;&#x7684; SG &#x6DF1;&#x5EA6;</p>
+<h3 id="sendzc&#x9875;&#x9762;&#x5F00;&#x9500;">send_zc&#x9875;&#x9762;&#x5F00;&#x9500;</h3>
+<p>&#x96F6;&#x62F7;&#x8D1D;&#x5E76;&#x4E0D;&#x662F;&#x96F6;&#x989D;&#x5916;&#x5F00;&#x9500;&#x7684;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#xFF1A;</p>
+<ol>
+<li>pin &#x7528;&#x6237;&#x9875;&#xFF1A;get_user_pages_fast() / iov_iter_get_pages*() &#x4E4B;&#x7C7B;&#x8DEF;&#x5F84;&#xFF1B;&#x5931;&#x8D25;&#x4F1A;&#x8D70;&#x66F4;&#x6162;&#x7684; fallback &#x8DEF;&#x5F84;&#xFF08;&#x9875;&#x8868;/&#x9501;/&#x7F3A;&#x9875;&#x7B49;&#x5BFC;&#x81F4;&#xFF09;&#x3002;</li>
+<li>&#x7EF4;&#x62A4;&#x5F15;&#x7528;&#x4E0E;&#x4F1A;&#x8BA1;&#xFF1A;&#x9875;&#x5F15;&#x7528;&#x8BA1;&#x6570;&#x3001;locked/pinned pages &#x8BB0;&#x8D26;&#x3001;sk_wmem &#x76F8;&#x5173;&#x7EA6;&#x675F;&#x4E0E;&#x8FFD;&#x8E2A;&#x3002;</li>
+<li>zerocopy &#x5B8C;&#x6210;&#x901A;&#x77E5;&#xFF1A;ubuf_info callback &#x89E6;&#x53D1;</li>
+</ol>
+<p>&#x4F60;&#x5728;&#x706B;&#x7130;&#x56FE;&#x4E0A;&#x6709;&#x65F6;&#x80FD;&#x770B;&#x5230;sendzc&#x660E;&#x663E;&#x6D88;&#x8017;cpu&#x8FD9;&#x662F;&#x6B63;&#x5E38;&#x7684;&#xFF0C;sendzc &#x5F80;&#x5F80;&#x589E;&#x52A0;&#x53D1;&#x9001;&#x7684;&#x8D44;&#x6E90;&#x7BA1;&#x7406;&#x5F00;&#x9500;&#xFF0C;&#x4F46;&#x51CF;&#x5C11;&#x62F7;&#x8D1D;&#x5F00;&#x9500;</p>
+<p>&#x5728;&#x5185;&#x5B58;&#x5E26;&#x5BBD;&#x548C;&#x53D1;&#x9001;&#x901F;&#x7387;&#x5F52;&#x4E00;&#x5316;&#x4E4B;&#x540E;&#x5176;&#x6027;&#x4EF7;&#x6BD4;&#x662F;&#x5F88;&#x597D;&#x7684;</p>
+<h3 id="sendzc&#x4F7F;&#x7528;&#x7684;&#x5C0F;&#x6280;&#x5DE7;">send_zc&#x4F7F;&#x7528;&#x7684;&#x5C0F;&#x6280;&#x5DE7;</h3>
+<h4 id="&#x53D1;&#x9001;&#x4E0B;&#x4E00;&#x4E2A;buffer&#x7684;&#x65F6;&#x673A;">&#x53D1;&#x9001;&#x4E0B;&#x4E00;&#x4E2A;Buffer&#x7684;&#x65F6;&#x673A;</h4>
+<p>&#x5BF9; TCP &#x800C;&#x8A00;&#xFF0C;buffer &#x53EF;&#x590D;&#x7528;&#x7684;&#x901A;&#x77E5;&#x4E0E; ACK &#x8FDB;&#x5EA6;&#x76F8;&#x5173;&#xFF1B;&#x5982;&#x679C;&#x7B49;&#x5230; NOTIF &#x624D;&#x7EE7;&#x7EED;&#x53D1;&#x9001;&#xFF0C;&#x4F1A;&#x663E;&#x8457;&#x62C9;&#x957F;&#x53D1;&#x9001;&#x95F4;&#x9699;&#x3002;</p>
+<ol>
+<li>&#x5728;&#x6536;&#x5230;&#x7B2C;&#x4E00;&#x4E2A; CQE &#x540E;&#xFF0C;&#x7ACB;&#x5373;&#x7EE7;&#x7EED;&#x63D0;&#x4EA4;&#x4E0B;&#x4E00;&#x6B21; send&#xFF1B;</li>
+<li>&#x540C;&#x65F6;&#x5C06;&#x5F53;&#x524D; send_zc &#x4F7F;&#x7528;&#x7684; buffer &#x79FB;&#x52A8;&#x5230;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x7B49;&#x5F85;&#x961F;&#x5217;&#xFF08;pending / zc-wait queue&#xFF09;&#xFF1B;</li>
+<li>&#x5728;&#x540E;&#x7EED;&#x6536;&#x5230; &#x7B2C;&#x4E8C;&#x4E2A; CQE&#xFF08;NOTIF&#xFF09; &#x65F6;&#xFF0C;&#x518D;&#x4ECE;&#x8BE5;&#x7B49;&#x5F85;&#x961F;&#x5217;&#x4E2D;&#x53D6;&#x51FA;&#x5BF9;&#x5E94; buffer &#x5E76;&#x6267;&#x884C;&#x771F;&#x6B63;&#x7684;&#x91CA;&#x653E;&#x64CD;&#x4F5C;&#x3002;</li>
+</ol>
+<p>&#x6CE8;&#x610F;&#xFF1A;&#x9700;&#x8981;&#x68C0;&#x67E5;&#x9996;&#x4E2A; CQE &#x662F;&#x5426;&#x5E26; <code>IORING_CQE_F_MORE</code>&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709; <code>MORE</code>&#xFF0C;&#x901A;&#x5E38;&#x610F;&#x5473;&#x7740;&#x4E0D;&#x4F1A;&#x518D;&#x6709; NOTIF&#xFF0C;&#x9700;&#x8981;&#x5728;&#x8BE5; CQE &#x4E0A;&#x5B8C;&#x6210;&#x5BF9;&#x5E94; buffer &#x7684;&#x91CA;&#x653E;/&#x590D;&#x7528;&#x903B;&#x8F91;&#xFF0C;&#x5426;&#x5219;&#x53EF;&#x80FD;&#x6CC4;&#x6F0F;&#x3002;</p>
+<p>&#x76F8;&#x5173;&#x8BA8;&#x8BBA;&#x53EF;&#x4EE5;&#x53C2;&#x8003;</p>
+<p><a href="https://github.com/netty/netty/issues/15599" target="_blank">https://github.com/netty/netty/issues/15599</a>
+<a href="https://github.com/axboe/liburing/issues/1462" target="_blank">https://github.com/axboe/liburing/issues/1462</a></p>
+<h4 id="&#x6DF7;&#x5408;&#x8D1F;&#x8F7D;&#x7684;&#x53D1;&#x9001;">&#x6DF7;&#x5408;&#x8D1F;&#x8F7D;&#x7684;&#x53D1;&#x9001;</h4>
+<p>&#x5982;&#x679C;&#x4E0D;&#x52A0;&#x533A;&#x5206;&#x5730;&#x628A;&#x6240;&#x6709; iov &#x90FD;&#x585E;&#x8FDB; <code>IORING_OP_SENDMSG_ZC</code>&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x51FA;&#x73B0;&#x201C;body &#x7684;&#x6536;&#x76CA;&#x88AB; header &#x7684;&#x5F00;&#x9500;&#x8986;&#x76D6;&#x201D;&#x3002;&#x66F4;&#x7A33;&#x59A5;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x6309; buffer &#x5927;&#x5C0F;&#x5206;&#x6D41;&#xFF1A;&#x5C0F; header &#x8D70;&#x666E;&#x901A;&#x53D1;&#x9001;&#xFF0C;&#x5927; body &#x624D;&#x8FDB;&#x5165; zero-copy&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x9608;&#x503C;&#x4E3A; 16KB&#xFF0C;&#x5F85;&#x53D1;&#x9001;&#x961F;&#x5217;&#x4E3A; <code>[4KB, 4KB, 16KB, 32KB, 2KB]</code>&#xFF0C;&#x53EF;&#x4EE5;&#x751F;&#x6210; 3 &#x4E2A; SQE&#xFF0C;&#x5E76;&#x7528; <code>IOSQE_IO_LINK</code> &#x4E32;&#x8D77;&#x6765;&#x4EE5;&#x4FDD;&#x8BC1;&#x987A;&#x5E8F;&#xFF1A;</p>
+<ol>
+<li><code>writev</code> &#x53D1;&#x9001; <code>[4KB, 4KB]</code></li>
+<li><code>io_sendmsg_zc</code> &#x53D1;&#x9001; <code>[16KB, 32KB]</code>&#xFF08;&#x4EC5;&#x5305;&#x542B;&#x6EE1;&#x8DB3;&#x9608;&#x503C;&#x7684; iov&#xFF09;</li>
+<li><code>send</code> &#x53D1;&#x9001; <code>[2KB]</code></li>
+</ol>
+<h2 id="&#x53C2;&#x8003;&#x8D44;&#x6599;">&#x53C2;&#x8003;&#x8D44;&#x6599;</h2>
+<ul>
+<li>[1] Pavel Begunkov, io_uring: path to zerocopy: <a href="https://archives.kernel-recipes.org/wp-content/uploads/2025/01/Pavel_Begunkov_slides.pdf" target="_blank">https://archives.kernel-recipes.org/wp-content/uploads/2025/01/Pavel_Begunkov_slides.pdf</a></li>
+<li>[2] Zero-copy network transmission with io_uring: <a href="https://lwn.net/Articles/879724/" target="_blank">https://lwn.net/Articles/879724/</a></li>
+<li>[3] Improving IORING_OP_SENDMSG_ZC efficiency for mixed-size buffer workloads: <a href="https://github.com/netty/netty/issues/16086" target="_blank">https://github.com/netty/netty/issues/16086</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="io_uring_recv_impl.html" class="navigation navigation-prev " aria-label="Previous page: io_uring_recv是怎么实现的">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../reactive_lock.html" class="navigation navigation-next " aria-label="Next page: 响应式的锁">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"io_uring_sendzc相关分享","level":"2.4","depth":1,"next":{"title":"响应式的锁","level":"3.1","depth":1,"path":"reactive_lock.md","ref":"reactive_lock.md","articles":[]},"previous":{"title":"io_uring_recv是怎么实现的","level":"2.3","depth":1,"path":"io_uring/io_uring_recv_impl.md","ref":"io_uring/io_uring_recv_impl.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"io_uring/io_uring_sendzc.md","mtime":"2026-01-03T14:57:11.725Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-01-03T14:57:36.993Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
