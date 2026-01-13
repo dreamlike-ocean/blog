@@ -151,6 +151,15 @@ https://github.com/axboe/liburing/issues/1462
 2. `io_sendmsg_zc` 发送 `[16KB, 32KB]`（仅包含满足阈值的 iov）
 3. `send` 发送 `[2KB]`
 
+具体讨论可以参考：https://github.com/netty/netty/issues/16086
+
+![alt text](assets/qps_vs_chunk_count_aligned.jpg)
+
+从表格和折线图可见，在低拆分数量（1-256）区间，patch 与旧版几乎相同，均维持在 23.2k-23.5k QPS 左右，差异极小，说明在“小包聚合程度不高”的场景下该 patch 对吞吐影响不明显。
+
+当拆分数量提高到 1024 时，旧版吞吐明显下降到约 7.5k QPS，而 patch 仍保持在 23.4k QPS 左右，提升约 3.12 倍。拆分数量为 2048 时差异进一步扩大：旧版约 2.6k QPS，patch 约 17.6k QPS，提升约 6.67 倍。这说明在“header + body 混合”的大多数 HTTP 负载里，如果把大量很小的 buffer 也一并纳入 zerocopy 批量发送，会引入额外的元数据/回收通知处理开销，从而限制整体收益。
+
+
 
 ## 参考资料
 - [1] Pavel Begunkov, io_uring: path to zerocopy: https://archives.kernel-recipes.org/wp-content/uploads/2025/01/Pavel_Begunkov_slides.pdf
