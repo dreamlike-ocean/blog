@@ -30,7 +30,9 @@
 * [Panama教程-2-MemoryLayout介绍](panama/panama-tutorial-2-MemoryLayout.md)
 * [Panama教程-3-FFI介绍](panama/panama-tutorial-3-FFI.md)
 * [失去了Unsafe内存操作之后该何去何从](panama/afterUnsafe.md)
-* [Panama源码浅析](panama/Panama浅析.md)
+* [Panama ffi源码浅析](panama/Panama浅析.md)
+* [从一个关闭超时问题看Panama 内存管理API](panama/arena_shared.md)
+
 
 ## 随笔
 
