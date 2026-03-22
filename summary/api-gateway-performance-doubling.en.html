@@ -1,0 +1,1427 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>API Gateway Performance Doubling in Practice (English) · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../io_uring/io_uring.html" />
+    
+    
+    <link rel="prev" href="api-gateway-performance-doubling.zh.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">性能总结</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="api-gateway-performance-doubling.zh.html">
+            
+                <a href="api-gateway-performance-doubling.zh.html">
+            
+                    
+                    API网关性能翻倍技术实践（中文）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2" data-path="api-gateway-performance-doubling.en.html">
+            
+                <a href="api-gateway-performance-doubling.en.html">
+            
+                    
+                    API Gateway Performance Doubling in Practice (English)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../io_uring/io_uring.html">
+            
+                <a href="../io_uring/io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../io_uring/io_uringAndMemory.html">
+            
+                <a href="../io_uring/io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../io_uring/io_uring_recv_impl.html">
+            
+                <a href="../io_uring/io_uring_recv_impl.html">
+            
+                    
+                    io_uring_recv是怎么实现的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="../io_uring/io_uring_sendzc.html">
+            
+                <a href="../io_uring/io_uring_sendzc.html">
+            
+                    
+                    io_uring_sendzc相关分享
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../netty-4-2.html">
+            
+                <a href="../netty-4-2.html">
+            
+                    
+                    Netty4.2模型变化简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../panama/panama-tutorial-0-A.html">
+            
+                <a href="../panama/panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../panama/panama-tutorial-0-B.html">
+            
+                <a href="../panama/panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                <a href="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                <a href="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                    
+                    Panama教程-2-MemoryLayout介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="../panama/panama-tutorial-3-FFI.html">
+            
+                <a href="../panama/panama-tutorial-3-FFI.html">
+            
+                    
+                    Panama教程-3-FFI介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama ffi源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.8" data-path="../panama/arena_shared.html">
+            
+                <a href="../panama/arena_shared.html">
+            
+                    
+                    从一个关闭超时问题看Panama 内存管理API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="9.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >API Gateway Performance Doubling in Practice (English)</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="api-gateway-performance-doubling-in-practice-2025&#x2013;2026">API Gateway Performance Doubling in Practice (2025&#x2013;2026)</h1>
+<blockquote>
+<p>This post summarizes a series of performance optimizations we made to our in-house API gateway over the past year. The work spans the networking layer, protocol layer, threading model, and memory management, and ultimately doubled throughput on the same hardware.</p>
+<p>&#x4E2D;&#x6587;&#x7248;&#x672C;&#xFF1A;<a href="api-gateway-performance-doubling.zh.html">API &#x7F51;&#x5173;&#x6027;&#x80FD;&#x7FFB;&#x500D;&#x6280;&#x672F;&#x5B9E;&#x8DF5;&#xFF08;2025-2026&#xFF09;</a></p>
+</blockquote>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#1-architecture-overview">1. Architecture Overview</a></li>
+<li><a href="#2-protocol-sniffing-remove-tlsalpn-dependency-auto-detect-h1h2">2. Protocol Sniffing: Remove TLS/ALPN Dependency, Auto-detect H1/H2</a></li>
+<li><a href="#3-async-connection-pool-lock-free-waiting-with-completablefuture">3. Async Connection Pool: Lock-free Waiting with CompletableFuture</a></li>
+<li><a href="#4-virtual-thread-filters-free-the-io-threads">4. Virtual-thread Filters: Free the IO Threads</a></li>
+<li><a href="#5-io_uring-enablement--tuning--linux-61-upgrade">5. io_uring Enablement &amp; Tuning + Linux 6.1 Upgrade</a></li>
+<li><a href="#6-disable-h2-huffman-encoding-trade-bandwidth-for-cpu">6. Disable H2 Huffman Encoding: Trade Bandwidth for CPU</a></li>
+<li><a href="#7-h2-header-reuse-eliminate-h2h1h2-conversion-overhead">7. H2 Header Reuse: Eliminate H2&#x2192;H1&#x2192;H2 Conversion Overhead</a></li>
+<li><a href="#8-remove-header-object-pooling-generational-zgc-cross-gen-reference-trap">8. Remove Header Object Pooling: Generational ZGC Cross-gen Reference Trap</a></li>
+<li><a href="#9-apm-agent-allocation-optimizations">9. APM Agent Allocation Optimizations</a></li>
+<li><a href="#10-upstream-contribution-optimizations-merged-into-netty">10. Upstream Contribution: Optimizations Merged into Netty</a></li>
+<li><a href="#11-ongoing-exploration">11. Ongoing Exploration</a></li>
+<li><a href="#12-summary--wins">12. Summary &amp; Wins</a></li>
+</ul>
+<hr>
+<h2 id="1-architecture-overview">1. Architecture Overview</h2>
+<p>Our gateway is an in-house reverse proxy built on Netty. In production, traffic first hits a cloud load balancer (LB) and is then forwarded to the gateway. Between the gateway and upstream services we use HTTP/2 everywhere. The topology looks like this:</p>
+<pre><code>Client &#x2500;&#x2500;(H1/H2)&#x2500;&#x2500;&#x25B6; Cloud LB &#x2500;&#x2500;(H1/H2 passthrough)&#x2500;&#x2500;&#x25B6; Gateway (Netty Pipeline) &#x2500;&#x2500;(H2)&#x2500;&#x2500;&#x25B6; Upstream Service
+                                                       &#x2502;
+                                                  Filter Chain
+                                                (authn/authz/ratelimit/...)
+</code></pre><p>A key constraint: the cloud LB is <strong>protocol-transparent</strong>. If the client speaks H1, the LB forwards H1; if the client speaks H2, the LB forwards H2. The gateway must handle both H1 and H2 on the same port.</p>
+<p>Before optimization, the primary bottlenecks were:</p>
+<ol>
+<li><strong>Protocol negotiation via TLS/ALPN</strong>, costing ~10% CPU</li>
+<li><strong>Blocking waits in the connection pool</strong>, stalling IO threads</li>
+<li><strong>Filters executed on a fixed business thread pool</strong>, saturating under high concurrency</li>
+<li><strong>epoll syscall overhead</strong>, where syscall frequency becomes a bottleneck</li>
+<li><strong>H2 codec CPU cost</strong>, especially Huffman coding and header conversions</li>
+<li><strong>Allocations and GC pressure</strong>, from frequent object creation/boxing</li>
+</ol>
+<hr>
+<h2 id="2-protocol-sniffing-remove-tlsalpn-dependency-auto-detect-h1h2">2. Protocol Sniffing: Remove TLS/ALPN Dependency, Auto-detect H1/H2</h2>
+<h3 id="background">Background</h3>
+<p>Because the LB is protocol-transparent, the gateway must distinguish H1 vs H2 on the <strong>same port</strong>. A straightforward approach is TLS + ALPN, but in an internal network this is mostly wasted work. Flame graphs showed ALPN-related logic consuming <strong>~10% CPU</strong>.</p>
+<h3 id="solution">Solution</h3>
+<p>Inspired by Vert.x&#x2019;s <a href="https://github.com/eclipse-vertx/vert.x/blob/436dfdfc0a596cd5aa20364d94d79f54938d25a6/vertx-core/src/main/java/io/vertx/core/http/impl/tcp/Http1xOrH2CHandler.java#L25" target="_blank">Http1xOrH2CHandler</a>, we implemented a byte-sniffing handler.</p>
+<p>HTTP/2 requires clients to send a 24-byte connection preface right after connection establishment:</p>
+<p><code>PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n</code></p>
+<p>HTTP/1.x starts with a method token (<code>GET</code>, <code>POST</code>, ...). These don&#x2019;t conflict. We read the first bytes, decide the protocol, configure the pipeline accordingly, then remove the sniffing handler so there is zero overhead afterwards:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HttpProtocolSniffChannelHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelInboundHandlerAdapter</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ByteBuf H2_PREFACE = Http2CodecUtil.connectionPrefaceBuf();
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> </span>{
+        ByteBuf buf = (ByteBuf) msg;
+        <span class="hljs-keyword">if</span> (isHttp2Preface(buf)) {
+            configurePipeline(ctx, Protocol.H2);
+        } <span class="hljs-keyword">else</span> {
+            configurePipeline(ctx, Protocol.H1);
+        }
+        ctx.pipeline().remove(<span class="hljs-keyword">this</span>);   <span class="hljs-comment">// remove after detection; zero overhead afterwards</span>
+        ctx.fireChannelRead(buf);
+    }
+}
+</code></pre>
+<p>This removes the TLS/ALPN dependency entirely and supports plaintext H1/H2 on a single port, saving <strong>~10% CPU</strong>.</p>
+<hr>
+<h2 id="3-async-connection-pool-lock-free-waiting-with-completablefuture">3. Async Connection Pool: Lock-free Waiting with CompletableFuture</h2>
+<h3 id="background">Background</h3>
+<p>We maintain connection pools between the gateway and upstream services. The previous implementation used blocking waits (<code>SynchronousQueue</code>). When the pool ran out, IO threads could block, directly reducing event-loop throughput.</p>
+<h3 id="solution">Solution</h3>
+<p>We referenced HikariCP&#x2019;s <code>ConcurrentBag</code> design and implemented a fully async, non-blocking connection pool. The key change: <strong>replace the blocking <code>SynchronousQueue</code> with a <code>CompletableFuture</code>-based async exchanger</strong>.</p>
+<p><strong>Blocking wait in original HikariCP (SynchronousQueue):</strong></p>
+<pre><code class="lang-java"><span class="hljs-comment">// HikariCP original: blocks here when the pool is empty</span>
+<span class="hljs-function">T <span class="hljs-title">borrow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span> </span>{
+    <span class="hljs-comment">// ... ThreadLocal and sharedList miss ...</span>
+
+    <span class="hljs-comment">// Blocks: the thread sleeps until a connection is returned</span>
+    T entry = handoffQueue.poll(timeout, unit);  <span class="hljs-comment">// SynchronousQueue.poll()</span>
+    <span class="hljs-keyword">return</span> entry;
+}
+</code></pre>
+<p><strong>Our async version (AsyncQueue):</strong></p>
+<pre><code class="lang-java"><span class="hljs-comment">/**
+ * A CompletableFuture-based async exchanger that replaces SynchronousQueue.
+ * Core idea: register a Future instead of parking a thread.
+ */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncQueue</span>&lt;<span class="hljs-title">T</span>&gt; </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ConcurrentLinkedQueue&lt;CompletableFuture&lt;T&gt;&gt; waiters = <span class="hljs-keyword">new</span> ConcurrentLinkedQueue&lt;&gt;();
+
+    <span class="hljs-comment">/**
+     * Called when returning a connection: deliver directly to the first waiter.
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offer</span><span class="hljs-params">(T item)</span> </span>{
+        CompletableFuture&lt;T&gt; waiter;
+        <span class="hljs-keyword">while</span> ((waiter = waiters.poll()) != <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">if</span> (waiter.complete(item)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-comment">// complete() failed =&gt; waiter already timed out/cancelled; try the next</span>
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+
+    <span class="hljs-comment">/**
+     * Called when borrowing: register a Future and return immediately (non-blocking).
+     */</span>
+    <span class="hljs-function">CompletableFuture&lt;T&gt; <span class="hljs-title">poll</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span> </span>{
+        CompletableFuture&lt;T&gt; future = <span class="hljs-keyword">new</span> CompletableFuture&lt;&gt;();
+        waiters.offer(future);
+        <span class="hljs-comment">// Use HashedWheelTimer for timeouts (avoid ScheduledThreadPoolExecutor contention)</span>
+        timer.newTimeout(t -&gt; future.completeExceptionally(TIMEOUT_EXCEPTION), timeout, unit);
+        <span class="hljs-keyword">return</span> future;
+    }
+}
+</code></pre>
+<p><strong>Why not <code>CompletableFuture.orTimeout()</code>?</strong></p>
+<p><code>orTimeout()</code> relies on <code>ScheduledThreadPoolExecutor</code> and its delayed queue/locking. Under high concurrency it introduces unnecessary contention. Netty&#x2019;s <code>HashedWheelTimer</code> is single-thread-driven; timeout registration is O(1) and works well for large volumes of short-lived timers.</p>
+<p><strong>Overall flow:</strong></p>
+<pre><code>borrowAsync() flow:
+
+  &#x2460; ThreadLocal list (fastest path)
+     &#x2502; hit     &#x2192; CompletableFuture.completedFuture(entry)
+     &#x2502; miss    &#x2193;
+  &#x2461; Shared CopyOnWriteArrayList (fast path)
+     &#x2502; hit     &#x2192; CompletableFuture.completedFuture(entry)
+     &#x2502; miss    &#x2193;
+  &#x2462; AsyncQueue.poll() (register Future; return immediately)
+     &#x2502; connection returned &#x2192; future.complete(entry)
+     &#x2502; timeout             &#x2192; future.completeExceptionally(timeout)
+</code></pre><h3 id="benefits">Benefits</h3>
+<ul>
+<li>IO threads never block waiting for upstream connections</li>
+<li><code>CompletableFuture</code> aligns well with Netty&#x2019;s event-driven model</li>
+<li><code>HashedWheelTimer</code> reduces timeout-related contention</li>
+</ul>
+<hr>
+<h2 id="4-virtual-thread-filters-free-the-io-threads">4. Virtual-thread Filters: Free the IO Threads</h2>
+<h3 id="background">Background</h3>
+<p>The filter chain includes authn/authz/ratelimiting and more. Some filters involve blocking I/O such as Redis and database calls. Previously we dispatched filters to a fixed platform-thread pool (<code>DefaultEventExecutorGroup</code>), which can saturate under high concurrency.</p>
+<h3 id="solution-virtual-threads">Solution: Virtual Threads</h3>
+<p>We use JDK 21 virtual threads (Project Loom) for the filter chain, replacing <code>DefaultEventExecutorGroup</code>:</p>
+<pre><code>Before:
+  IO Thread &#x2500;&#x2500;dispatch&#x2500;&#x2500;&#x25B6; DefaultEventExecutorGroup (fixed N platform threads)
+                          &#x251C;&#x2500;&#x2500; Filter1(sync)
+                          &#x251C;&#x2500;&#x2500; Filter2(blocking Redis)  &#x2190; queueing when threads are exhausted
+                          &#x2514;&#x2500;&#x2500; Filter3(sync)
+
+After:
+  IO Thread &#x2500;&#x2500;dispatch&#x2500;&#x2500;&#x25B6; VirtualThread Executor (one virtual thread per request)
+                          &#x251C;&#x2500;&#x2500; Filter1(sync)
+                          &#x251C;&#x2500;&#x2500; Filter2(blocking Redis)  &#x2190; virtual thread yields; doesn&#x2019;t burn platform threads
+                          &#x2514;&#x2500;&#x2500; Filter3(sync)
+</code></pre><h3 id="related-threadlocal-performance-on-virtual-threads">Related: ThreadLocal performance on virtual threads</h3>
+<p>After introducing virtual threads we ran into a non-obvious issue: <strong><code>ThreadLocal</code> performs poorly on virtual threads</strong>.</p>
+<p>Virtual threads are typically short-lived (often one request). That means the &#x201C;cache&#x201D; semantics of <code>ThreadLocal</code> rarely pay off: instead of reuse, you repeatedly initialize &#x2192; use &#x2192; discard. You also pay extra overhead from <code>ThreadLocalMap</code> initialization and Entry allocations.</p>
+<p>This is not unique to us. The Jackson community reported similar regressions: <a href="https://github.com/FasterXML/jackson-core/issues/919" target="_blank">jackson-core#919</a>. In that case, an internal <code>ThreadLocal&lt;SoftReference&lt;BufferRecycler&gt;&gt;</code> caused serious performance degradation with virtual threads: each virtual thread tended to build its own <code>BufferRecycler</code>, and <code>SoftReference</code> further increased GC pressure.</p>
+<p>Our approach was to replace per-thread pooling (e.g. Netty <code>Recycler</code> on virtual threads) with a global bounded MPMC queue, so virtual threads can still reuse objects efficiently.</p>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>IO threads are fully dedicated to networking</li>
+<li>No fixed thread-pool saturation</li>
+<li>Blocking calls in filters yield naturally</li>
+</ul>
+<blockquote>
+<p>&#x26A0;&#xFE0F; <strong>JDK note</strong>: In JDK 21, entering <code>synchronized</code> (Object Monitor) on virtual threads can <strong>pin the carrier thread</strong>, reducing scalability around blocking points. If monitors are common, you may observe more compensation threads and higher scheduling overhead.</p>
+<p>Prefer newer JDKs (and keep up with Loom fixes) and minimize long monitor holds on virtual threads.</p>
+<p>Also note there are deadlock risks involving classloading (see <a href="https://mail.openjdk.org/pipermail/loom-dev/2025-November/007998.html" target="_blank">case 1</a>, <a href="https://mail.openjdk.org/pipermail/loom-dev/2025-December/008097.html" target="_blank">case 2</a>). <a href="https://github.com/openjdk/jdk/pull/27802" target="_blank">JDK-8347265</a> mitigates the issue; keep an eye on updates.</p>
+<p><strong>Practical advice</strong>: Only run controlled, predictable code on virtual threads, and try to avoid triggering classloading during request execution (preload classes at startup).</p>
+</blockquote>
+<hr>
+<h2 id="5-iouring-enablement--tuning--linux-61-upgrade">5. io_uring Enablement &amp; Tuning + Linux 6.1 Upgrade</h2>
+<h3 id="background">Background</h3>
+<p>The traditional epoll model has a few issues under high concurrency:</p>
+<ul>
+<li>Each IO op needs separate syscalls (<code>epoll_wait</code> + <code>read</code>/<code>write</code>)</li>
+<li>Frequent user/kernel context switches</li>
+<li>Copies: <code>write</code> copies from user-space to kernel-space buffers</li>
+</ul>
+<h3 id="solution-iouring--linux-61">Solution: io_uring + Linux 6.1</h3>
+<p>We upgraded Netty to 4.2 and adopted io_uring, and upgraded the Linux kernel to 6.1 to get full feature support.</p>
+<h3 id="51-multishot-submit-once-reap-continuously">5.1 Multishot: submit once, reap continuously</h3>
+<p>Multishot is one of io_uring&#x2019;s most impactful features. Traditionally, each <code>recv</code>/<code>accept</code> requires submitting an SQE, then re-submitting for the next operation.</p>
+<p>Multishot breaks that 1:1 loop:</p>
+<pre><code>Traditional (one-shot):
+  user &#x2192; submit recv SQE &#x2192; kernel completes &#x2192; CQE &#x2192; user submits next recv &#x2192; ...
+
+Multishot:
+  user &#x2192; submit recv_multishot SQE &#x2192; kernel completes &#x2192; CQE&#x2081;
+                                         completes &#x2192; CQE&#x2082;   &#x2190; no re-submit needed
+                                         completes &#x2192; CQE&#x2083;
+                                         ...
+</code></pre><p>In our gateway we enable all three multishot capabilities:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Min kernel</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>poll_multishot</code></td>
+<td>Linux 5.13+</td>
+<td>register once and continuously receive readiness events</td>
+</tr>
+<tr>
+<td><code>accept_multishot</code></td>
+<td>Linux 5.19+</td>
+<td>accept multiple connections from one submission</td>
+</tr>
+<tr>
+<td><code>recv_multishot</code></td>
+<td>Linux 6.0+</td>
+<td>receive multiple packets from one submission</td>
+</tr>
+</tbody>
+</table>
+<p>Because one SQE can yield multiple CQEs, we need to increase CQ size:</p>
+<pre><code class="lang-java">IoUringIoHandlerConfig config = <span class="hljs-keyword">new</span> IoUringIoHandlerConfig();
+config.setRingSize(<span class="hljs-number">4096</span>);  <span class="hljs-comment">// SQE ring</span>
+
+<span class="hljs-comment">// multishot produces more CQEs; increase CQ size to avoid overflow</span>
+<span class="hljs-keyword">if</span> (IoUring.isAcceptMultishotEnabled() || IoUring.isRecvMultishotEnabled()
+    || IoUring.isPollAddMultishotEnabled()) {
+    config.setCqSize(config.getRingSize() * <span class="hljs-number">4</span>);  <span class="hljs-comment">// CQE = SQE &#xD7; 4</span>
+}
+</code></pre>
+<h3 id="52-buffer-ring-memory-efficiency-for-recvmultishot">5.2 Buffer Ring: memory efficiency for recv_multishot</h3>
+<p>Traditional <code>recv</code> requires userspace to provide a buffer per operation. At massive connection counts, <strong>per-connection receive buffers waste huge memory</strong> (most connections are idle most of the time).</p>
+<p>Buffer Ring is an io_uring kernel-side buffer pooling mechanism that solves this.</p>
+<p>Important: <strong>Buffer Ring does not make <code>recv</code> zero-copy</strong>. The kernel still copies data from the protocol stack into a selected registered buffer. Buffer Ring mainly removes per-connection buffer reservation and improves reuse.</p>
+<pre><code>Traditional (per-connection buffer):
+  Conn1 &#x2192; buffer1 (4KB, mostly idle)
+  Conn2 &#x2192; buffer2 (4KB, mostly idle)
+  ...
+  Total memory = N &#xD7; 4KB
+
+Buffer Ring:
+  Kernel shared buffer pool &#x2190;&#x2500;&#x2500; all connections borrow on demand
+  Total memory = pool_size &#xD7; buffer_size
+</code></pre><p>This is also a prerequisite for <code>recv_multishot</code>: the kernel can keep receiving without userspace supplying a fresh buffer every time.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">if</span> (IoUring.isRegisterBufferRingSupported()) {
+    IoUringBufferRingConfig bufferRingConfig = IoUringBufferRingConfig.builder()
+        .allocator(<span class="hljs-keyword">new</span> IoUringAdaptiveBufferRingAllocator(
+            ByteBufAllocator.DEFAULT,
+            <span class="hljs-number">1024</span>,    <span class="hljs-comment">// min</span>
+            <span class="hljs-number">1024</span>,    <span class="hljs-comment">// initial</span>
+            <span class="hljs-number">4096</span>,    <span class="hljs-comment">// max</span>
+            <span class="hljs-keyword">true</span>))
+        .bufferRingSize((<span class="hljs-keyword">short</span>) <span class="hljs-number">4096</span>)
+        .batchAllocation(<span class="hljs-keyword">true</span>)
+        .batchSize(<span class="hljs-number">2048</span>)
+        .build();
+    config.setBufferRingConfig(bufferRingConfig);
+}
+</code></pre>
+<p><strong><code>batchAllocation</code> and TLB behavior</strong>: allocating buffers one-by-one during traffic spikes may map fresh physical pages repeatedly and cause TLB churn. Batch allocating (e.g. 2048 buffers) improves locality and reduces TLB misses.</p>
+<h3 id="53-zero-copy-send">5.3 Zero-Copy Send</h3>
+<p>For writes above a threshold (default 32KB), we use <code>IORING_OP_SEND_ZC</code> (Linux 6.0+, stable in 6.1) to enable kernel zero-copy send:</p>
+<pre><code>Normal write: user buffer &#x2192; copy to kernel buffer &#x2192; NIC
+Zero-copy:    user buffer &#x2500;&#x2500;&#x2500;&#x2500;&#x2500; DMA directly &#x2500;&#x2500;&#x2500;&#x2192; NIC
+</code></pre><p>For scatter-gather, use <code>IORING_OP_SENDMSG_ZC</code> (Linux 6.1).</p>
+<p>Zero-copy complicates buffer lifecycle: you must wait for <code>IORING_CQE_F_NOTIF</code> before freeing:</p>
+<pre><code>Normal write:      submit SQE &#x2192; CQE &#x2192; free buffer &#x2713;
+Zero-copy write:   submit SQE &#x2192; CQE (F_MORE) &#x2192; wait NOTIF CQE &#x2192; free buffer &#x2713;
+</code></pre><h3 id="54-setup-flags-iouring-initialization-tuning">5.4 Setup flags: io_uring initialization tuning</h3>
+<p>Netty 4.2&#x2019;s <code>Native.setupFlags()</code> enables an optimal flags combination based on kernel capabilities:</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">setupFlags</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> useSingleIssuer)</span> </span>{
+    <span class="hljs-keyword">int</span> flags = IORING_SETUP_R_DISABLED | IORING_SETUP_CLAMP;
+
+    <span class="hljs-keyword">if</span> (isSetupSubmitAllSupported()) {
+        flags |= IORING_SETUP_SUBMIT_ALL;
+    }
+    <span class="hljs-keyword">if</span> (useSingleIssuer &amp;&amp; isSetupSingleIssuerSupported()) {
+        flags |= IORING_SETUP_SINGLE_ISSUER;
+    }
+    <span class="hljs-keyword">if</span> (isSetupDeferTaskrunSupported()) {
+        flags |= IORING_SETUP_DEFER_TASKRUN;
+        flags |= IORING_SETUP_TASKRUN_FLAG;
+    }
+    <span class="hljs-keyword">if</span> (isIoringSetupNoSqarraySupported()) {
+        flags |= IORING_SETUP_NO_SQARRAY;
+    }
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-keyword">return</span> flags;
+}
+</code></pre>
+<p>The most important one is <strong><code>IORING_SETUP_DEFER_TASKRUN</code></strong>.</p>
+<p>By default, io_uring &#x201C;task work&#x201D; may run on <em>any</em> CPU at <em>any</em> time. For example, after an interrupt on another CPU, the kernel can process CQEs immediately and wake up the userspace thread via <code>eventfd</code>. This brings two problems:</p>
+<ol>
+<li><strong>Cross-CPU wakeups</strong>: CQE processing may happen on a different CPU than the userspace EventLoop, causing cache lines to bounce between CPUs.</li>
+<li><strong>Unnecessary wakeups</strong>: the userspace thread might be busy handling other events, and kernel wakeups interrupt useful work.</li>
+</ol>
+<p><code>DEFER_TASKRUN</code> changes the behavior by deferring all task work until userspace <strong>explicitly calls <code>io_uring_enter</code></strong>. In practice:</p>
+<ul>
+<li>CQE processing runs on the <strong>same CPU</strong> as the userspace EventLoop, improving CPU affinity.</li>
+<li>Userspace can batch completion handling at its own pace, reducing pointless wakeups.</li>
+<li>Combined with <code>SINGLE_ISSUER</code> (declare a single SQE submitter), the kernel can skip some concurrency protection.</li>
+</ul>
+<h3 id="55-linux-61-key-features-used">5.5 Linux 6.1 key features used</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Intro</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>IORING_OP_SEND_ZC</code></strong></td>
+<td>6.0</td>
+<td>zero-copy send</td>
+</tr>
+<tr>
+<td><strong><code>IORING_OP_SENDMSG_ZC</code></strong></td>
+<td>6.1</td>
+<td>vectorized zero-copy</td>
+</tr>
+<tr>
+<td><strong><code>recv_multishot</code></strong></td>
+<td>6.0</td>
+<td>continuous receive</td>
+</tr>
+<tr>
+<td><strong><code>accept_multishot</code></strong></td>
+<td>5.19</td>
+<td>continuous accept</td>
+</tr>
+<tr>
+<td><strong>Buffer Ring kernel improvements</strong></td>
+<td>6.1</td>
+<td>less contention</td>
+</tr>
+<tr>
+<td><strong><code>IORING_SETUP_DEFER_TASKRUN</code></strong></td>
+<td>6.1</td>
+<td>defer task work to poll</td>
+</tr>
+<tr>
+<td><strong><code>IORING_SETUP_SINGLE_ISSUER</code></strong></td>
+<td>6.0</td>
+<td>single-submitter optimization</td>
+</tr>
+</tbody>
+</table>
+<h3 id="56-thread-model-from-2n-to-n">5.6 Thread model: from 2N to N</h3>
+<p>With epoll we ran <code>CPU_CORE * 2</code> IO threads (Netty default). After switching to io_uring, flame graphs showed more time in <code>__schedule</code>: 2N threads competing on N cores causes heavy context switching.</p>
+<p>Also, io_uring&#x2019;s architecture naturally needs fewer userspace threads:</p>
+<ul>
+<li><strong>Syscall coalescing</strong>: io_uring batches submission and completion via SQ/CQ rings; single-thread IO throughput is typically much higher than epoll (where each read/write is a separate syscall).</li>
+<li><strong>Kernel-side async work</strong>: io_uring has <code>io-wq</code> (io worker) kernel thread pools to handle some operations that can&#x2019;t complete immediately. This reduces the need for extra userspace threads.</li>
+</ul>
+<p>We reduced IO threads to <code>CPU_CORE</code>:</p>
+<pre><code class="lang-java"><span class="hljs-comment">// epoll: 2x cores</span>
+<span class="hljs-keyword">int</span> epollThreads = Runtime.getRuntime().availableProcessors() * <span class="hljs-number">2</span>;
+
+<span class="hljs-comment">// io_uring: 1x cores</span>
+<span class="hljs-keyword">int</span> ioUringThreads = Runtime.getRuntime().availableProcessors();
+</code></pre>
+<p>Measured result: fewer threads increased effective CPU utilization and improved throughput.</p>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>50%+ fewer syscalls (multishot + batched io_uring)</li>
+<li>Half the IO threads; less scheduling overhead</li>
+<li>Zero-copy for large writes reduces copies</li>
+<li>Buffer Ring reduces wasted per-connection memory and TLB misses</li>
+</ul>
+<hr>
+<h2 id="6-disable-h2-huffman-encoding-trade-bandwidth-for-cpu">6. Disable H2 Huffman Encoding: Trade Bandwidth for CPU</h2>
+<h3 id="background">Background</h3>
+<p>HTTP/2 HPACK uses Huffman coding for header names/values by default. Flame graphs showed <code>HpackEncoder</code> Huffman encoding consumed a significant share of CPU.</p>
+<h3 id="analysis">Analysis</h3>
+<p>In a gateway proxy on a high-bandwidth internal network, we are CPU-bound. Huffman saves little:</p>
+<ul>
+<li>Most headers are short (<code>:method: GET</code> is 3 bytes)</li>
+<li>Many values are high-entropy (UUID/token) so compression is weak or can even expand</li>
+<li>Encoding/decoding requires table lookups and bit operations</li>
+</ul>
+<p><strong>Conclusion: in our environment, Huffman trades meaningful CPU for negligible bandwidth.</strong></p>
+<h3 id="solution-disable-huffman-encoding">Solution: Disable Huffman encoding</h3>
+<p>We override Netty&#x2019;s <code>HpackEncoder</code> (placed under the same package <code>io.netty.handler.codec.http2</code> to access package-private members) and skip Huffman encoding entirely:</p>
+<pre><code class="lang-java"><span class="hljs-comment">// Override Netty&apos;s HpackEncoder under io.netty.handler.codec.http2</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HpackEncoder</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">encodeStringLiteral</span><span class="hljs-params">(ByteBuf out, CharSequence string)</span> </span>{
+        <span class="hljs-comment">// Write raw bytes and skip Huffman encoding</span>
+        encodeLiteral(out, string, string.length());
+    }
+}
+</code></pre>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>Lower H2 encoding CPU time</li>
+<li>Minimal bandwidth increase (not a bottleneck in our environment)</li>
+</ul>
+<hr>
+<h2 id="7-h2-header-reuse-eliminate-h2&#x2192;h1&#x2192;h2-conversion-overhead">7. H2 Header Reuse: Eliminate H2&#x2192;H1&#x2192;H2 Conversion Overhead</h2>
+<h3 id="background">Background</h3>
+<p>For H2 traffic, we still need to support a legacy filter chain built around HTTP/1.1 semantics (<code>HttpServletRequest</code>/<code>HttpHeaders</code>). Netty&#x2019;s standard approach converts inbound H2 frames to H1 objects using <code>InboundHttp2ToHttpAdapter</code>, runs filters, then converts back to H2 with <code>HttpToHttp2ConnectionHandler</code>.</p>
+<pre><code>Client (H2) &#x2192; [InboundHttp2ToHttpAdapter: H2 Headers &#x2192; H1 Headers]
+           &#x2192; Filter Chain (operates on H1 Headers)
+           &#x2192; [HttpToHttp2ConnectionHandler: H1 Headers &#x2192; H2 Headers]
+           &#x2192; Upstream (H2)
+</code></pre><p>This involves heavy string work:</p>
+<ul>
+<li>pseudo-headers (<code>:method</code>, <code>:path</code>, <code>:authority</code>) conversions</li>
+<li>header name case normalization (H2 requires lowercase, while H1 codebases traditionally use canonical/camel-cased names)</li>
+<li>new <code>HttpHeaders</code> allocations on each conversion</li>
+</ul>
+<p>In a pass-through gateway, most headers are not modified, so this conversion is waste.</p>
+<h3 id="solution-dual-write-pass-through-headers">Solution: Dual-write pass-through headers</h3>
+<p>Core idea: <strong>keep the original H2 Headers and expose an H1 view for filters; on egress, reuse the original H2 Headers and skip H1&#x2192;H2 conversion</strong>.</p>
+<p><strong>Http2Http1MergedHeaders &#x2014; a dual-write wrapper:</strong></p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Http2Http1MergedHeaders</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DefaultHttpHeaders</span> </span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> HttpHeaders h1Header;   <span class="hljs-comment">// H1 view for filters</span>
+    <span class="hljs-keyword">private</span> Http2Headers h2Header;        <span class="hljs-comment">// original H2 headers for direct egress</span>
+
+    <span class="hljs-comment">// Dual-write on mutations</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> HttpHeaders <span class="hljs-title">add</span><span class="hljs-params">(String name, Object value)</span> </span>{
+        h1Header.add(name, value);
+        <span class="hljs-keyword">if</span> (h2Header != <span class="hljs-keyword">null</span>) {
+            h2Header.add(AsciiString.of(name.toLowerCase()), value.toString());
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> HttpHeaders <span class="hljs-title">remove</span><span class="hljs-params">(String name)</span> </span>{
+        h1Header.remove(name);
+        <span class="hljs-keyword">if</span> (h2Header != <span class="hljs-keyword">null</span>) {
+            h2Header.remove(AsciiString.of(name.toLowerCase()));
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+
+    <span class="hljs-comment">// Egress: reuse the synced H2 headers directly</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Http2Headers <span class="hljs-title">getHttp2Headers</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> h2Header; }
+
+    <span class="hljs-comment">// Help GC once sent</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">clearHttp2Headers</span><span class="hljs-params">()</span> </span>{ h2Header = <span class="hljs-keyword">null</span>; }
+}
+</code></pre>
+<p><strong>Ingress change (InboundHttp2ToHttpAdapter):</strong></p>
+<p>When converting H2 frames into an H1 request object, we use <code>MergedHeaders</code> instead of a regular <code>HttpHeaders</code>, and keep a reference to the original H2 headers.</p>
+<pre><code class="lang-java">DefaultFullHttpRequest request = <span class="hljs-keyword">new</span> DefaultFullHttpRequest(
+    HttpVersion.HTTP_1_1, method, path, data,
+    Http2Http1MergedHeaders.newHeaders(),
+    IgnoreTrailingHeaders.INSTANCE
+);
+((Http2Http1MergedHeaders) request.headers()).saveHttp2Headers(http2Headers);
+</code></pre>
+<p><strong>Egress change (HttpToHttp2ConnectionHandler):</strong></p>
+<p>When converting the H1 request object back into H2 frames, if the headers are <code>MergedHeaders</code> we directly return the retained H2 headers. Otherwise (e.g. a pure H1 path), we fall back to the standard conversion.</p>
+<pre><code class="lang-java"><span class="hljs-function">Http2Headers <span class="hljs-title">toHttp2Headers</span><span class="hljs-params">(HttpHeaders inHeaders)</span> </span>{
+    <span class="hljs-keyword">if</span> (inHeaders <span class="hljs-keyword">instanceof</span> Http2Http1MergedHeaders merged) {
+        Http2Headers h2 = merged.getHttp2Headers();
+        <span class="hljs-keyword">if</span> (h2 != <span class="hljs-keyword">null</span>) {
+            merged.clearHttp2Headers();
+            <span class="hljs-keyword">return</span> h2;  <span class="hljs-comment">// reuse; skip full H1&#x2192;H2 conversion</span>
+        }
+    }
+    <span class="hljs-keyword">return</span> HttpConversionUtil.toHttp2Headers(inHeaders);
+}
+</code></pre>
+<h3 id="data-flow-comparison">Data flow comparison</h3>
+<pre><code>Before (H2&#x2192;H1&#x2192;H2):
+  H2 &#x2192; decode &#x2192; create H1 headers (allocs) &#x2192; filter
+    &#x2192; create H2 headers (allocs) &#x2192; encode &#x2192; H2
+
+After (H2 pass-through):
+  H2 &#x2192; decode &#x2192; keep H2 headers + create H1 view &#x2192; filter (dual-write)
+    &#x2192; reuse H2 headers &#x2192; encode &#x2192; H2
+
+Savings: N H1&#x2192;H2 string conversions (N = number of headers, typically 15&#x2013;30) plus one `HttpHeaders` allocation on the egress path.
+</code></pre><h3 id="benefits">Benefits</h3>
+<ul>
+<li>Eliminates the expensive egress H1&#x2192;H2 conversion</li>
+<li>Reduces per-request string allocations (typically 15&#x2013;30 headers)</li>
+<li>Saves an allocation via singleton trailing headers</li>
+</ul>
+<hr>
+<h2 id="8-remove-header-object-pooling-generational-zgc-cross-gen-reference-trap">8. Remove Header Object Pooling: Generational ZGC Cross-gen Reference Trap</h2>
+<h3 id="background">Background</h3>
+<p>We previously pooled <code>HttpHeaders</code>, <code>DefaultFullHttpRequest</code>, etc. (Recycler) to reduce allocations. It helped with non-generational ZGC.</p>
+<h3 id="what-went-wrong">What went wrong</h3>
+<p>After moving from non-generational ZGC to generational ZGC (starting with JDK 25, ZGC is generational-only by default), performance regressed. Root cause: <strong>cross-generation references</strong>:</p>
+<ul>
+<li><code>HttpHeaders</code> contains a <code>Map</code> (header key/value storage) and many <code>CharSequence</code> references</li>
+<li>pooled <code>HttpHeaders</code> survive long enough to be promoted to old gen</li>
+<li>each request writes new young-gen strings (request-id/token/etc.) into these old-gen objects</li>
+<li>old&#x2192;young references explode; remembered sets and barriers become expensive</li>
+</ul>
+<pre><code>Pooled HttpHeaders (old gen)
+  &#x251C;&#x2500;&#x2500; Map&lt;String, List&lt;String&gt;&gt;
+  &#x2502;     &#x251C;&#x2500;&#x2500; &quot;x-request-id&quot; &#x2192; [&quot;abc123&quot;]          &#x2190; young object
+  &#x2502;     &#x251C;&#x2500;&#x2500; &quot;authorization&quot; &#x2192; [&quot;Bearer xxx...&quot;]   &#x2190; young object
+  &#x2502;     &#x251C;&#x2500;&#x2500; &quot;content-type&quot; &#x2192; [&quot;application/json&quot;] &#x2190; young object
+  &#x2502;     &#x2514;&#x2500;&#x2500; ...
+  &#x2514;&#x2500;&#x2500; reset() between requests, but the headers object stays old-gen
+</code></pre><p>Generational ZGC maintains remembered sets to track references from old gen to young gen, so it knows which young objects are still reachable during young collections. With a large number of pooled <code>HttpHeaders</code>, each request can create dozens of old&#x2192;young reference updates, which means lots of write barriers and remembered-set maintenance. In our case, the maintenance cost outweighed the allocation savings from pooling.</p>
+<h3 id="fix">Fix</h3>
+<p>Remove pooling for <code>DefaultFullHttpRequest</code>, <code>DefaultHttpHeaders</code>, <code>DefaultHeaders</code>, and allocate normally per request.</p>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>Restored performance under generational ZGC</li>
+<li>Avoided remembered-set bloat and barrier overhead</li>
+<li>Simpler code (no pooling lifecycle complexity)</li>
+</ul>
+<h3 id="lesson-learned">Lesson learned</h3>
+<p><strong>Object pools are not always beneficial</strong>. They only help when &#x201C;allocation cost &gt; pooling management cost&#x201D;. Under generational GC, pooling long-lived objects whose fields frequently point to short-lived objects can introduce severe cross-generation reference overhead. This is especially true for objects that contain many reference fields such as <code>Map</code> and <code>List</code>.</p>
+<hr>
+<h2 id="9-apm-agent-allocation-optimizations">9. APM Agent Allocation Optimizations</h2>
+<h3 id="background">Background</h3>
+<p>We run an APM agent for tracing/monitoring. Using JFR&#x2019;s <code>ObjectAllocationSample</code>, we found the APM interceptors were a major allocation hotspot.</p>
+<p><img src="objectSample.png" alt="JFR ObjectAllocationSample example"></p>
+<p><strong>Why <code>ObjectAllocationSample</code>?</strong></p>
+<p>JFR provides two &#x201C;per-allocation&#x201D; events:</p>
+<ul>
+<li><code>ObjectAllocationInNewTLAB</code>: triggered when an allocation happens <strong>because a thread has to refill its TLAB</strong>.</li>
+<li><code>ObjectAllocationOutsideTLAB</code>: triggered when an allocation happens <strong>outside TLAB</strong> (e.g., large objects or slow-path allocations).</li>
+</ul>
+<p>These events are extremely detailed, but in practice they only become actionable once you also capture stack traces &#x2014; and capturing a stack trace for <em>every</em> allocation is expensive. In typical microservice stacks, call depths can easily reach hundreds of frames; high-frequency stack-walks can distort the performance profile you&#x2019;re trying to measure.</p>
+<p><code>ObjectAllocationSample</code> (introduced in JDK 16 and enabled by default) is designed to address this:</p>
+<ul>
+<li>It focuses on the same signals (TLAB refills / outside-TLAB allocations) but applies a <strong>throttle</strong> (default ~150 samples/s) to keep overhead bounded.</li>
+<li>The throttling is not &#x201C;take the first N events&#x201D;. Internally it uses an <strong>EWMA (Exponentially Weighted Moving Average)</strong> model to estimate and continuously adjust the sampling interval.</li>
+<li>It is <strong>weighted by allocated bytes</strong>: larger allocations are more likely to be sampled.</li>
+<li>Its <code>weight</code> field does <strong>not</strong> mean &#x201C;size of this one object&#x201D;. Instead it records <strong>the total number of bytes allocated by that thread since the previous sample</strong>.</li>
+</ul>
+<p>As a result, after aggregating samples into a flame graph, the hottest stacks correspond to the <strong>largest allocation volume</strong>, which makes it much more practical for continuous allocation profiling in production-like workloads.</p>
+<h3 id="findings">Findings</h3>
+<p><strong>1) Repeated StringBuilder creation when iterating headers</strong></p>
+<p>The interceptor concatenated headers into a string, creating a new <code>StringBuilder</code> per request.</p>
+<p><strong>Fix</strong>: use <code>ThreadLocal&lt;StringBuilder&gt;</code> and <code>setLength(0)</code> before reuse; also reduce truncation length for header values.</p>
+<p><strong>2) Repeated protobuf Builder creation</strong></p>
+<p>APM reporting uses gRPC/protobuf; the implementation created builders each time.</p>
+<p><strong>Fix</strong>: cache builder objects in <code>ThreadLocal</code> and call <code>clear()</code> after use.</p>
+<h3 id="benefits">Benefits</h3>
+<ul>
+<li>Allocation share from the APM agent dropped significantly</li>
+<li>Lower GC pressure and fewer young GCs</li>
+<li>Low-risk changes (cache + reuse)</li>
+</ul>
+<hr>
+<h2 id="10-upstream-contribution-optimizations-merged-into-netty">10. Upstream Contribution: Optimizations Merged into Netty</h2>
+<p>During the work we found bugs and optimization opportunities in Netty&#x2019;s io_uring transport. We contributed fixes upstream. Some merged PRs:</p>
+<table>
+<thead>
+<tr>
+<th>PR</th>
+<th>Topic</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/14690" target="_blank">#14690</a></td>
+<td>Provided Buffers support</td>
+<td>Buffer Ring; prerequisite for <code>recv_multishot</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/14793" target="_blank">#14793</a></td>
+<td><code>IORING_SETUP_CQSIZE</code> support</td>
+<td>configure CQ size for multishot</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/15210" target="_blank">#15210</a></td>
+<td>io_uring Unix Domain Socket</td>
+<td>faster local IPC</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/15491" target="_blank">#15491</a></td>
+<td><code>IORING_OP_SEND_ZC</code> support</td>
+<td>zero-copy send</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/15591" target="_blank">#15591</a></td>
+<td>reduce redundant syscalls</td>
+<td>fewer unnecessary <code>io_uring_enter</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/16130" target="_blank">#16130</a></td>
+<td>refactor <code>IORING_OP_SENDMSG_ZC</code></td>
+<td>improved reliability</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/16234" target="_blank">#16234</a></td>
+<td>MsgHdrMemory allocation</td>
+<td>fewer allocations via slicing</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/16259" target="_blank">#16259</a></td>
+<td>reduce non-blocking syscalls</td>
+<td>further reduce <code>io_uring_enter</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/14650" target="_blank">#14650</a></td>
+<td><code>IORING_REGISTER_IOWQ_MAX_WORKERS</code></td>
+<td>cap io-wq workers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/15054" target="_blank">#15054</a></td>
+<td>buffer group ordering fix</td>
+<td>ensure configured before reads</td>
+</tr>
+<tr>
+<td><a href="https://github.com/netty/netty/pull/15482" target="_blank">#15482</a></td>
+<td>cache io_uring probe results</td>
+<td>faster initialization</td>
+</tr>
+</tbody>
+</table>
+<p>We believe performance work shouldn&#x2019;t stop at application code; upstreaming changes benefits the whole Netty community.</p>
+<hr>
+<h2 id="11-ongoing-exploration">11. Ongoing Exploration</h2>
+<h3 id="111-eventloop-driven-virtual-threads">11.1 EventLoop-driven Virtual Threads</h3>
+<h4 id="current-situation">Current situation</h4>
+<p>Today our virtual threads are scheduled by the JDK default ForkJoinPool, which effectively creates two thread systems:</p>
+<pre><code>&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;    &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+&#x2502;   Netty EventLoop Threads   &#x2502;    &#x2502;  ForkJoinPool Carrier Threads &#x2502;
+&#x2502;   (io_uring, N)             &#x2502;    &#x2502;  (default scheduler, M)       &#x2502;
+&#x2502;                             &#x2502;    &#x2502;                              &#x2502;
+&#x2502;   &#x2022; network IO              &#x2502;    &#x2502;   &#x2022; filter chain              &#x2502;
+&#x2502;   &#x2022; H2 codec                &#x2502;    &#x2502;   &#x2022; blocking Redis/DB calls    &#x2502;
+&#x2502;   &#x2022; protocol sniffing       &#x2502;    &#x2502;   &#x2022; mount/unmount              &#x2502;
+&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+         &#x2195; cross-pool scheduling &#x2195;
+</code></pre><p>Issues:</p>
+<ol>
+<li>cross-pool scheduling overhead (two context switches)</li>
+<li>cache locality loss across cores</li>
+<li>more total threads and context switches</li>
+</ol>
+<h4 id="direction-make-eventloop-the-virtual-thread-scheduler">Direction: make EventLoop the virtual-thread scheduler</h4>
+<p>If Netty EventLoop threads can act as carrier threads, we can unify scheduling:</p>
+<pre><code>&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+&#x2502; Netty EventLoop Threads (io_uring, N)           &#x2502;
+&#x2502;                                                &#x2502;
+&#x2502; &#x2022; network IO                                   &#x2502;
+&#x2502; &#x2022; H2 codec                                     &#x2502;
+&#x2502; &#x2022; protocol sniffing                            &#x2502;
+&#x2502; &#x2022; also drive virtual threads as carriers        &#x2502;
+&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
+</code></pre><p>Potential benefits:</p>
+<ul>
+<li>zero cross-thread-pool scheduling: virtual-thread filters and network IO run on the same EventLoop</li>
+<li>natural cache affinity: a request&#x2019;s full processing stays on the same CPU core</li>
+<li>fewer total threads: only N EventLoop threads, no extra ForkJoinPool</li>
+<li>reduced pinning risk: fewer chances to hit blocking/monitor/classloading in uncontrolled code paths after cross-pool dispatch (pinning still requires careful attention)</li>
+</ul>
+<p>We are following related work:</p>
+<ul>
+<li><a href="https://github.com/franz1981/Netty-VirtualThread-Scheduler" target="_blank">franz1981/Netty-VirtualThread-Scheduler</a></li>
+<li><a href="https://github.com/dreamlike-ocean/VirtualThreadPlayground/pull/1" target="_blank">dreamlike-ocean/VirtualThreadPlayground#1</a></li>
+</ul>
+<p>This direction is still in the prototype stage, but we believe a &#x201C;unified scheduler&#x201D; is the endgame for Netty + virtual threads.</p>
+<h3 id="112-iouring-zero-copy-receive-zero-copy-on-the-receive-path">11.2 io_uring Zero-Copy Receive: zero-copy on the receive path</h3>
+<p>We already use zero-copy send (<code>SEND_ZC</code>/<code>SENDMSG_ZC</code>), but the receive path still copies data from kernel to userspace. Netty also tracks this topic: <a href="https://github.com/netty/netty/issues/15475" target="_blank">netty#15475</a>.</p>
+<p>The key point in <a href="https://github.com/netty/netty/issues/15475" target="_blank">netty#15475</a> is that benchmarking shows <strong>the receive-side memory copy can consume a large amount of CPU</strong>.</p>
+<p>Linux is pushing <code>IORING_OP_RECV_ZC</code> (Zero-Copy Receive). The idea is:</p>
+<ul>
+<li>Userspace pre-registers a memory region.</li>
+<li>The NIC DMA-writes packets directly into that region.</li>
+<li>Userspace receives <code>{offset, length}</code> from the io_uring CQE.</li>
+</ul>
+<p>This makes the receive path zero-copy end-to-end.</p>
+<p>Kernel Recipes 2024 talk: <a href="https://kernel-recipes.org/en/2024/schedule/efficient-zero-copy-networking-using-io_uring/" target="_blank">&quot;Efficient zero-copy networking using io_uring&quot;</a>.</p>
+<p><strong>ZC Rx data flow:</strong></p>
+<p><img src="zcrx_slide9_full_flow.png" alt="io_uring Zero-Copy Receive architecture">
+<em>Source: Kernel Recipes 2024 - &quot;Efficient zero-copy networking using io_uring&quot;, Pavel Begunkov &amp; David Wei</em></p>
+<p><strong>Benchmark (1500 MTU):</strong></p>
+<p><img src="zcrx_slide14_benchmark_1500mtu.png" alt="io_uring ZC Rx vs epoll benchmark">
+<em>Source: Kernel Recipes 2024 - &quot;Efficient zero-copy networking using io_uring&quot;, Pavel Begunkov &amp; David Wei</em></p>
+<p>At 1500 MTU, io_uring ZC Rx improves bandwidth by <strong>31%&#x2013;43%</strong> vs epoll under the standard TCP stack.</p>
+<p>This requires newer kernels (6.12+) and NIC driver support. Once Netty integrates <code>IORING_OP_RECV_ZC</code>, we can further reduce CPU cost on the receive path.</p>
+<hr>
+<h2 id="12-summary--wins">12. Summary &amp; Wins</h2>
+<h3 id="key-items">Key items</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Mechanism</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol sniffing</td>
+<td>H2 preface match; remove TLS/ALPN</td>
+<td>CPU&#x2193; ~10%</td>
+</tr>
+<tr>
+<td>Async connection pool</td>
+<td>CompletableFuture instead of SynchronousQueue</td>
+<td>throughput&#x2191; latency&#x2193;</td>
+</tr>
+<tr>
+<td>Virtual-thread filters</td>
+<td>Loom instead of fixed executor</td>
+<td>throughput&#x2191; fewer blocked threads</td>
+</tr>
+<tr>
+<td>io_uring + Linux 6.1</td>
+<td>multishot + zero-copy + buffer ring + DEFER_TASKRUN</td>
+<td>throughput&#x2191; CPU&#x2193;</td>
+</tr>
+<tr>
+<td>Disable Huffman</td>
+<td>skip HPACK Huffman</td>
+<td>CPU&#x2193;</td>
+</tr>
+<tr>
+<td>H2 header reuse</td>
+<td>dual-write to avoid H2&#x2194;H1 conversions</td>
+<td>CPU&#x2193; alloc&#x2193;</td>
+</tr>
+<tr>
+<td>Remove header pooling</td>
+<td>avoid generational ZGC cross-gen refs</td>
+<td>GC&#x2193;</td>
+</tr>
+<tr>
+<td>APM optimizations</td>
+<td>cache StringBuilder / protobuf builders</td>
+<td>alloc&#x2193; GC&#x2193;</td>
+</tr>
+<tr>
+<td>Disable safety checks</td>
+<td>remove some ByteBuf defensive checks</td>
+<td>CPU&#x2193;</td>
+</tr>
+<tr>
+<td>MPSC queue</td>
+<td>JCTools lock-free queue vs BlockingQueue</td>
+<td>throughput&#x2191;</td>
+</tr>
+</tbody>
+</table>
+<p>Notes on two items above:</p>
+<ul>
+<li><strong>Disable safety checks</strong>: in controlled production environments, optionally bypass some defensive ByteBuf checks (e.g. certain <code>checkAccessible</code>/bounds-check paths) to reduce hot-path overhead. This should be guarded by feature flags, rollout, and rollback to avoid masking real memory bugs.</li>
+<li><strong>MPSC queue</strong>: replacing blocking queues with lock-free MPSC queues (e.g. JCTools) reduces lock contention and context switching, especially for frequent cross-thread event dispatch.</li>
+</ul>
+<h3 id="methodology">Methodology</h3>
+<ol>
+<li>flame-graph driven: use async-profiler to locate CPU hotspots and JFR <code>ObjectAllocationSample</code> to locate allocation hotspots; prioritize the stacks/functions with the largest share first</li>
+<li>top-down, layer-by-layer optimization: from application to kernel</li>
+<li>remove unnecessary work:<ul>
+<li>remove unnecessary protocol conversions (H2 header reuse)</li>
+<li>remove unnecessary encoding/decoding (disable Huffman)</li>
+<li>remove unnecessary safety checks (disable/avoid hot-path <code>checkAccessible</code>)</li>
+<li>remove unnecessary syscalls (io_uring multishot + batched submission)</li>
+</ul>
+</li>
+<li>make everything async where possible: connection pool, filter execution</li>
+<li>leverage new OS/JDK features: io_uring, zero-copy, virtual threads</li>
+<li>design for GC: understand generational GC and avoid cross-generation reference traps; understand virtual threads&#x2019; impact on <code>ThreadLocal</code> caching</li>
+<li>contribute upstream</li>
+</ol>
+<blockquote>
+<p>There is no silver bullet in performance work, but systematic waste reduction at each layer helped us reach the goal of doubling throughput.</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="api-gateway-performance-doubling.zh.html" class="navigation navigation-prev " aria-label="Previous page: API网关性能翻倍技术实践（中文）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../io_uring/io_uring.html" class="navigation navigation-next " aria-label="Next page: io_uring介绍">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"API Gateway Performance Doubling in Practice (English)","level":"2.2","depth":1,"next":{"title":"io_uring介绍","level":"3.1","depth":1,"path":"io_uring/io_uring.md","ref":"io_uring/io_uring.md","articles":[]},"previous":{"title":"API网关性能翻倍技术实践（中文）","level":"2.1","depth":1,"path":"summary/api-gateway-performance-doubling.zh.md","ref":"summary/api-gateway-performance-doubling.zh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"summary/api-gateway-performance-doubling.en.md","mtime":"2026-03-22T12:14:07.020Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-03-22T12:14:32.011Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
