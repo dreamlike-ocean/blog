@@ -2,6 +2,8 @@
 
 > 本文梳理了过去一年多来我们在自研 API 网关上所做的一系列性能优化工作。这些改动覆盖了网络传输层、协议层、线程模型、内存管理等多个维度，最终实现了同等硬件条件下吞吐量翻倍的效果。
 
+> English version: [API Gateway Performance Doubling in Practice (2025–2026)](api-gateway-performance-doubling.en.md)
+
 ---
 
 ## 目录
@@ -16,7 +18,7 @@
 - [八、移除 Header 对象池：分代 ZGC 下的跨代引用陷阱](#八移除-header-对象池分代-zgc-下的跨代引用陷阱)
 - [九、APM Agent 内存分配优化](#九apm-agent-内存分配优化)
 - [十、回馈上游：向 Netty 社区贡献优化](#十回馈上游向-netty-社区贡献优化)
-- [十一、正在探索：EventLoop 驱动虚拟线程](#十一正在探索eventloop-驱动虚拟线程)
+- [十一、正在探索](#十一正在探索)
 - [十二、总结与收益](#十二总结与收益)
 
 ---
@@ -206,9 +208,11 @@ borrowAsync() 执行流程：
 - 虚拟线程数量无上限，不存在线程池饱和问题
 - Filter 中的阻塞调用（Redis/DB）自动 yield，不浪费 CPU
 
-> ⚠️ **JDK 版本建议**：建议至少升级到 JDK 24。JDK 21 的虚拟线程不兼容 `synchronized`（Object Monitor），虚拟线程在进入 `synchronized` 块时会 pin 住 carrier thread 无法 yield。更严重的是，在某些高并发场景下 JDK 21 会触发大量的 ForkJoinWorker 补偿线程创建，导致 carrier thread 数目远超预期，反而恶化性能。JDK 24 解决了 Object Monitor 的兼容性问题，虚拟线程在 `synchronized` 中也能正常 yield。
+> ⚠️ **JDK 版本建议**：在 JDK 21 中，虚拟线程进入 `synchronized`（Object Monitor）时会 **pin 住 carrier thread**，从而失去阻塞点自动 unmount/yield 的伸缩性优势；如果 monitor 使用较多，可能触发补偿线程（compensation）增多，带来线程数膨胀与调度开销。
 >
-> 此外，虚拟线程在 classloader 场景下还存在莫名其妙的死锁问题（[案例一](https://mail.openjdk.org/pipermail/loom-dev/2025-November/007998.html)、[案例二](https://mail.openjdk.org/pipermail/loom-dev/2025-December/008097.html)）——当虚拟线程触发类加载时，可能与其他线程在 classloader 锁上产生死锁，导致整个应用 hang 住。[JDK-8347265](https://github.com/openjdk/jdk/pull/27802) 能缓解此问题，建议关注并及时升级。
+> 建议优先使用较新的 JDK（并持续跟进 Loom 相关修复/优化），并尽量减少虚拟线程上的长时间 monitor 持有。
+>
+> 此外，虚拟线程在 classloader 场景下还存在死锁风险（[案例一](https://mail.openjdk.org/pipermail/loom-dev/2025-November/007998.html)、[案例二](https://mail.openjdk.org/pipermail/loom-dev/2025-December/008097.html)）——当虚拟线程触发类加载时，可能与其他线程在 classloader 锁上产生死锁，导致整个应用 hang 住。[JDK-8347265](https://github.com/openjdk/jdk/pull/27802) 能缓解此问题，建议关注并及时升级。
 >
 > **实践建议**：只允许受控的、行为可预测的代码运行在虚拟线程上，并且尽可能确保虚拟线程运行期间不会触发类加载（即所有相关类在应用启动阶段就已加载完毕）。
 
@@ -271,9 +275,9 @@ if (IoUring.isAcceptMultishotEnabled() || IoUring.isRecvMultishotEnabled()
 
 传统 `recv` 调用需要用户态预先分配好 buffer 并在 SQE 中指定。这意味着**每个连接必须预分配一个接收 buffer**——对于十万连接级别的网关，这是巨大的内存浪费（大部分连接在大部分时间是空闲的）。
 
-Buffer Ring 是 io_uring 提供的内核侧 buffer 池化机制，它完美解决了这个问题：\
+Buffer Ring 是 io_uring 提供的内核侧 buffer 池化机制，它完美解决了这个问题。
 
-注意这里并不意味着是零拷贝的recv，而是内核自动选择一个buffer，将内核缓冲区的buffer拷贝进去
+需要强调的是：**Buffer Ring 并不意味着 `recv` 零拷贝**，它只是让内核自动选择一个已注册的 buffer，然后把内核协议栈中的数据拷贝进这个 buffer，最后通过 CQE 把 buffer id/长度返回给用户态。
 
 ```
 传统模式（per-connection buffer）：
@@ -373,14 +377,14 @@ static int setupFlags(boolean useSingleIssuer) {
 Linux 6.1 是一个重要的 LTS 版本，我们用到了以下 io_uring 特性：
 
 | 特性                              | 引入版本 | 作用 |
-|---------------------------------|---------|------|
-| **`IORING_OP_SEND_ZC`**         | 6.0 (稳定于 6.1) | Zero-copy send，大包直接 DMA 发送 |
+|---------------------------------|-------|------|
+| **`IORING_OP_SEND_ZC`**         | 6.0 | Zero-copy send，大包直接 DMA 发送 |
 | **`IORING_OP_SENDMSG_ZC`**      | 6.1 | 向量化零拷贝写入（scatter-gather） |
 | **`recv_multishot`**            | 6.0 | 一次提交持续接收多个数据包 |
 | **`accept_multishot`**          | 5.19 | 一次提交持续 accept 多个连接 |
 | **`Buffer Ring 内核优化`**            | 6.1 | buffer ring 性能改进，减少 buffer 选择的锁竞争 |
 | **`IORING_SETUP_DEFER_TASKRUN`** | 6.1 | 推迟任务到用户态主动 poll 时执行，减少不必要的唤醒 |
-| **`IORING_SETUP_SINGLE_ISSUER`** | 6.0 (稳定于 6.1) | 声明单线程提交，内核跳过并发保护 |
+| **`IORING_SETUP_SINGLE_ISSUER`** | 6.0 | 声明单线程提交，内核跳过并发保护 |
 
 ### 5.6 线程模型调整：从 2N 降至 N
 
@@ -575,7 +579,7 @@ Http2Headers toHttp2Headers(HttpHeaders inHeaders) {
 
 ### 问题发现
 
-当我们从单代 ZGC 升级到分代 ZGC（Generational ZGC，JDK 21 默认推荐）后，性能不升反降。通过分析发现根因是 **跨代引用（cross-generation reference）**：
+当我们从单代 ZGC 升级到分代 ZGC（Generational ZGC；JDK 25 开始默认仅提供分代模式）后，性能不升反降。通过分析发现根因是 **跨代引用（cross-generation reference）**：
 
 - `HttpHeaders` 内部包含 `Map`（存储 header 键值对）以及大量 `CharSequence` 引用
 - 池化的 `HttpHeaders` 对象在多次请求间复用，经历多次 GC 后被晋升到老年代
@@ -622,6 +626,8 @@ Http2Headers toHttp2Headers(HttpHeaders inHeaders) {
 
 在火焰图中定位到以下高频分配热点：
 
+![JFR ObjectAllocationSample 示例](objectSample.png)
+
 **1. Header 遍历时的 StringBuilder 重复创建**
 
 APM 拦截器在每个请求中遍历请求 header 并拼接为字符串用于记录。每次请求都 `new StringBuilder()`，在高 QPS 下产生大量短命对象。
@@ -654,7 +660,7 @@ APM 数据上报使用 gRPC/protobuf。原实现每次发送都 `newBuilder().se
 | [#15591](https://github.com/netty/netty/pull/15591) | 减少冗余系统调用 | 优化事件循环中不必要的 `io_uring_enter` 调用 |
 | [#16130](https://github.com/netty/netty/pull/16130) | 重构 `IORING_OP_SENDMSG_ZC` | 重写向量化零拷贝发送的实现，提升可靠性 |
 | [#16234](https://github.com/netty/netty/pull/16234) | MsgHdrMemory 内存分配优化 | 多个独立分配合并为一次大段分配后切片，减少分配次数 |
-| [#16259](https://github.com/netty/netty/pull/16259) | 减少非阻塞路径系统调用 | 进一步消除事件循环中多余的 `io_uring_enter` ||
+| [#16259](https://github.com/netty/netty/pull/16259) | 减少非阻塞路径系统调用 | 进一步消除事件循环中多余的 `io_uring_enter` |
 | [#14650](https://github.com/netty/netty/pull/14650) | `IORING_REGISTER_IOWQ_MAX_WORKERS` | 支持配置 io_uring 内核异步工作线程数上限 |
 | [#15054](https://github.com/netty/netty/pull/15054) | Buffer Group 设置时序修复 | 确保 buffer group 在 channel read 之前正确配置 |
 | [#15482](https://github.com/netty/netty/pull/15482) | io_uring probe 结果缓存 | 缓存内核能力探测结果，加速 IoUring 初始化 |
@@ -663,9 +669,11 @@ APM 数据上报使用 gRPC/protobuf。原实现每次发送都 `newBuilder().se
 
 ---
 
-## 十一、正在探索：EventLoop 驱动虚拟线程
+## 十一、正在探索
 
-### 现状与问题
+### 11.1 EventLoop 驱动虚拟线程
+
+#### 现在的问题
 
 当前我们的虚拟线程由 JDK 默认的 ForkJoinPool 调度。这意味着网关内部实际上存在两套线程体系：
 
@@ -685,9 +693,8 @@ APM 数据上报使用 gRPC/protobuf。原实现每次发送都 `newBuilder().se
 1. **跨线程池调度开销**：请求从 EventLoop 调度到 ForkJoinPool，处理完再回到 EventLoop，中间有两次线程切换和数据传递
 2. **Cache Locality 损失**：EventLoop 线程和 ForkJoinPool carrier thread 大概率不在同一个 CPU 核上，请求上下文的 cache line 需要迁移
 3. **线程总数偏多**：N 个 EventLoop + M 个 ForkJoinPool carrier = 更多的上下文切换
-4. **死锁风险**：ForkJoinPool 的 carrier thread 如果被阻塞（比如触发类加载时的 ZipFile 锁），会导致补偿线程大量创建，我们在 Netty [MPSC Queue PR (#15372)](https://github.com/netty/netty/pull/15372) 中就遇到过类似的死锁场景
 
-### 探索方向：EventLoop 作为虚拟线程调度器
+#### 探索方向：EventLoop 作为虚拟线程调度器
 
 如果能让 Netty EventLoop 自身作为虚拟线程的 carrier thread（调度器），就可以将两套线程体系合二为一：
 
@@ -713,11 +720,11 @@ APM 数据上报使用 gRPC/protobuf。原实现每次发送都 `newBuilder().se
 
 我们正在关注和参考以下社区探索：
 - [franz1981/Netty-VirtualThread-Scheduler](https://github.com/franz1981/Netty-VirtualThread-Scheduler) — Red Hat 工程师 Francesco Nigro 的实验项目，探索将 Netty EventLoop 作为虚拟线程调度器
-- [dreamlike-ocean/VirtualThreadPlayground#1](https://github.com/dreamlike-ocean/VirtualThreadPlayground/pull/1) — 我们自己的实验，尝试让 Netty 接管更多的虚拟线程调度能力
+- [dreamlike-ocean/VirtualThreadPlayground#1](https://github.com/dreamlike-ocean/VirtualThreadPlayground/pull/1) — 我自己的实验，尝试让 Netty 接管更多的虚拟线程调度能力
 
 这一方向仍在原型阶段，但我们相信"统一调度器"是 Netty + 虚拟线程的最终形态。
 
-### io_uring Zero-Copy Receive：接收端也零拷贝
+### 11.2 io_uring Zero-Copy Receive：接收端也零拷贝
 
 我们目前已经实现了发送端的零拷贝（`SEND_ZC` / `SENDMSG_ZC`），但接收端仍然存在内核→用户态的数据拷贝。Netty 社区也注意到了这个问题——[netty#15475](https://github.com/netty/netty/issues/15475) 明确指出，benchmarking 显示**接收路径上的内存拷贝消耗了大量 CPU**。
 
@@ -737,7 +744,7 @@ Linux 内核社区正在推进 `IORING_OP_RECV_ZC`（Zero-Copy Receive），其�
 
 在 1500 MTU 下，io_uring ZC Rx 相比 epoll 带宽提升 **31%~43%**，这还是在使用标准 TCP 协议栈、不绕过内核的前提下实现的。
 
-这一特性需要较新的内核版本（6.12+）和网卡驱动支持（目前 Broadcom bnxt 和 Google gve 已支持，Mellanox mlx5 正在开发中）。一旦 Netty 完成 `IORING_OP_RECV_ZC` 的集成，我们的网关在接收端也能实现零拷贝，进一步降低 CPU 开销。
+这一特性需要较新的内核版本（6.12+）和网卡驱动支持 一旦 Netty 完成 `IORING_OP_RECV_ZC` 的集成，我们的网关在接收端也能实现零拷贝，进一步降低 CPU 开销。
 
 ---
 
@@ -757,6 +764,11 @@ Linux 内核社区正在推进 `IORING_OP_RECV_ZC`（Zero-Copy Receive），其�
 | APM Agent 优化 | ThreadLocal 缓存 StringBuilder / protobuf Builder | GC↓ 分配↓ |
 | 安全检查关闭 | 去除 ByteBuf 防御性检查 | CPU↓ |
 | MPSC Queue | JCTools 无锁队列替代 BlockingQueue | 吞吐↑ |
+
+上表中的两项补充说明：
+
+- **安全检查关闭**：指在可控生产环境中，按需关闭/绕过部分 ByteBuf 的防御性检查（例如某些 `checkAccessible`/bounds check 路径），以减少热路径分支与方法调用开销。此类优化务必配合灰度与回滚开关，避免掩盖内存越界/释放后使用等问题。
+- **MPSC Queue**：将部分线程间事件投递从阻塞队列替换为无锁 MPSC 队列（如 JCTools），减少锁竞争与上下文切换，尤其在高并发、频繁跨线程投递的场景收益明显。
 
 ### 方法论
 
