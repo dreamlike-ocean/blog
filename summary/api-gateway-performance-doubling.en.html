@@ -585,6 +585,7 @@
 <p>This post summarizes a series of performance optimizations we made to our in-house API gateway over the past year. The work spans the networking layer, protocol layer, threading model, and memory management, and ultimately doubled throughput on the same hardware.</p>
 <p>&#x4E2D;&#x6587;&#x7248;&#x672C;&#xFF1A;<a href="api-gateway-performance-doubling.zh.html">API &#x7F51;&#x5173;&#x6027;&#x80FD;&#x7FFB;&#x500D;&#x6280;&#x672F;&#x5B9E;&#x8DF5;&#xFF08;2025-2026&#xFF09;</a></p>
 </blockquote>
+<p>We also upgraded the runtime from JDK 17 to JDK 25, enabling generational ZGC, Compact Object Headers, and improved JIT optimizations.</p>
 <hr>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ul>
@@ -867,17 +868,8 @@ Zero-copy write:   submit SQE &#x2192; CQE (F_MORE) &#x2192; wait NOTIF CQE &#x2
 }
 </code></pre>
 <p>The most important one is <strong><code>IORING_SETUP_DEFER_TASKRUN</code></strong>.</p>
-<p>By default, io_uring &#x201C;task work&#x201D; may run on <em>any</em> CPU at <em>any</em> time. For example, after an interrupt on another CPU, the kernel can process CQEs immediately and wake up the userspace thread via <code>eventfd</code>. This brings two problems:</p>
-<ol>
-<li><strong>Cross-CPU wakeups</strong>: CQE processing may happen on a different CPU than the userspace EventLoop, causing cache lines to bounce between CPUs.</li>
-<li><strong>Unnecessary wakeups</strong>: the userspace thread might be busy handling other events, and kernel wakeups interrupt useful work.</li>
-</ol>
-<p><code>DEFER_TASKRUN</code> changes the behavior by deferring all task work until userspace <strong>explicitly calls <code>io_uring_enter</code></strong>. In practice:</p>
-<ul>
-<li>CQE processing runs on the <strong>same CPU</strong> as the userspace EventLoop, improving CPU affinity.</li>
-<li>Userspace can batch completion handling at its own pace, reducing pointless wakeups.</li>
-<li>Combined with <code>SINGLE_ISSUER</code> (declare a single SQE submitter), the kernel can skip some concurrency protection.</li>
-</ul>
+<p>More precisely, with this flag enabled, io_uring does not actually create <code>task_work</code> in <code>__io_req_task_work_add()</code>. Instead, it turns the work into <strong>local work</strong>.</p>
+<p>This matters especially in scenarios where the system frequently interleaves &#x201C;producing task work&#x201D; with &#x201C;issuing syscalls&#x201D; (for example, repeatedly calling <code>io_uring_enter</code>). When work is kept as local work rather than being immediately materialized as <code>task_work</code> and executed at less predictable times, it creates better opportunities for <strong>batching</strong> on both the userspace and kernel side, which unlocks further optimization potential.</p>
 <h3 id="55-linux-61-key-features-used">5.5 Linux 6.1 key features used</h3>
 <table>
 <thead>
@@ -942,7 +934,7 @@ Zero-copy write:   submit SQE &#x2192; CQE (F_MORE) &#x2192; wait NOTIF CQE &#x2
 <p>Measured result: fewer threads increased effective CPU utilization and improved throughput.</p>
 <h3 id="benefits">Benefits</h3>
 <ul>
-<li>50%+ fewer syscalls (multishot + batched io_uring)</li>
+<li>syscalls reduced significantly (multishot + batched io_uring)</li>
 <li>Half the IO threads; less scheduling overhead</li>
 <li>Zero-copy for large writes reduces copies</li>
 <li>Buffer Ring reduces wasted per-connection memory and TLB misses</li>
@@ -966,7 +958,13 @@ Zero-copy write:   submit SQE &#x2192; CQE (F_MORE) &#x2192; wait NOTIF CQE &#x2
 
     <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">encodeStringLiteral</span><span class="hljs-params">(ByteBuf out, CharSequence string)</span> </span>{
         <span class="hljs-comment">// Write raw bytes and skip Huffman encoding</span>
-        encodeLiteral(out, string, string.length());
+        encodeInteger(out, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>, string.length());
+        <span class="hljs-keyword">if</span> (string <span class="hljs-keyword">instanceof</span> AsciiString) {
+            AsciiString asciiString = (AsciiString)string;
+            out.writeBytes(asciiString.array(), asciiString.arrayOffset(), asciiString.length());
+        } <span class="hljs-keyword">else</span> {
+            out.writeCharSequence(string, CharsetUtil.ISO_8859_1);
+        }
     }
 }
 </code></pre>
@@ -1388,7 +1386,7 @@ Savings: N H1&#x2192;H2 string conversions (N = number of headers, typically 15&
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"API Gateway Performance Doubling in Practice (English)","level":"2.2","depth":1,"next":{"title":"io_uring介绍","level":"3.1","depth":1,"path":"io_uring/io_uring.md","ref":"io_uring/io_uring.md","articles":[]},"previous":{"title":"API网关性能翻倍技术实践（中文）","level":"2.1","depth":1,"path":"summary/api-gateway-performance-doubling.zh.md","ref":"summary/api-gateway-performance-doubling.zh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"summary/api-gateway-performance-doubling.en.md","mtime":"2026-03-22T12:14:07.020Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-03-22T12:14:32.011Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"API Gateway Performance Doubling in Practice (English)","level":"2.2","depth":1,"next":{"title":"io_uring介绍","level":"3.1","depth":1,"path":"io_uring/io_uring.md","ref":"io_uring/io_uring.md","articles":[]},"previous":{"title":"API网关性能翻倍技术实践（中文）","level":"2.1","depth":1,"path":"summary/api-gateway-performance-doubling.zh.md","ref":"summary/api-gateway-performance-doubling.zh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"summary/api-gateway-performance-doubling.en.md","mtime":"2026-03-22T12:25:13.813Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-03-22T12:25:37.501Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
