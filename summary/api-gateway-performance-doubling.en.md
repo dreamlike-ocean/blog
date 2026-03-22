@@ -4,6 +4,8 @@
 >
 > 中文版本：[API 网关性能翻倍技术实践（2025-2026）](api-gateway-performance-doubling.zh.md)
 
+We also upgraded the runtime from JDK 17 to JDK 25, enabling generational ZGC, Compact Object Headers, and improved JIT optimizations.
+
 ---
 
 ## Table of Contents
@@ -361,16 +363,9 @@ static int setupFlags(boolean useSingleIssuer) {
 
 The most important one is **`IORING_SETUP_DEFER_TASKRUN`**.
 
-By default, io_uring “task work” may run on *any* CPU at *any* time. For example, after an interrupt on another CPU, the kernel can process CQEs immediately and wake up the userspace thread via `eventfd`. This brings two problems:
+More precisely, with this flag enabled, io_uring does not actually create `task_work` in `__io_req_task_work_add()`. Instead, it turns the work into **local work**.
 
-1. **Cross-CPU wakeups**: CQE processing may happen on a different CPU than the userspace EventLoop, causing cache lines to bounce between CPUs.
-2. **Unnecessary wakeups**: the userspace thread might be busy handling other events, and kernel wakeups interrupt useful work.
-
-`DEFER_TASKRUN` changes the behavior by deferring all task work until userspace **explicitly calls `io_uring_enter`**. In practice:
-
-- CQE processing runs on the **same CPU** as the userspace EventLoop, improving CPU affinity.
-- Userspace can batch completion handling at its own pace, reducing pointless wakeups.
-- Combined with `SINGLE_ISSUER` (declare a single SQE submitter), the kernel can skip some concurrency protection.
+This matters especially in scenarios where the system frequently interleaves “producing task work” with “issuing syscalls” (for example, repeatedly calling `io_uring_enter`). When work is kept as local work rather than being immediately materialized as `task_work` and executed at less predictable times, it creates better opportunities for **batching** on both the userspace and kernel side, which unlocks further optimization potential.
 
 ### 5.5 Linux 6.1 key features used
 
@@ -407,7 +402,7 @@ Measured result: fewer threads increased effective CPU utilization and improved 
 
 ### Benefits
 
-- 50%+ fewer syscalls (multishot + batched io_uring)
+- syscalls reduced significantly (multishot + batched io_uring)
 - Half the IO threads; less scheduling overhead
 - Zero-copy for large writes reduces copies
 - Buffer Ring reduces wasted per-connection memory and TLB misses
@@ -440,7 +435,13 @@ public class HpackEncoder {
 
     private void encodeStringLiteral(ByteBuf out, CharSequence string) {
         // Write raw bytes and skip Huffman encoding
-        encodeLiteral(out, string, string.length());
+        encodeInteger(out, 0, 7, string.length());
+        if (string instanceof AsciiString) {
+            AsciiString asciiString = (AsciiString)string;
+            out.writeBytes(asciiString.array(), asciiString.arrayOffset(), asciiString.length());
+        } else {
+            out.writeCharSequence(string, CharsetUtil.ISO_8859_1);
+        }
     }
 }
 ```

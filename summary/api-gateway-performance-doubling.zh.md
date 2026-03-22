@@ -4,6 +4,8 @@
 
 > English version: [API Gateway Performance Doubling in Practice (2025–2026)](api-gateway-performance-doubling.en.md)
 
+此外，我们也将运行时从 JDK 17 升级到 JDK 25，获得了分代 ZGC、压缩对象头（Compact Object Headers）以及更好的 JIT 优化。
+
 ---
 
 ## 目录
@@ -362,15 +364,11 @@ static int setupFlags(boolean useSingleIssuer) {
 }
 ```
 
-其中最关键的是 **`IORING_SETUP_DEFER_TASKRUN`**。默认情况下，io_uring 的内核侧完成工作（task work）可能在任意 CPU 上被任意时机执行——比如当其他 CPU 的中断处理完成时，内核会立即处理 CQE 并通过 `eventfd` 唤醒用户态线程。这带来两个问题：
+其中最关键的是 **`IORING_SETUP_DEFER_TASKRUN`**。
 
-1. **跨 CPU 唤醒**：CQE 的处理可能发生在与用户态 EventLoop 不同的 CPU 上，导致 cache line 频繁在 CPU 之间迁移
-2. **不必要的唤醒**：用户态线程可能正在处理其他事件，内核的唤醒打断了当前工作
+更准确地说，开启该 flag 后，io_uring 在 `__io_req_task_work_add()` 中**不再真正生成 task_work**，而是改为挂到 **local work** 上（避免将工作以 task_work 的形式抛到更“全局/异步”的执行时机）。
 
-`DEFER_TASKRUN` 改变了这一行为：内核推迟所有 task work 到用户态**主动调用 `io_uring_enter` 时才执行**。这意味着：
-- CQE 的处理与用户态 EventLoop 在**同一 CPU** 上执行，获得天然的 CPU 亲和性
-- 用户态可以按自己的节奏批量收割完成事件，减少无效唤醒
-- 配合 `SINGLE_ISSUER`（声明只有一个线程提交 SQE），内核可以完全跳过并发保护逻辑
+这一点对于“高频交织地产生 task work + 同时又高频执行系统调用（例如反复 `io_uring_enter`）”的场景尤其有意义：当工作不再被立刻变成 task_work 并分散到不可控的执行时机时，用户态/内核态在请求与完成处理上就有更好的**批处理（batching）机会**，从而具备进一步优化的潜力。
 
 ### 5.5 Linux 6.1 关键特性汇总
 
@@ -392,7 +390,7 @@ Linux 6.1 是一个重要的 LTS 版本，我们用到了以下 io_uring 特性�
 
 
 同时 io_uring 的架构本身也支持更少的用户态线程：
-- **syscall 合并**：io_uring 通过 SQ/CQ ring 批量提交和收割 IO 操作，单线程的 IO 吞吐量远超 epoll（epoll 每次 read/write 都是独立 syscall）
+- **syscall合并**：io_uring 通过 SQ/CQ ring 批量提交和收割 IO 操作，单线程的 IO 吞吐量远超 epoll（epoll 每次 read/write 都是独立 syscall）
 - **内核侧异步工作**：io_uring 内部有 `io-wq`（io worker）内核线程池来处理部分无法立即完成的操作（如 buffered I/O、文件操作等），这些异步工作不需要用户态线程参与
 
 基于以上分析，我们将 IO 线程数降低到 `CPU_CORE`：
@@ -412,7 +410,7 @@ int ioUringThreads = Runtime.getRuntime().availableProcessors();
 
 ### 收益
 
-- 系统调用减少 50%+（multishot + io_uring 批量提交）
+- 系统调用大幅减少（multishot + io_uring 批量提交）
 - IO 线程数减半，消除调度开销，CPU 利用率反而提升
 - 大包 zero-copy 避免用户态→内核态数据拷贝
 - Buffer Ring 消除 per-connection buffer 浪费，减少 TLB miss
@@ -444,7 +442,13 @@ public class HpackEncoder {
     
     private void encodeStringLiteral(ByteBuf out, CharSequence string) {
         // 直接写入原始字节，完全跳过哈夫曼编码
-        encodeLiteral(out, string, string.length());
+       encodeInteger(out, 0, 7, string.length());
+       if (string instanceof AsciiString) {
+          AsciiString asciiString = (AsciiString)string;
+          out.writeBytes(asciiString.array(), asciiString.arrayOffset(), asciiString.length());
+       } else {
+          out.writeCharSequence(string, CharsetUtil.ISO_8859_1);
+       }
     }
 }
 ```
