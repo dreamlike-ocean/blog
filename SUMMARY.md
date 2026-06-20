@@ -14,6 +14,7 @@
 * [io_uring,Memory以及Procator的Socket IO](io_uring/io_uringAndMemory.md)
 * [io_uring_recv是怎么实现的](io_uring/io_uring_recv_impl.md)
 * [io_uring_sendzc相关分享](io_uring/io_uring_sendzc.md)
+* [Netty io_uring linked SQE 设计方案 和 cancel 行为调研](io_uring/netty_linked_sqe_cancel.md)
 
 ## reactive
 
