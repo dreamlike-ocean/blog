@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>io_uring_recv是怎么实现的 · GitBook</title>
+        <title>从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="io_uring_sendzc.html" />
+    <link rel="next" href="../reactive_lock.html" />
     
     
-    <link rel="prev" href="io_uringAndMemory.html" />
+    <link rel="prev" href="netty_linked_sqe_cancel.html" />
     
 
     </head>
@@ -168,7 +168,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.3" data-path="io_uring_recv_impl.html">
+        <li class="chapter " data-level="3.3" data-path="io_uring_recv_impl.html">
             
                 <a href="io_uring_recv_impl.html">
             
@@ -207,7 +207,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="io_uring-fast-poll-entry.html">
+        <li class="chapter active" data-level="3.6" data-path="io_uring-fast-poll-entry.html">
             
                 <a href="io_uring-fast-poll-entry.html">
             
@@ -591,7 +591,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >io_uring_recv是怎么实现的</a>
+        <a href=".." >从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路</a>
     </h1>
 </div>
 
@@ -606,85 +606,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="&#x5728;iouring&#x4E2D;&#x8BBE;&#x7F6E;block&#x7684;socket&#x662F;&#x5426;&#x6709;&#x610F;&#x4E49;&#xFF1F;">&#x5728;io_uring&#x4E2D;&#x8BBE;&#x7F6E;block&#x7684;socket&#x662F;&#x5426;&#x6709;&#x610F;&#x4E49;&#xFF1F;</h3>
-<p>&#x5148;&#x770B;IORING_OP_RECVMSG pdef &#x5176;&#x652F;&#x6301;pollin </p>
-<pre><code class="lang-C++">    [IORING_OP_RECVMSG] = {
-        .needs_file     = <span class="hljs-number">1</span>,
-        .unbound_nonreg_file    = <span class="hljs-number">1</span>,
-        .pollin         = <span class="hljs-number">1</span>,
-        .buffer_select      = <span class="hljs-number">1</span>,
-        .ioprio         = <span class="hljs-number">1</span>,
-        .manual_alloc       = <span class="hljs-number">1</span>,
-        .name           = <span class="hljs-string">&quot;RECVMSG&quot;</span>,
-<span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> defined(CONFIG_NET)</span>
-        .async_size     = <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> io_async_msghdr),
-        .prep           = io_recvmsg_prep,
-        .issue          = io_recvmsg,
-        .prep_async     = io_recvmsg_prep_async,
-        .cleanup        = io_sendmsg_recvmsg_cleanup,
-        .fail           = io_sendrecv_fail,
-</code></pre>
-<p>&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x5904;&#x7406;sqe&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5F3A;&#x5236;&#x4F7F;&#x7528;IO_URING_F_NONBLOCK&#x8C03;&#x7528;io_recvmsg</p>
-<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">io_queue_sqe</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> io_kiocb *req)</span>
-    __<span class="hljs-title">must_hold</span><span class="hljs-params">(&amp;req-&gt;ctx-&gt;uring_lock)</span>
-</span>{
-    <span class="hljs-keyword">int</span> ret;
+                                <h1 id="&#x4ECE;-fastpoll-&#x5230;-mpsc-fifo&#xFF1A;iouring-&#x7684;&#x5B8C;&#x6210;&#x6267;&#x884C;&#x4E4B;&#x8DEF;">&#x4ECE; FAST_POLL &#x5230; MPSC FIFO&#xFF1A;io_uring &#x7684;&#x5B8C;&#x6210;&#x6267;&#x884C;&#x4E4B;&#x8DEF;</h1>
+<p>&#x8FD9;&#x662F;&#x4E00;&#x4EFD;&#x9762;&#x5411;&#x6F14;&#x793A;&#x3001;PPT &#x548C;&#x52A8;&#x753B;&#x518D;&#x521B;&#x4F5C;&#x7684;&#x4EA4;&#x4E92;&#x5F0F;&#x6280;&#x672F;&#x6587;&#x6863;&#x3002;&#x5EFA;&#x8BAE;&#x4F7F;&#x7528;&#x8F83;&#x5BBD;&#x7684;&#x6D4F;&#x89C8;&#x5668;&#x7A97;&#x53E3;&#x9605;&#x8BFB;&#xFF1B;&#x4E5F;&#x53EF;&#x4EE5;<a href="io_uring-fast-poll.html">&#x5168;&#x5C4F;&#x6253;&#x5F00;&#x4EA4;&#x4E92;&#x6587;&#x6863;</a>&#x3002;</p>
+<iframe src="io_uring-fast-poll.html" title="&#x4ECE; FAST_POLL &#x5230; MPSC FIFO&#xFF1A;io_uring &#x7684;&#x5B8C;&#x6210;&#x6267;&#x884C;&#x4E4B;&#x8DEF;" style="display:block;width:100%;height:82vh;min-height:640px;border:1px solid #2b3548;border-radius:12px;background:#090d16;" loading="lazy" allowfullscreen>
+</iframe>
 
-    ret = io_issue_sqe(req, IO_URING_F_NONBLOCK|IO_URING_F_COMPLETE_DEFER);
-
-    <span class="hljs-comment">/*
-     * We async punt it if the file wasn&apos;t marked NOWAIT, or if the file
-     * doesn&apos;t support non-blocking read/write attempts
-     */</span>
-    <span class="hljs-keyword">if</span> (likely(!ret))
-        io_arm_ltimeout(req);
-    <span class="hljs-keyword">else</span>
-        io_queue_async(req, ret);
-}
-</code></pre>
-<p>&#x5BF9;&#x4E8E;recv&#x7684;&#x5B9E;&#x73B0; &#x5982;&#x679C;&#x4F20;&#x5165;&#x4E86;IO_URING_F_NONBLOCK&#x9ED8;&#x8BA4;&#x5C31;&#x4F1A;&#x8D70;MSG_DONTWAIT&#x653E;&#x8FDB;flag&#x91CC;&#x9762;&#xFF0C;&#x5BF9;&#x4E8E;recvmsg&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x8FD9;&#x4E2A;flag&#x4F1A;&#x975E;&#x963B;&#x585E;&#x5C1D;&#x8BD5;&#x4E0B;&#x770B;&#x770B;&#x6709;&#x6CA1;&#x6709;&#x6570;&#x636E;</p>
-<p>&#x6240;&#x4EE5;&#x7B2C;&#x4E00;&#x6B21;&#x7684;&#x975E;&#x963B;&#x585E;&#x5C1D;&#x8BD5;&#x4E0E;&#x662F;&#x4E0D;&#x662F;block&#x7684;<strong>socket&#x6CA1;&#x5173;&#x7CFB;</strong></p>
-<pre><code class="lang-C++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">io_recvmsg</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> io_kiocb *req, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> issue_flags)</span>
-</span>{
-   <span class="hljs-comment">//....</span>
-    <span class="hljs-keyword">bool</span> force_nonblock = issue_flags &amp; IO_URING_F_NONBLOCK;
-   <span class="hljs-comment">//....</span>
-    flags = sr-&gt;msg_flags;
-    <span class="hljs-keyword">if</span> (force_nonblock)
-        flags |= MSG_DONTWAIT;
-
-    <span class="hljs-comment">//....</span>
-    ret = __sys_recvmsg_sock(sock, &amp;kmsg-&gt;msg, sr-&gt;umsg,
-                     kmsg-&gt;uaddr, flags);
-    <span class="hljs-comment">//....                     </span>
- }
-</code></pre>
-<p>&#x82E5;&#x53D6;&#x4E0D;&#x5230;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8D70;&#x4E86;io_queue_async -&gt; io_arm_poll_handler -&gt; __io_arm_poll_handler</p>
-<pre><code class="lang-C++"><span class="hljs-keyword">if</span> (def-&gt;pollin) {
-<span class="hljs-comment">//&#x8FD9;&#x91CC;&#x7684;recv op&#x662F;&#x652F;&#x6301; poll in&#x7684;</span>
-<span class="hljs-comment">//&#x6700;&#x540E;&#x4F1A;&#x76F4;&#x63A5;&#x6302;&#x8F7D;&#x5230;vfs&#x7684;poll&#x4E0A;&#x53BB;</span>
-        mask |= EPOLLIN | EPOLLRDNORM;
-
-        <span class="hljs-comment">/* If reading from MSG_ERRQUEUE using recvmsg, ignore POLLIN */</span>
-        <span class="hljs-keyword">if</span> (req-&gt;flags &amp; REQ_F_CLEAR_POLLIN)
-            mask &amp;= ~EPOLLIN;
-    } <span class="hljs-keyword">else</span> {
-        mask |= EPOLLOUT | EPOLLWRNORM;
-    }
-    <span class="hljs-keyword">if</span> (def-&gt;poll_exclusive)
-        mask |= EPOLLEXCLUSIVE;
-
-    apoll = io_req_alloc_apoll(req, issue_flags);
-    <span class="hljs-keyword">if</span> (!apoll)
-        <span class="hljs-keyword">return</span> IO_APOLL_ABORTED;
-    req-&gt;flags &amp;= ~(REQ_F_SINGLE_POLL | REQ_F_DOUBLE_POLL);
-    req-&gt;flags |= REQ_F_POLLED;
-    ipt.pt._qproc = io_async_queue_proc;
-
-    io_kbuf_recycle(req, issue_flags);
-<span class="hljs-comment">//&#x7B80;&#x5355;&#x6765;&#x8BF4;&#x5C31;&#x662F; mask = vfs_poll(req-&gt;file, &amp;ipt-&gt;pt) &amp; poll-&gt;events;</span>
-    ret = __io_arm_poll_handler(req, &amp;apoll-&gt;poll, &amp;ipt, mask, issue_flags);
-</code></pre>
 
                                 
                                 </section>
@@ -712,12 +638,12 @@
 
             
                 
-                <a href="io_uringAndMemory.html" class="navigation navigation-prev " aria-label="Previous page: io_uring,Memory以及Procator的Socket IO">
+                <a href="netty_linked_sqe_cancel.html" class="navigation navigation-prev " aria-label="Previous page: Netty io_uring linked SQE 设计方案 和 cancel 行为调研">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="io_uring_sendzc.html" class="navigation navigation-next " aria-label="Next page: io_uring_sendzc相关分享">
+                <a href="../reactive_lock.html" class="navigation navigation-next " aria-label="Next page: 响应式的锁">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -728,7 +654,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"io_uring_recv是怎么实现的","level":"3.3","depth":1,"next":{"title":"io_uring_sendzc相关分享","level":"3.4","depth":1,"path":"io_uring/io_uring_sendzc.md","ref":"io_uring/io_uring_sendzc.md","articles":[]},"previous":{"title":"io_uring,Memory以及Procator的Socket IO","level":"3.2","depth":1,"path":"io_uring/io_uringAndMemory.md","ref":"io_uring/io_uringAndMemory.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"io_uring/io_uring_recv_impl.md","mtime":"2026-08-23T14:57:31.224Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-08-23T14:57:54.977Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路","level":"3.6","depth":1,"next":{"title":"响应式的锁","level":"4.1","depth":1,"path":"reactive_lock.md","ref":"reactive_lock.md","articles":[]},"previous":{"title":"Netty io_uring linked SQE 设计方案 和 cancel 行为调研","level":"3.5","depth":1,"path":"io_uring/netty_linked_sqe_cancel.md","ref":"io_uring/netty_linked_sqe_cancel.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"io_uring/io_uring-fast-poll-entry.md","mtime":"2026-08-23T14:57:31.224Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-08-23T14:57:54.977Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
