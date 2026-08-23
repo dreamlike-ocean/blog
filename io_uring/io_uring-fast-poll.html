@@ -1,0 +1,2108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="从 FAST_POLL、task_work 到 DEFER_TASKRUN 与 Linux 7.2 MPSC FIFO 的 io_uring 交互演示">
+  <title>从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路</title>
+  <script>document.documentElement.classList.add('js')</script>
+  <style>
+    :root {
+      --bg: #0c0f0d;
+      --bg-deep: #070908;
+      --ink: #fbfbfe;
+      --muted: #9aa29e;
+      --faint: #66706b;
+      --line: #39423d;
+      --green: #42b883;
+      --green-2: #20d99a;
+      --green-soft: rgba(66, 184, 131, .12);
+      --blue: #3585ff;
+      --cyan: #18c3b1;
+      --pink: #ef5da8;
+      --amber: #f2ae49;
+      --red: #f06464;
+      --serif: "PT Serif", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", Georgia, serif;
+      --sans: Inter, "Noto Sans CJK SC", "Source Han Sans SC", system-ui, sans-serif;
+      --mono: "PT Mono", "SFMono-Regular", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      color: var(--ink);
+    }
+
+    body {
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button, a { font: inherit; }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    .app {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: #000;
+      user-select: none;
+    }
+
+    .deck {
+      --scale: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1000px;
+      height: 562.5px;
+      overflow: hidden;
+      transform: translate(-50%, -50%) scale(var(--scale));
+      transform-origin: center;
+      background:
+        radial-gradient(circle at 9% 6%, rgba(66, 184, 131, .05), transparent 27%),
+        radial-gradient(circle at 92% 72%, rgba(31, 95, 67, .035), transparent 29%),
+        linear-gradient(135deg, #0d110e 0%, var(--bg) 55%, #090c0a 100%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.025);
+      cursor: default;
+    }
+
+    .deck::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: .12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 42px 58px 44px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(70px) scale(.985);
+      transition:
+        opacity .32s ease,
+        transform .48s cubic-bezier(.22,.82,.2,1);
+    }
+
+    .slide.is-active {
+      z-index: 3;
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    .slide.is-past { transform: translateX(-70px) scale(.985); }
+
+    .slide h1 {
+      margin: 0;
+      color: #e9eeeb;
+      font-family: var(--serif);
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 400;
+      letter-spacing: -.7px;
+    }
+
+    .slide h1 .term,
+    .slide h1 .mono,
+    .slide h1 code { color: var(--green); }
+
+    .slide h2,
+    .slide h3,
+    .slide p { margin-top: 0; }
+
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--faint);
+      font: 600 11px/1.2 var(--mono);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .small-title {
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .mono { font-family: var(--mono); }
+    .green { color: var(--green); }
+    .blue { color: var(--blue); }
+    .pink { color: var(--pink); }
+    .amber { color: var(--amber); }
+    .muted { color: var(--muted); }
+
+    code {
+      color: #b9e9d1;
+      font: .9em var(--mono);
+    }
+
+    .term {
+      position: relative;
+      color: inherit;
+      text-decoration: underline dotted rgba(105,214,164,.48) 1px;
+      text-underline-offset: 5px;
+      cursor: help;
+    }
+
+    .term::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      top: calc(100% + 11px);
+      z-index: 90;
+      width: 280px;
+      padding: 11px 13px;
+      border: 1px solid #52605a;
+      border-left: 2px solid var(--green);
+      border-radius: 5px;
+      color: #e5e9e7;
+      background: rgba(8,11,9,.97);
+      box-shadow: 0 12px 28px rgba(0,0,0,.34);
+      font: 11px/1.55 var(--mono);
+      letter-spacing: 0;
+      text-align: left;
+      white-space: normal;
+      opacity: 0;
+      transform: translateY(-5px);
+      pointer-events: none;
+      transition: opacity .16s ease, transform .2s ease;
+    }
+
+    .term.tip-left::after { left: auto; right: 0; }
+    .term.tip-up::after { top: auto; bottom: calc(100% + 11px); }
+
+    .term:hover::after,
+    .term:focus::after {
+      opacity: 1;
+      transform: none;
+    }
+
+    .bottom-copy {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      bottom: 38px;
+      margin: 0;
+      color: #d8dedb;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .bottom-copy strong { color: var(--green); }
+
+    .slide-no {
+      position: absolute;
+      top: 17px;
+      right: 24px;
+      z-index: 25;
+      color: rgba(251,251,254,.26);
+      font: 10px/1 var(--mono);
+      letter-spacing: .06em;
+    }
+
+    .brand {
+      position: absolute;
+      right: 25px;
+      bottom: 17px;
+      z-index: 25;
+      color: rgba(251,251,254,.22);
+      font: 10px/1 var(--mono);
+    }
+
+    [data-click] {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity .32s ease,
+        transform .42s cubic-bezier(.22,.82,.2,1);
+    }
+
+    svg [data-click] {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    [data-click].is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    [data-click].is-current {
+      animation: click-enter .46s cubic-bezier(.22,.82,.2,1) both;
+    }
+
+    [data-click].is-prior { opacity: 1; }
+    [data-click].is-click-hidden {
+      opacity: 0 !important;
+      transform: translateY(-9px) !important;
+      pointer-events: none;
+    }
+
+    @keyframes click-enter {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -28; }
+    }
+
+    @keyframes pulse {
+      50% { opacity: .32; transform: scale(1.7); }
+    }
+
+    @keyframes blink {
+      0%, 68%, 100% { opacity: .18; }
+      76%, 90% { opacity: 1; }
+    }
+
+    @keyframes caret {
+      50% { opacity: .18; }
+    }
+
+    svg {
+      overflow: visible;
+      font-family: var(--sans);
+    }
+
+    .diagram {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 104px;
+      height: 360px;
+    }
+
+    .diagram svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .svg-box rect {
+      fill: rgba(7,11,9,.62);
+      stroke: var(--line);
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .svg-box text {
+      fill: var(--ink);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .svg-box .sub {
+      fill: var(--muted);
+      font: 11px var(--mono);
+      font-weight: 400;
+    }
+
+    .stroke-green rect { stroke: var(--green); }
+    .stroke-blue rect { stroke: var(--blue); }
+    .stroke-pink rect { stroke: var(--pink); }
+    .stroke-amber rect { stroke: var(--amber); }
+    .stroke-cyan rect { stroke: var(--cyan); }
+
+    .wire {
+      fill: none;
+      stroke: #4d5651;
+      stroke-width: 1.35;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .wire.active {
+      stroke: var(--green);
+      stroke-dasharray: 7 6;
+      animation: dash .9s linear infinite;
+    }
+
+    .wire.blue { stroke: var(--blue); }
+    .wire.pink { stroke: var(--pink); }
+    .wire.amber { stroke: var(--amber); }
+    .wire.cyan { stroke: var(--cyan); }
+
+    .request-dot {
+      transition: transform .7s cubic-bezier(.22,.82,.2,1);
+    }
+
+    .request-dot circle { fill: var(--green); }
+
+    .motion-token rect {
+      fill: var(--bg);
+      stroke: var(--green);
+      stroke-width: 1.4;
+    }
+
+    .motion-token text {
+      fill: var(--green);
+      font: 10px var(--mono);
+    }
+
+    .motion-token { transition: transform .7s cubic-bezier(.22,.82,.2,1), opacity .25s; }
+
+    .slide h1.tight-title { font-size: 34px; }
+
+    .label {
+      fill: var(--muted);
+      font: 11px var(--mono);
+    }
+
+    .result-label {
+      fill: var(--green);
+      font: 700 12px var(--mono);
+    }
+
+    .danger-label {
+      fill: var(--red);
+      font: 700 12px var(--mono);
+    }
+
+    /* cover */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 72px;
+      background:
+        linear-gradient(90deg, rgba(66,184,131,.04), transparent 42%),
+        radial-gradient(circle at 80% 47%, rgba(66,184,131,.06), transparent 25%);
+    }
+
+    .cover .eyebrow { margin-bottom: 24px; }
+
+    .cover h1 {
+      max-width: 760px;
+      font-size: 60px;
+      line-height: 1.08;
+      letter-spacing: -1.8px;
+    }
+
+    .cover .cover-sub {
+      width: 710px;
+      margin: 38px 0 0;
+      color: #d7dbd8;
+      font-size: 19px;
+      line-height: 1.65;
+    }
+
+    .cover-chain {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 34px;
+      color: var(--muted);
+      font: 12px var(--mono);
+    }
+
+    .cover-chain i {
+      width: 32px;
+      height: 1px;
+      background: var(--green);
+      opacity: .6;
+    }
+
+    .cover-hint {
+      position: absolute;
+      left: 72px;
+      bottom: 18px;
+      color: var(--faint);
+      font: 11px var(--mono);
+    }
+
+    .cover-hint .cursor {
+      display: inline-block;
+      width: 5px;
+      height: 12px;
+      margin-left: 7px;
+      vertical-align: -2px;
+      background: var(--green);
+      animation: caret 1s steps(1) infinite;
+    }
+
+    /* slide 2: no fast poll */
+    .problem-costs {
+      position: absolute;
+      top: 270px;
+      left: 604px;
+      display: grid;
+      gap: 6px;
+      color: #d8dcda;
+      font-size: 14px;
+    }
+
+    .problem-costs span::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--red);
+    }
+
+    /* fast poll */
+    .s-fast .fast-token { transform: translate(87px, 174px); }
+    .s-fast[data-step="1"] .fast-token { transform: translate(276px, 174px); }
+    .s-fast[data-step="2"] .fast-token { transform: translate(472px, 174px); }
+    .s-fast[data-step="3"] .fast-token { transform: translate(717px, 174px); }
+    .s-fast[data-step="4"] .fast-token { transform: translate(562px, 295px); }
+    .s-fast[data-step="5"] .fast-token { transform: translate(809px, 295px); }
+
+    .clue {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 2px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .clue strong { color: var(--pink); }
+
+    .taskwork-mini {
+      position: absolute;
+      left: 2px;
+      bottom: 10px;
+      width: 360px;
+      padding: 12px 15px;
+      border-left: 2px solid var(--pink);
+      color: var(--muted);
+      font: 12px/1.55 var(--mono);
+    }
+
+    .taskwork-mini b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--pink);
+      font-size: 13px;
+    }
+
+    /* chapter handoff */
+    .bridge-panel {
+      position: absolute;
+      inset: 0;
+      z-index: 18;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 86px 82px 72px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(circle at 86% 46%, rgba(66,184,131,.08), transparent 28%),
+        linear-gradient(108deg, #090c0a 0%, #0b0f0c 58%, #080a09 100%);
+    }
+
+    .bridge-panel::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0 0 0 48%;
+      opacity: .38;
+      background-image: radial-gradient(circle, rgba(115,222,171,.28) .7px, transparent .9px);
+      background-size: 17px 17px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 48%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 48%, transparent 100%);
+    }
+
+    .bridge-panel::after {
+      content: "";
+      position: absolute;
+      left: 82px;
+      right: 82px;
+      top: 78px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(66,184,131,.78), rgba(66,184,131,.12) 46%, transparent 82%);
+      transform-origin: left;
+    }
+
+    .bridge-panel .bridge-from {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 31px;
+      color: var(--faint);
+      font: 700 11px/1 var(--mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .bridge-panel .bridge-from::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border: 1px solid var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 14px rgba(66,184,131,.48);
+    }
+
+    .bridge-panel .bridge-from::after {
+      content: "";
+      width: 52px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--green), transparent);
+    }
+
+    .bridge-prompt {
+      position: relative;
+      z-index: 1;
+      max-width: 830px;
+      padding-left: 30px;
+    }
+
+    .bridge-prompt::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .2em;
+      bottom: .15em;
+      width: 2px;
+      background: linear-gradient(180deg, var(--green), rgba(66,184,131,.14));
+      transform-origin: top;
+    }
+
+    .bridge-prompt p {
+      margin: 0;
+      color: #edf2ef;
+      font-family: var(--serif);
+      font-size: 44px;
+      line-height: 1.38;
+      letter-spacing: -.6px;
+      text-wrap: balance;
+    }
+
+    .bridge-prompt.medium p { font-size: 37px; line-height: 1.43; }
+    .bridge-prompt.long p { font-size: 33px; line-height: 1.48; }
+
+    .bridge-prompt code {
+      color: #69d6a4;
+      text-shadow: 0 0 22px rgba(66,184,131,.12);
+    }
+
+    .bridge-panel.is-current::after { animation: bridge-rule .9s .06s cubic-bezier(.22,.82,.2,1) both; }
+    .bridge-panel.is-current .bridge-from { animation: bridge-meta .58s .12s ease both; }
+    .bridge-panel.is-current .bridge-prompt::before { animation: bridge-stem .72s .16s cubic-bezier(.22,.82,.2,1) both; }
+    .bridge-panel.is-current .bridge-prompt p { animation: bridge-copy .72s .2s cubic-bezier(.22,.82,.2,1) both; }
+
+    @keyframes bridge-rule {
+      from { opacity: 0; transform: scaleX(.08); }
+      to { opacity: 1; transform: scaleX(1); }
+    }
+
+    @keyframes bridge-meta {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes bridge-stem {
+      from { opacity: 0; transform: scaleY(0); }
+      to { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes bridge-copy {
+      from { opacity: 0; transform: translateY(18px); filter: blur(5px); }
+      to { opacity: 1; transform: none; filter: blur(0); }
+    }
+
+    /* task_work */
+    .task-layout {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 116px;
+      display: grid;
+      grid-template-columns: 410px 1fr;
+      gap: 72px;
+    }
+
+    .task-struct {
+      position: relative;
+      height: 292px;
+      padding: 34px 26px 24px;
+      border: 1.5px solid #53605a;
+      border-radius: 8px;
+    }
+
+    .task-struct::before {
+      content: "task_struct · submitter T";
+      position: absolute;
+      top: -11px;
+      left: 18px;
+      padding: 0 8px;
+      color: var(--blue);
+      background: var(--bg);
+      font: 700 13px var(--mono);
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font: 12px var(--mono);
+    }
+
+    .field.hot {
+      margin: 11px 0 0;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+    }
+
+    .work-list {
+      display: flex;
+      gap: 7px;
+      margin-left: auto;
+    }
+
+    .work-list i {
+      width: 26px;
+      height: 18px;
+      border: 1px solid var(--pink);
+      background: rgba(239,93,168,.09);
+    }
+
+    .run-points {
+      position: relative;
+      padding-top: 8px;
+    }
+
+    .run-points h3 {
+      margin-bottom: 26px;
+      color: var(--ink);
+      font-size: 17px;
+    }
+
+    .run-point {
+      position: relative;
+      min-height: 58px;
+      padding: 0 0 19px 36px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .run-point::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .run-point::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 18px;
+      bottom: -2px;
+      width: 1px;
+      background: #48514c;
+    }
+
+    .run-point:last-child::after { display: none; }
+    .run-point b { display: block; color: var(--ink); font-size: 16px; }
+
+    .not-worker {
+      position: absolute;
+      left: 58px;
+      bottom: 42px;
+      color: #dfe3e1;
+      font-size: 18px;
+    }
+
+    .not-worker strong { color: var(--green); }
+
+    /* notification slides */
+    .notify-grid {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 116px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .cpu-case {
+      position: relative;
+      height: 285px;
+      padding: 23px;
+      border: 1.4px solid #414a45;
+      border-radius: 8px;
+    }
+
+    .cpu-case h3 {
+      margin-bottom: 22px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .cpu {
+      position: absolute;
+      top: 76px;
+      width: 118px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid var(--blue);
+      border-radius: 7px;
+      font: 700 14px var(--mono);
+    }
+
+    .cpu.from { left: 27px; }
+    .cpu.to { right: 27px; }
+    .cpu.sleep { border-color: var(--faint); color: var(--muted); }
+
+    .ipi {
+      position: absolute;
+      left: 172px;
+      top: 90px;
+      color: var(--amber);
+      font: 700 13px var(--mono);
+      text-align: center;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    .ipi::after {
+      content: "⚡";
+      display: block;
+      margin-top: 4px;
+      font-size: 27px;
+    }
+
+    .case-result {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 23px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .case-result strong { color: var(--green); }
+
+    .mode-tag {
+      display: inline-block;
+      margin-left: 14px;
+      color: var(--muted);
+      font: 11px var(--mono);
+      vertical-align: 5px;
+    }
+
+    /* coop/defer */
+    .mode-stage {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 124px;
+      height: 285px;
+    }
+
+    .mode-stage svg { width: 100%; height: 100%; }
+
+    /* default task_work: queue, notify, consume */
+    .execution-stage {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 116px;
+      height: 304px;
+    }
+
+    .execution-stage svg { width: 100%; height: 100%; }
+
+    .default-work-token,
+    .default-runner,
+    .sleep-task-token,
+    .defer-work-token,
+    .defer-issuer {
+      transition: transform .65s cubic-bezier(.22,.82,.2,1), opacity .25s;
+    }
+
+    .s-default .default-work-token { transform: translate(91px, 215px); }
+    .s-default[data-step="1"] .default-work-token,
+    .s-default[data-step="2"] .default-work-token { transform: translate(343px, 215px); }
+    .s-default[data-step="3"] .default-work-token,
+    .s-default[data-step="4"] .default-work-token { transform: translate(620px, 215px); opacity: 0; }
+
+    .s-default .default-runner { transform: translate(570px, 220px); opacity: 0; }
+    .s-default[data-step="3"] .default-runner,
+    .s-default[data-step="4"] .default-runner { transform: translate(690px, 215px); opacity: 1; }
+    .s-default[data-step="4"] .default-runner { transform: translate(795px, 215px); }
+
+    .callback-cell { transition: opacity .25s, transform .35s; }
+    .s-default[data-step="3"] .callback-cell.n1 { animation: callback-consume .7s .05s both; }
+    .s-default[data-step="3"] .callback-cell.n2 { animation: callback-consume .7s .35s both; }
+    .s-default[data-step="3"] .callback-cell.n3 { animation: callback-consume .7s .65s both; }
+    .s-default[data-step="4"] .callback-cell { opacity: .12; transform: translateY(10px); }
+
+    @keyframes callback-consume {
+      0% { opacity: 1; transform: none; }
+      55%, 100% { opacity: .15; transform: translateY(10px); }
+    }
+
+    .ipi-bolt {
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    .s-default[data-step="2"] .ipi-bolt,
+    .s-default[data-step="3"] .ipi-bolt,
+    .s-default[data-step="4"] .ipi-bolt {
+      opacity: 1;
+      animation: blink 1.1s ease-in-out infinite;
+    }
+
+    /* sleeping target */
+    .s-sleep .sleep-task-token { transform: translate(690px, 230px); }
+    .s-sleep[data-step="2"] .sleep-task-token { transform: translate(565px, 230px); }
+    .s-sleep[data-step="3"] .sleep-task-token,
+    .s-sleep[data-step="4"] .sleep-task-token { transform: translate(710px, 230px); }
+    .s-sleep[data-step="4"] .sleep-task-token { transform: translate(795px, 230px); }
+
+    /* defer task run: work enters ring, issuer consumes */
+    .defer-stage {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 112px;
+      height: 322px;
+    }
+
+    .defer-stage svg { width: 100%; height: 100%; }
+
+    .s-defer .defer-work-token { transform: translate(90px, 210px); }
+    .s-defer[data-step="1"] .defer-work-token,
+    .s-defer[data-step="2"] .defer-work-token,
+    .s-defer[data-step="3"] .defer-work-token { transform: translate(311px, 210px); }
+    .s-defer[data-step="4"] .defer-work-token,
+    .s-defer[data-step="5"] .defer-work-token { transform: translate(590px, 210px); opacity: 0; }
+
+    .s-defer .defer-issuer { transform: translate(772px, 158px); }
+    .s-defer[data-step="3"] .defer-issuer { transform: translate(587px, 245px); }
+    .s-defer[data-step="4"] .defer-issuer { animation: issuer-consume 1.55s ease-in-out both; }
+    .s-defer[data-step="5"] .defer-issuer { transform: translate(772px, 135px); opacity: 0; }
+
+    @keyframes issuer-consume {
+      0% { transform: translate(587px, 245px); }
+      30% { transform: translate(330px, 135px); }
+      58% { transform: translate(425px, 135px); }
+      84%, 100% { transform: translate(520px, 135px); }
+    }
+
+    .defer-node { transition: opacity .25s, transform .35s; }
+    .s-defer[data-step="4"] .defer-node.n1 { animation: defer-consume .42s .42s both; }
+    .s-defer[data-step="4"] .defer-node.n2 { animation: defer-consume .42s .82s both; }
+    .s-defer[data-step="4"] .defer-node.n3 { animation: defer-consume .42s 1.22s both; }
+    .s-defer[data-step="5"] .defer-node { opacity: .12; transform: translateY(12px); }
+
+    @keyframes defer-consume {
+      to { opacity: .12; transform: translateY(12px); }
+    }
+
+    .defer-cqe { opacity: 0; transform: translateY(8px); }
+    .s-defer[data-step="4"] .defer-cqe.c1 { animation: cqe-enter .35s .62s both; }
+    .s-defer[data-step="4"] .defer-cqe.c2 { animation: cqe-enter .35s 1.02s both; }
+    .s-defer[data-step="4"] .defer-cqe.c3 { animation: cqe-enter .35s 1.42s both; }
+    .s-defer[data-step="5"] .defer-cqe { opacity: 1; transform: none; }
+
+    @keyframes cqe-enter { to { opacity: 1; transform: none; } }
+
+    .tradeoff {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      bottom: 38px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      font-size: 17px;
+    }
+
+    .tradeoff .gain { color: var(--green); }
+    .tradeoff .debt { color: var(--amber); text-align: right; }
+
+    /* timeline */
+    .timeline-stage {
+      position: absolute;
+      left: 86px;
+      right: 72px;
+      top: 125px;
+      height: 300px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 80px;
+      right: 68px;
+      top: 142px;
+      height: 2px;
+      background: #46504b;
+    }
+
+    .era {
+      position: absolute;
+      top: 96px;
+      width: 190px;
+      text-align: center;
+    }
+
+    .era::before {
+      content: "";
+      display: block;
+      width: 13px;
+      height: 13px;
+      margin: 39px auto 22px;
+      border: 3px solid var(--green);
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .era.e1 { left: 0; }
+    .era.e2 { left: 290px; }
+    .era.e3 { right: 0; }
+
+    .era .year {
+      display: block;
+      color: var(--green);
+      font: 700 13px var(--mono);
+    }
+
+    .era b {
+      display: block;
+      margin-top: 7px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .era p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .timeline-question {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 28px;
+      text-align: center;
+      color: #e9ecea;
+      font-size: 20px;
+    }
+
+    /* mpsc */
+    .queue-compare {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 110px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .queue-side {
+      height: 300px;
+      padding: 22px 24px;
+      border-top: 1px solid #3d4641;
+    }
+
+    .queue-side h3 {
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .queue-side .version {
+      color: var(--green);
+      font: 700 12px var(--mono);
+    }
+
+    .nodes {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 92px;
+      margin-top: 22px;
+    }
+
+    .node {
+      position: relative;
+      width: 54px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid var(--blue);
+      color: var(--ink);
+      font: 700 13px var(--mono);
+      transition: transform .5s ease, opacity .3s ease;
+    }
+
+    .node + .node { margin-left: 31px; }
+    .node + .node::before {
+      content: "→";
+      position: absolute;
+      left: -25px;
+      color: var(--green);
+    }
+
+    .node.stub { border-color: var(--green); color: var(--green); }
+
+    .queue-code {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font: 12px/1.7 var(--mono);
+      white-space: pre-line;
+    }
+
+    .queue-verdict {
+      margin-top: 14px;
+      color: #e1e5e3;
+      font-size: 15px;
+    }
+
+    .queue-verdict strong { color: var(--green); }
+
+    /* publication gap */
+    .mpsc-stage {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 105px;
+      height: 330px;
+    }
+
+    .mpsc-stage svg { width: 100%; height: 100%; }
+
+    .mpsc-b { transition: transform .55s cubic-bezier(.22,.82,.2,1), opacity .3s; transform: translate(0, 88px); opacity: 0; }
+    .s-gap[data-step="1"] .mpsc-b,
+    .s-gap[data-step="2"] .mpsc-b,
+    .s-gap[data-step="3"] .mpsc-b,
+    .s-gap[data-step="4"] .mpsc-b { transform: none; opacity: 1; }
+
+    .tail-pointer { transition: transform .55s cubic-bezier(.22,.82,.2,1); }
+    .s-gap[data-step="2"] .tail-pointer,
+    .s-gap[data-step="3"] .tail-pointer,
+    .s-gap[data-step="4"] .tail-pointer { transform: translateX(260px); }
+
+    .publish-link { opacity: 0; transition: opacity .25s; }
+    .s-gap[data-step="3"] .publish-link,
+    .s-gap[data-step="4"] .publish-link { opacity: 1; }
+
+    .gap-window { opacity: 0; transition: opacity .25s; }
+    .s-gap[data-step="2"] .gap-window { opacity: 1; }
+
+    .head-pointer { transition: transform .55s cubic-bezier(.22,.82,.2,1); }
+    .s-gap[data-step="4"] .head-pointer { transform: translateX(260px); }
+
+    .mpsc-step-copy {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      bottom: 34px;
+      min-height: 30px;
+      color: #e5e8e6;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .mpsc-step-copy strong { color: var(--green); }
+
+    /* closing */
+    .closing {
+      display: grid;
+      align-content: center;
+      padding-left: 88px;
+    }
+
+    .closing h1 {
+      max-width: 770px;
+      font-size: 49px;
+      line-height: 1.2;
+    }
+
+    .closing-list {
+      display: grid;
+      gap: 15px;
+      margin-top: 38px;
+    }
+
+    .closing-item {
+      display: grid;
+      grid-template-columns: 135px 20px 1fr;
+      align-items: center;
+      width: 750px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .closing-item b { color: var(--ink); }
+    .closing-item i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .sources {
+      position: absolute;
+      left: 88px;
+      bottom: 39px;
+      display: flex;
+      gap: 18px;
+      font: 10px var(--mono);
+    }
+
+    .sources a {
+      color: var(--faint);
+      text-decoration: none;
+    }
+
+    .sources a:hover { color: var(--green); }
+
+    /* controls */
+    .progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      height: 2px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .progress i {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--green);
+      transition: width .35s ease;
+    }
+
+    .toolbar {
+      position: absolute;
+      left: 16px;
+      bottom: 13px;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity .2s, transform .2s;
+    }
+
+    .deck:hover .toolbar,
+    .toolbar:focus-within {
+      opacity: 1;
+      transform: none;
+    }
+
+    .tool-button {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      color: rgba(251,251,254,.65);
+      background: rgba(0,0,0,.38);
+      cursor: pointer;
+      font: 14px var(--sans);
+    }
+
+    .tool-button:hover {
+      color: var(--green);
+      background: rgba(0,0,0,.66);
+    }
+
+    .click-dots {
+      display: flex;
+      gap: 4px;
+      margin-left: 7px;
+    }
+
+    .click-dots i {
+      width: 5px;
+      height: 5px;
+      border: 1px solid #65716b;
+      border-radius: 50%;
+    }
+
+    .click-dots i.on { border-color: var(--green); background: var(--green); }
+
+    .overview {
+      position: absolute;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      background: rgba(7,9,8,.96);
+    }
+
+    .overview.is-open { display: block; animation: click-enter .25s ease both; }
+
+    .overlay-close {
+      position: absolute;
+      top: 25px;
+      right: 28px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 46px;
+    }
+
+    .overview-card {
+      min-height: 102px;
+      padding: 16px;
+      border: 1px solid #39423d;
+      color: var(--muted);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .overview-card:hover,
+    .overview-card.active {
+      border-color: var(--green);
+      color: var(--ink);
+    }
+
+    .overview-card span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font: 10px var(--mono);
+    }
+
+    .overview-card b { font-size: 16px; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+    }
+
+    @media print {
+      html, body { overflow: visible; background: #fff; }
+      .app { position: static; display: block; background: #fff; }
+      .deck { position: static; width: 1000px; height: auto; transform: none; }
+      .slide { position: relative; width: 1000px; height: 562.5px; opacity: 1; transform: none; page-break-after: always; }
+      [data-click] { opacity: 1; transform: none; }
+      .toolbar, .progress, .overview { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="io_uring 交互演示">
+    <div class="deck" id="deck">
+      <svg width="0" height="0" aria-hidden="true">
+        <defs>
+          <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#42b883"/>
+          </marker>
+          <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3585ff"/>
+          </marker>
+          <marker id="arrow-pink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef5da8"/>
+          </marker>
+          <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f2ae49"/>
+          </marker>
+        </defs>
+      </svg>
+
+      <section class="slide cover" data-title="开场" data-max-clicks="2">
+        <div class="eyebrow">io_uring internals · Linux 5.7 → 7.2</div>
+        <h1>一次 <span class="mono">recv</span><br>如何最终变成 <span class="term tip-left" tabindex="0" data-tip="Completion Queue Entry：内核写入完成队列的结果记录，包含 user_data、返回值和 flags。">CQE</span>？</h1>
+        <p class="cover-sub" data-click="1">
+          从 FAST_POLL 的唤醒回调出发，追踪 work 挂在哪里、谁来执行，
+          直到 DEFER_TASKRUN 与新的 MPSC FIFO。
+        </p>
+        <div class="cover-chain" data-click="2">
+          <span>socket ready</span><i></i><span>poll callback</span><i></i><span>task_work</span><i></i><span>CQE</span>
+        </div>
+        <div class="cover-hint">SPACE / → 逐拍播放 · 虚线下划线可悬停查看术语<span class="cursor"></span></div>
+      </section>
+
+      <section class="slide s-problem" data-title="没有 FAST_POLL" data-max-clicks="4">
+        <div class="eyebrow">01 · before fast poll</div>
+        <h1>没有 FAST_POLL：recv 由 <span class="term tip-left" tabindex="0" data-tip="io-wq 管理的独立 worker task。它承载可能阻塞的请求，等待结束后继续执行并发布 CQE。">io-wq worker</span> 阻塞等待</h1>
+        <div class="diagram">
+          <svg viewBox="0 0 884 350" role="img" aria-label="没有 FAST_POLL 时 recv 转交 io-wq">
+            <path class="wire active" d="M 164 144 H 252" marker-end="url(#arrow-green)" data-click="1"/>
+            <path class="wire amber" d="M 365 177 C 415 236 454 248 505 248" marker-end="url(#arrow-amber)" data-click="2"/>
+
+            <g class="svg-box stroke-blue">
+              <rect x="22" y="105" width="142" height="78" rx="8"/>
+              <text x="93" y="137" text-anchor="middle">submitter T</text>
+              <text class="sub" x="93" y="159" text-anchor="middle">submit recv</text>
+            </g>
+
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="252" y="105" width="146" height="78" rx="8"/>
+              <text x="325" y="137" text-anchor="middle">socket recv</text>
+              <text class="sub" x="325" y="159" text-anchor="middle">→ -EAGAIN</text>
+            </g>
+
+            <g class="svg-box stroke-amber" data-click="2">
+              <rect x="505" y="208" width="171" height="80" rx="8"/>
+              <text x="590" y="240" text-anchor="middle">io-wq worker</text>
+              <text class="sub" x="590" y="263" text-anchor="middle">blocking recv</text>
+            </g>
+
+            <g data-click="2">
+              <text class="label" x="423" y="224">fallback</text>
+              <path class="wire" d="M 676 248 H 777" marker-end="url(#arrow-green)"/>
+              <text class="result-label" x="788" y="252">CQE</text>
+            </g>
+
+          </svg>
+          <div class="problem-costs" data-click="3">
+            <span>触发：recv 返回 -EAGAIN</span>
+            <span>承载：io-wq work item</span>
+            <span>运行：独立 io-wq worker task</span>
+            <span>完成：worker 发布 CQE</span>
+          </div>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2"><code>recv</code> 返回 <code>-EAGAIN</code>，请求进入等待路径。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3">io-wq work item 保存请求；独立 worker task 调用阻塞式 <code>recv</code>，睡在 socket 等待队列上。</p>
+        <p class="bottom-copy" data-click="3">每个正在等待的请求都占用 worker 的调度实体和内核栈。FAST_POLL 用 socket wait entry 保存等待状态。</p>
+        <div class="bridge-panel" data-click="4">
+          <div class="bridge-from">01 → 02</div>
+          <div class="bridge-prompt long">
+            <p>命中 <code>io-wq</code> 后，阻塞只是从用户线程转移给内核 worker，仍会占用调度实体和内核栈，真异步的优势没有发挥出来。倘若能像 <code>epoll</code> 那样 <code>arm poll</code> 呢？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-fast" data-title="FAST_POLL recv 流程" data-max-clicks="6">
+        <div class="eyebrow">02 · IORING_FEAT_FAST_POLL</div>
+        <h1><span class="term" tabindex="0" data-tip="io_uring 的 poll-assisted 异步路径：请求在 -EAGAIN 后挂入文件等待队列，由就绪回调触发后续处理。">FAST_POLL</span>：request 挂入 socket wait queue</h1>
+        <div class="diagram" style="top:102px;height:376px">
+          <svg viewBox="0 0 884 376" role="img" aria-label="FAST_POLL 从 recv 到 CQE 的逐步流程">
+            <path class="wire active" d="M 150 107 H 211" marker-end="url(#arrow-green)" data-click="1"/>
+            <path class="wire active" d="M 342 107 H 392" marker-end="url(#arrow-green)" data-click="2"/>
+            <path class="wire pink" d="M 553 107 H 647" marker-end="url(#arrow-pink)" data-click="3"/>
+            <path class="wire pink active" d="M 706 147 C 706 196 652 238 604 238" marker-end="url(#arrow-pink)" data-click="4"/>
+            <path class="wire active" d="M 642 238 H 759" marker-end="url(#arrow-green)" data-click="5"/>
+
+            <g class="svg-box stroke-blue">
+              <rect x="24" y="69" width="126" height="76" rx="8"/>
+              <text x="87" y="101" text-anchor="middle">submitter T</text>
+              <text class="sub" x="87" y="123" text-anchor="middle">io_uring_enter</text>
+            </g>
+
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="211" y="69" width="131" height="76" rx="8"/>
+              <text x="276" y="101" text-anchor="middle">try recv</text>
+              <text class="sub" x="276" y="123" text-anchor="middle">-EAGAIN</text>
+            </g>
+
+            <g class="svg-box stroke-cyan" data-click="2">
+              <rect x="392" y="63" width="161" height="88" rx="8"/>
+              <text x="472" y="97" text-anchor="middle">socket wait queue</text>
+              <text class="sub" x="472" y="121" text-anchor="middle">arm poll + park req</text>
+            </g>
+
+            <g class="svg-box stroke-pink" data-click="3">
+              <rect x="647" y="63" width="141" height="88" rx="8"/>
+              <text x="717" y="97" text-anchor="middle">poll callback</text>
+              <text class="sub" x="717" y="121" text-anchor="middle">socket ready</text>
+            </g>
+
+            <g class="svg-box stroke-pink" data-click="4">
+              <rect x="482" y="202" width="160" height="73" rx="8"/>
+              <text x="562" y="232" text-anchor="middle">queue task_work</text>
+              <text class="sub" x="562" y="253" text-anchor="middle">挂回 submitter T</text>
+            </g>
+
+            <g class="svg-box stroke-green" data-click="5">
+              <rect x="759" y="199" width="101" height="78" rx="8"/>
+              <text x="809" y="230" text-anchor="middle">retry recv</text>
+              <text class="sub" x="809" y="252" text-anchor="middle">fill CQE</text>
+            </g>
+
+            <g data-click="3">
+              <path class="wire pink active" d="M 610 34 H 719 V 60" marker-end="url(#arrow-pink)"/>
+              <text class="label" x="610" y="24">network wakeup</text>
+            </g>
+
+            <g class="motion-token fast-token"><rect x="-18" y="-10" width="36" height="20" rx="4"/><text x="0" y="4" text-anchor="middle">req</text></g>
+
+            <text class="danger-label" x="454" y="315" data-click="4" data-hide-at="5">poll callback：排入 task_work，CQE 尚未发布</text>
+            <text class="result-label" x="432" y="332" data-click="5">submitter T：执行 callback → retry recv → 发布 CQE</text>
+          </svg>
+          <div class="taskwork-mini" data-click="5">
+            <b><span class="term" tabindex="0" data-tip="Linux task_work 是 callback_head 节点。节点链接到目标 task，目标 task 在内核运行点调用其中的 func。">task_work</span></b>
+            callback 节点挂到目标 task；目标 task 进入内核后调用节点中的 <code>func(req)</code>。
+          </div>
+        </div>
+        <div class="bridge-panel" data-click="6">
+          <div class="bridge-from">02 → 03</div>
+          <div class="bridge-prompt">
+            <p>那么，是谁来执行这些填充 <code>CQE</code> 的回调？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="task_work 挂在哪里" data-max-clicks="4">
+        <div class="eyebrow">03 · execution ownership</div>
+        <h1><span class="term" tabindex="0" data-tip="callback 节点挂到 task_struct::task_works，运行者是该 task 自己。">task_work</span>：把回调挂到一个具体的 <span class="term tip-left" tabindex="0" data-tip="Linux 的可调度执行实体，由 task_struct 表示；用户通常可把它理解为一个线程。">task</span> 上</h1>
+        <div class="task-layout">
+          <div class="task-struct">
+            <div class="field">mm / files / signal …</div>
+            <div class="field hot" data-click="1">
+              task_works
+              <span class="work-list"><i></i><i></i><i></i></span>
+            </div>
+            <div class="field" data-click="1">callback_head → func(req)</div>
+            <div class="field" data-click="1">执行者：这个 task 自己</div>
+          </div>
+          <div class="run-points">
+            <h3 data-click="2">触发、承载与运行</h3>
+            <div class="run-point" data-click="2">
+              <b>触发 / 承载</b>
+              poll callback 调用入队函数；节点链接到 <code>T.task_works</code>
+            </div>
+            <div class="run-point" data-click="3">
+              <b>运行</b>
+              T 到达内核返回点后调用 <code>task_work_run()</code>，逐项调用 <code>func(req)</code>
+            </div>
+          </div>
+        </div>
+        <p class="not-worker" data-click="3"><strong>task_work 是目标 task 上的回调队列。</strong> “消费队列”指摘下待执行节点并逐个调用，直到队列为空。</p>
+        <div class="bridge-panel" data-click="4">
+          <div class="bridge-from">03 → 04</div>
+          <div class="bridge-prompt medium">
+            <p>callback 已经挂到 <code>T.task_works</code>。T 仍在远端 CPU 的用户态运行时，内核怎样提醒它回来执行？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-default" data-title="默认 task_work：运行中的 T" data-max-clicks="5">
+        <div class="eyebrow">04 · Linux 5.7 · T is running</div>
+        <h1 class="tight-title">默认 <span class="term" tabindex="0" data-tip="callback 队列挂在提交者 task 上，并由提交者在内核返回路径消费。">task_work</span>：远端完成通知正在运行的提交者</h1>
+        <div class="execution-stage">
+          <svg viewBox="0 0 884 304" role="img" aria-label="运行中的提交者接收 task_work 通知并执行 callback">
+            <g class="svg-box stroke-pink">
+              <rect x="22" y="99" width="138" height="78" rx="8"/>
+              <text x="91" y="130" text-anchor="middle">completion CPU</text>
+              <text class="sub" x="91" y="153" text-anchor="middle">poll callback</text>
+            </g>
+
+            <path class="wire pink active" d="M 160 138 H 247" marker-end="url(#arrow-pink)" data-click="1"/>
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="247" y="83" width="192" height="110" rx="8"/>
+              <text x="343" y="112" text-anchor="middle">T.task_works</text>
+              <g class="callback-cell n1"><rect x="270" y="135" width="36" height="27" rx="3"/><text class="sub" x="288" y="153" text-anchor="middle">f1</text></g>
+              <g class="callback-cell n2"><rect x="320" y="135" width="36" height="27" rx="3"/><text class="sub" x="338" y="153" text-anchor="middle">f2</text></g>
+              <g class="callback-cell n3"><rect x="370" y="135" width="36" height="27" rx="3"/><text class="sub" x="388" y="153" text-anchor="middle">f3</text></g>
+            </g>
+
+            <g class="svg-box stroke-blue">
+              <rect x="492" y="83" width="156" height="110" rx="8"/>
+              <text x="570" y="116" text-anchor="middle">CPU 1</text>
+              <text class="sub" x="570" y="143" text-anchor="middle">submitter T</text>
+              <text class="result-label" x="570" y="166" text-anchor="middle">running in user</text>
+            </g>
+
+            <g class="ipi-bolt" data-click="2">
+              <path class="wire amber" d="M 454 47 H 570 V 78" marker-end="url(#arrow-amber)"/>
+              <text class="label" x="454" y="31">set_notify_resume → kick_process</text>
+              <text x="571" y="62" fill="#f2ae49" font-size="22" text-anchor="middle">⚡</text>
+              <text class="danger-label" x="659" y="50">reschedule IPI</text>
+            </g>
+
+            <path class="wire active" d="M 648 138 H 728" marker-end="url(#arrow-green)" data-click="3"/>
+            <g class="svg-box stroke-green" data-click="3">
+              <rect x="728" y="83" width="134" height="110" rx="8"/>
+              <text x="795" y="116" text-anchor="middle">T in kernel</text>
+              <text class="sub" x="795" y="143" text-anchor="middle">task_work_run()</text>
+              <text class="sub" x="795" y="166" text-anchor="middle">call each callback</text>
+            </g>
+
+            <g class="motion-token default-work-token"><rect x="-22" y="-10" width="44" height="20" rx="4"/><text x="0" y="4" text-anchor="middle">work</text></g>
+            <g class="motion-token default-runner"><rect x="-16" y="-10" width="32" height="20" rx="4"/><text x="0" y="4" text-anchor="middle">T</text></g>
+
+            <g data-click="4">
+              <path class="wire active" d="M 795 194 V 243 H 847" marker-end="url(#arrow-green)"/>
+              <text class="result-label" x="847" y="266" text-anchor="middle">CQE</text>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">poll callback 把 callback 节点链接到 <code>T.task_works</code>。此时 work 已经入队，尚未执行。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3"><code>task_work_add(..., true)</code> 设置 notify-resume 标志。T 正在远端 CPU 运行时，<code>kick_process(T)</code> 发送 reschedule IPI；IPI 本身不调用 callback。</p>
+        <p class="bottom-copy" data-click="3" data-hide-at="4">T 进入内核并经过返回路径，随后调用 <code>task_work_run()</code>：摘下待执行链表，逐个调用 callback。</p>
+        <p class="bottom-copy" data-click="4">T 正在运行时，通知路径包含 reschedule IPI。T 已经阻塞时，callback 队列保持不变，通知动作改为显式唤醒。</p>
+        <div class="bridge-panel" data-click="5">
+          <div class="bridge-from">04 → 05</div>
+          <div class="bridge-prompt">
+            <p>如果 <code>task</code> 此时处于挂起状态呢？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-sleep" data-title="默认 task_work：睡眠中的 T" data-max-clicks="5">
+        <div class="eyebrow">05 · Linux 5.7 · T is sleeping</div>
+        <h1 class="tight-title">目标 <span class="term" tabindex="0" data-tip="T 表示拥有这批 task_work 的 submitter task。callback 最终在 T 的上下文中执行。">T</span> 处于可中断睡眠：先唤醒，再由 T 执行</h1>
+        <div class="execution-stage">
+          <svg viewBox="0 0 884 304" role="img" aria-label="睡眠中的提交者被唤醒并执行 task_work">
+            <g class="svg-box stroke-pink">
+              <rect x="22" y="105" width="145" height="82" rx="8"/>
+              <text x="94" y="137" text-anchor="middle">completion CPU</text>
+              <text class="sub" x="94" y="160" text-anchor="middle">queue callback</text>
+            </g>
+            <path class="wire pink active" d="M 167 146 H 275" marker-end="url(#arrow-pink)" data-click="1"/>
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="275" y="105" width="168" height="82" rx="8"/>
+              <text x="359" y="137" text-anchor="middle">T.task_works</text>
+              <text class="sub" x="359" y="160" text-anchor="middle">callback queued</text>
+            </g>
+            <g class="svg-box stroke-amber" data-click="2">
+              <rect x="474" y="93" width="182" height="106" rx="8"/>
+              <text x="565" y="126" text-anchor="middle">wake_up_process(T)</text>
+              <text class="sub" x="565" y="151" text-anchor="middle">io_uring explicit wakeup</text>
+              <text class="result-label" x="565" y="176" text-anchor="middle">blocked → runnable</text>
+            </g>
+            <path class="wire active" d="M 656 146 H 728" marker-end="url(#arrow-green)" data-click="3"/>
+            <g class="svg-box stroke-blue" data-click="3">
+              <rect x="728" y="93" width="134" height="106" rx="8"/>
+              <text x="795" y="126" text-anchor="middle">T scheduled</text>
+              <text class="sub" x="795" y="151" text-anchor="middle">task_work_run()</text>
+              <text class="sub" x="795" y="176" text-anchor="middle">execute callback</text>
+            </g>
+            <g class="motion-token sleep-task-token"><rect x="-16" y="-10" width="32" height="20" rx="4"/><text x="0" y="4" text-anchor="middle">T</text></g>
+            <g data-click="4">
+              <path class="wire active" d="M 795 201 V 247 H 847" marker-end="url(#arrow-green)"/>
+              <text class="result-label" x="847" y="270" text-anchor="middle">CQE</text>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">callback 的承载位置仍为 <code>T.task_works</code>。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3">notify-resume 标志已经设置。阻塞中的 T 不满足 <code>task_curr(T)</code>，因此 <code>kick_process</code> 不发送 reschedule IPI；io_uring 随后调用 <code>wake_up_process(T)</code>。</p>
+        <p class="bottom-copy" data-click="3" data-hide-at="4">T 变为 runnable。调度器若要唤醒空闲 CPU，可能发送调度器自己的 wakeup IPI；这条 IPI 用于安排调度，不是强制打断正在运行的 T。</p>
+        <p class="bottom-copy" data-click="4">Linux 5.7 的两个分支都会尽快调度 T。Linux 5.19 的 COOP_TASKRUN 保留 <code>T.task_works</code>，同时跳过强制 reschedule IPI。</p>
+        <div class="bridge-panel" data-click="5">
+          <div class="bridge-from">05 → 06</div>
+          <div class="bridge-prompt medium">
+            <p>默认 <code>task_work</code> 总想尽快唤回 T。完成频繁时，running T 会反复收到 <code>reschedule IPI</code>，额外的 CPU 打断也会成为开销。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-coop" data-title="Linux 5.19 COOP_TASKRUN" data-max-clicks="4">
+        <div class="eyebrow">06 · Linux 5.19</div>
+        <h1 class="tight-title">COOP_TASKRUN：保留 <span class="term" tabindex="0" data-tip="目标 task T 上的 callback 链表；COOP 只改变通知方式，挂载位置保持不变。">T.task_works</span>，跳过 <span class="term tip-left" tabindex="0" data-tip="kick_process 会在目标 task 正运行于远端 CPU 时发送 reschedule IPI，促使该 CPU 尽快进入调度路径。">kick_process</span></h1>
+        <div class="execution-stage">
+          <svg viewBox="0 0 884 304" role="img" aria-label="COOP_TASKRUN 保留 task 队列并跳过强制 IPI">
+            <g class="svg-box stroke-pink">
+              <rect x="22" y="99" width="138" height="78" rx="8"/>
+              <text x="91" y="130" text-anchor="middle">completion CPU</text>
+              <text class="sub" x="91" y="153" text-anchor="middle">poll callback</text>
+            </g>
+            <path class="wire pink active" d="M 160 138 H 247" marker-end="url(#arrow-pink)" data-click="1"/>
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="247" y="83" width="192" height="110" rx="8"/>
+              <text x="343" y="119" text-anchor="middle">T.task_works</text>
+              <text class="sub" x="343" y="146" text-anchor="middle">callback queued</text>
+              <text class="sub" x="343" y="170" text-anchor="middle">same carrier as default</text>
+            </g>
+            <g data-click="2">
+              <path class="wire" d="M 439 138 H 492" marker-end="url(#arrow-green)"/>
+            </g>
+            <g class="svg-box stroke-amber" data-click="2">
+              <rect x="492" y="83" width="156" height="110" rx="8"/>
+              <text x="570" y="113" text-anchor="middle">notify flag only</text>
+              <text class="sub" x="570" y="140" text-anchor="middle">TWA_SIGNAL_NO_IPI</text>
+              <text class="danger-label" x="570" y="167" text-anchor="middle">skip kick_process</text>
+            </g>
+            <g data-click="3">
+              <path class="wire active" d="M 648 138 H 728" marker-end="url(#arrow-green)"/>
+            </g>
+            <g class="svg-box stroke-blue" data-click="3">
+              <rect x="728" y="83" width="134" height="110" rx="8"/>
+              <text x="795" y="113" text-anchor="middle">submitter T</text>
+              <text class="sub" x="795" y="140" text-anchor="middle">next kernel entry</text>
+              <text class="sub" x="795" y="164" text-anchor="middle">run callbacks → CQE</text>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">callback 继续由 <code>T.task_works</code> 承载，执行者仍为 T。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3"><code>TWA_SIGNAL_NO_IPI</code> 设置通知标志并跳过 <code>kick_process</code>。远端完成不会为这批 callback 强制打断 T。</p>
+        <p class="bottom-copy" data-click="3">T 下一次进入内核时消费 callback 队列。T 停留在用户态的时间会直接计入完成延迟。</p>
+        <div class="bridge-panel" data-click="4">
+          <div class="bridge-from">06 → 07</div>
+          <div class="bridge-prompt medium">
+            <p><code>COOP_TASKRUN</code> 仍依赖 <code>task_work</code> 的运行时机：callback 要等 T 下一次进入内核才能执行，这段等待缺乏可预测性。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-defer" data-title="Linux 6.1 DEFER_TASKRUN" data-max-clicks="5">
+        <div class="eyebrow">07 · Linux 6.1</div>
+        <h1 class="tight-title">DEFER_TASKRUN：<span class="term" tabindex="0" data-tip="ring 指内核中的 io_ring_ctx，即一个 io_uring 实例的共享状态。DEFER 的 callback 队列挂在这里。">ring</span> 承载 callback，<span class="term tip-left" tabindex="0" data-tip="IORING_SETUP_SINGLE_ISSUER 约定的唯一提交 task；它进入内核后消费 ring-local callback 队列。">single issuer</span> 负责消费</h1>
+        <div class="defer-stage">
+          <svg viewBox="0 0 884 322" role="img" aria-label="DEFER_TASKRUN callback 入队与 single issuer 消费动画">
+            <g class="svg-box stroke-pink">
+              <rect x="18" y="96" width="145" height="78" rx="8"/>
+              <text x="90" y="127" text-anchor="middle">completion CPU</text>
+              <text class="sub" x="90" y="150" text-anchor="middle">produce callback</text>
+            </g>
+            <path class="wire pink active" d="M 163 135 H 243" marker-end="url(#arrow-pink)" data-click="1"/>
+            <g class="svg-box stroke-green" data-click="1">
+              <rect x="243" y="69" width="330" height="132" rx="8"/>
+              <text x="408" y="97" text-anchor="middle">io_ring_ctx · ring-local task_list</text>
+              <g class="defer-node n1"><rect x="278" y="119" width="66" height="42" rx="4"/><text class="sub" x="311" y="145" text-anchor="middle">work 1</text></g>
+              <g class="defer-node n2" data-click="2"><rect x="375" y="119" width="66" height="42" rx="4"/><text class="sub" x="408" y="145" text-anchor="middle">work 2</text></g>
+              <g class="defer-node n3" data-click="2"><rect x="472" y="119" width="66" height="42" rx="4"/><text class="sub" x="505" y="145" text-anchor="middle">work 3</text></g>
+              <text class="result-label" x="408" y="185" text-anchor="middle" data-click="2" data-hide-at="5">IORING_SQ_TASKRUN = 1</text>
+            </g>
+            <g class="svg-box stroke-blue">
+              <rect x="682" y="96" width="180" height="78" rx="8"/>
+              <text x="772" y="125" text-anchor="middle">userspace</text>
+            </g>
+            <g data-click="3">
+              <path class="wire blue active" d="M 772 178 V 246 H 587" marker-end="url(#arrow-blue)"/>
+              <text class="label" x="678" y="236">io_uring_enter(GETEVENTS)</text>
+            </g>
+            <g class="motion-token defer-work-token"><rect x="-22" y="-10" width="44" height="20" rx="4"/><text x="0" y="4" text-anchor="middle">work</text></g>
+            <g class="defer-issuer">
+              <rect x="-25" y="-12" width="50" height="24" rx="4" fill="#101210" stroke="#3585ff"/>
+              <text x="0" y="4" text-anchor="middle" fill="#3585ff" font-family="var(--mono)" font-size="11">issuer T</text>
+            </g>
+            <g data-click="4">
+              <text class="label" x="408" y="227" text-anchor="middle">pop work → call func(req) → next</text>
+              <g class="defer-cqe c1"><rect x="623" y="264" width="58" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="652" y="284" text-anchor="middle">CQE 1</text></g>
+              <g class="defer-cqe c2"><rect x="696" y="264" width="58" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="725" y="284" text-anchor="middle">CQE 2</text></g>
+              <g class="defer-cqe c3"><rect x="769" y="264" width="58" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="798" y="284" text-anchor="middle">CQE 3</text></g>
+            </g>
+            <g data-click="5">
+              <text class="result-label" x="408" y="185" text-anchor="middle">task_list empty · SQ_TASKRUN cleared</text>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">completion CPU 把 callback 节点追加到 <code>io_ring_ctx</code> 的本地队列。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3">更多完成可以继续入队；ring 设置 <code>IORING_SQ_TASKRUN</code>，期间不触发 task_work 通知或 reschedule IPI。</p>
+        <p class="bottom-copy" data-click="3" data-hide-at="4">single issuer 观察到标志并调用 <code>io_uring_enter(GETEVENTS)</code>，随后进入 ring 的消费路径。</p>
+        <p class="bottom-copy" data-click="4" data-hide-at="5">issuer T 依次取出 work 1、2、3，在自己的内核上下文中调用 callback，并发布对应 CQE。</p>
+        <p class="bottom-copy" data-click="5">队列消费完毕后清除 TASKRUN 状态。callback 的承载者是 ring，运行者仍为 single issuer T。</p>
+      </section>
+
+      <section class="slide" data-title="三代机制时间线" data-max-clicks="4">
+        <div class="eyebrow">08 · evolution</div>
+        <h1>三代 <span class="term" tabindex="0" data-tip="task-run 描述 io_uring 延后执行 callback 的机制，包括 callback 挂载位置、通知方式和消费时机。">task-run</span>：挂载位置、通知方式与消费时机</h1>
+        <div class="timeline-stage">
+          <div class="timeline-line"></div>
+          <article class="era e1" data-click="1">
+            <span class="year">Linux 5.7</span>
+            <b>默认 task_work</b>
+            <p>挂 task<br>主动通知 / 可能 IPI</p>
+          </article>
+          <article class="era e2" data-click="2">
+            <span class="year">Linux 5.19</span>
+            <b>COOP_TASKRUN</b>
+            <p>仍挂 task<br>不为 work 单独发 IPI</p>
+          </article>
+          <article class="era e3" data-click="3">
+            <span class="year">Linux 6.1</span>
+            <b>DEFER_TASKRUN</b>
+            <p>改挂 ring<br>由唯一 issuer 主动消费</p>
+          </article>
+        </div>
+        <p class="timeline-question" data-click="3">这些 work 队列都具有多生产者、单消费者的 FIFO 访问模式。</p>
+        <div class="bridge-panel" data-click="4">
+          <div class="bridge-from">08 → 09</div>
+          <div class="bridge-prompt medium">
+            <p>这些队列由多个完成上下文并发写入、一个 task 顺序消费。旧 <code>llist</code> 为恢复 FIFO 每批都要 <code>reverse</code>，这笔固定成本能否拿掉？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Linux 7.2 MPSC 重写" data-max-clicks="4">
+        <div class="eyebrow">09 · Linux 7.2 queue rewrite</div>
+        <h1>从 llist + reverse 到直接保持 FIFO 的 <span class="term tip-left" tabindex="0" data-tip="Multiple Producer / Single Consumer：多个完成上下文并发入队，由一个 task 顺序消费。">MPSC</span></h1>
+        <div class="queue-compare">
+          <article class="queue-side">
+            <span class="version">BEFORE</span>
+            <h3>生产者压入 LIFO</h3>
+            <div class="nodes" data-click="1">
+              <span class="node">C</span><span class="node">B</span><span class="node">A</span>
+            </div>
+            <div class="queue-code" data-click="1">push: cmpxchg(head, node)
+consumer: detach_all()
+          reverse(list)  // O(n)</div>
+            <p class="queue-verdict" data-click="1">锁少，但消费者每批都要<strong>反转链表</strong>恢复 FIFO。</p>
+          </article>
+          <article class="queue-side">
+            <span class="version">LINUX 7.2</span>
+            <h3>生产者直接在 tail 追加</h3>
+            <div class="nodes" data-click="2">
+              <span class="node stub">stub</span><span class="node">A</span><span class="node">B</span>
+            </div>
+            <div class="queue-code" data-click="2">prev = xchg(&tail, node)
+store_release(&prev->next, node)
+consumer: load_acquire(head->next)</div>
+            <p class="queue-verdict" data-click="3">生产者争用一次 tail；消费者按 FIFO 前进，<strong>不再聚合后 reverse</strong>。</p>
+          </article>
+        </div>
+        <p class="bottom-copy" data-click="3">算法把固定的 O(n) 反转成本拿掉，但交换 tail 与发布 <code>prev-&gt;next</code> 之间出现一个短暂窗口。</p>
+        <div class="bridge-panel" data-click="4">
+          <div class="bridge-from">09 → 10</div>
+          <div class="bridge-prompt medium">
+            <p>MPSC 拿掉了 <code>reverse</code>，但更新 <code>tail</code> 和发布 <code>prev-&gt;next</code> 分成两步。consumer 恰好撞进这两步之间，会把队列误判为空吗？</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide s-gap" data-title="MPSC 发布窗口" data-max-clicks="4">
+        <div class="eyebrow">10 · the publication gap</div>
+        <h1>MPSC 的关键：暂时 <span class="term" tabindex="0" data-tip="pop 由唯一 consumer 执行：读取 head->next，成功后推进 consumer head。">pop</span> 不到，不等于队列为空</h1>
+        <div class="mpsc-stage">
+          <svg viewBox="0 0 884 330" role="img" aria-label="MPSC 两阶段发布窗口动画">
+            <g class="svg-box stroke-green">
+              <rect x="52" y="114" width="112" height="66" rx="7"/>
+              <text x="108" y="143" text-anchor="middle">stub</text>
+              <text class="sub" x="108" y="163" text-anchor="middle">sentinel</text>
+            </g>
+            <path class="wire active" d="M 164 147 H 276" marker-end="url(#arrow-green)"/>
+            <g class="svg-box stroke-blue">
+              <rect x="276" y="107" width="142" height="80" rx="7"/>
+              <text x="347" y="140" text-anchor="middle">node A</text>
+              <text class="sub" x="347" y="164" text-anchor="middle">A.next = NULL</text>
+            </g>
+            <g class="mpsc-b svg-box stroke-pink">
+              <rect x="536" y="107" width="142" height="80" rx="7"/>
+              <text x="607" y="140" text-anchor="middle">node B</text>
+              <text class="sub" x="607" y="164" text-anchor="middle">B.next = NULL</text>
+            </g>
+            <g class="tail-pointer">
+              <path class="wire amber" d="M 347 66 V 101" marker-end="url(#arrow-amber)"/>
+              <text class="label" x="347" y="50" text-anchor="middle">atomic tail</text>
+            </g>
+            <g class="head-pointer">
+              <path class="wire blue" d="M 347 233 V 194" marker-end="url(#arrow-blue)"/>
+              <text class="label" x="347" y="253" text-anchor="middle">consumer head</text>
+            </g>
+            <g class="publish-link">
+              <path class="wire pink active" d="M 418 147 H 536" marker-end="url(#arrow-pink)"/>
+              <text class="label" x="477" y="132" text-anchor="middle">store_release</text>
+            </g>
+            <g class="gap-window">
+              <path d="M 431 104 V 190 M 523 104 V 190" stroke="#f06464" stroke-width="1.5" stroke-dasharray="5 4"/>
+              <text class="danger-label" x="477" y="215" text-anchor="middle">publication gap</text>
+              <text class="label" x="477" y="235" text-anchor="middle">tail = B, but A.next = NULL</text>
+            </g>
+            <g data-click="4">
+              <rect x="714" y="114" width="122" height="66" rx="7" fill="rgba(66,184,131,.1)" stroke="#42b883"/>
+              <text class="result-label" x="775" y="143" text-anchor="middle">pop A</text>
+              <text class="label" x="775" y="163" text-anchor="middle">then head → B</text>
+              <path class="wire active" d="M 678 147 H 706" marker-end="url(#arrow-green)"/>
+            </g>
+          </svg>
+        </div>
+        <p class="mpsc-step-copy" data-click="1" data-hide-at="2">① producer 准备 B：先令 <code>B.next = NULL</code>。</p>
+        <p class="mpsc-step-copy" data-click="2" data-hide-at="3">② <code>xchg(tail, B)</code> 已完成；consumer 此刻看到 <code>A.next == NULL</code>，但 <code>head != tail</code>。</p>
+        <p class="mpsc-step-copy" data-click="3" data-hide-at="4">③ producer 用 release-store 发布 <code>A.next = B</code>；consumer 的 acquire-load 现在能看见 B。</p>
+        <p class="mpsc-step-copy" data-click="4">④ consumer 弹出 A 并前移 head。<strong>发布窗口只会短暂重试，不能误判 empty。</strong></p>
+      </section>
+
+      <section class="slide closing" data-title="结论" data-max-clicks="3">
+        <div class="eyebrow">11 · summary</div>
+        <h1>io_uring 完成路径的三个组成部分</h1>
+        <div class="closing-list">
+          <div class="closing-item" data-click="1"><b>等待位置</b><i></i><span>FAST_POLL 把 request 挂入 socket wait queue</span></div>
+          <div class="closing-item" data-click="2"><b>执行位置</b><i></i><span>task_work 挂 task；DEFER_TASKRUN 挂 ring，由 issuer 消费</span></div>
+          <div class="closing-item" data-click="3"><b>队列实现</b><i></i><span>Linux 7.2 MPSC 直接维持 FIFO，省去批量 reverse</span></div>
+        </div>
+        <div class="sources">
+          <a href="https://github.com/torvalds/linux/blob/v6.1/kernel/task_work.c" target="_blank" rel="noreferrer">kernel/task_work.c</a>
+          <a href="https://github.com/torvalds/linux/tree/v6.1/io_uring" target="_blank" rel="noreferrer">io_uring @ v6.1</a>
+          <a href="https://github.com/torvalds/linux/blob/v7.2/io_uring/mpscq.h" target="_blank" rel="noreferrer">mpscq.h @ v7.2</a>
+        </div>
+      </section>
+
+      <div class="slide-no" id="slideNo">01 / 12</div>
+      <div class="brand">io_uring · execution ownership</div>
+      <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+      <nav class="toolbar" aria-label="演示控制">
+        <button class="tool-button" id="prevButton" type="button" title="上一步（←）">←</button>
+        <button class="tool-button" id="nextButton" type="button" title="下一步（→）">→</button>
+        <button class="tool-button" id="overviewButton" type="button" title="总览（O）">⌘</button>
+        <button class="tool-button" id="fullButton" type="button" title="全屏（F）">⛶</button>
+        <span class="click-dots" id="clickDots" aria-hidden="true"></span>
+      </nav>
+
+      <section class="overview" id="overview" aria-label="幻灯片总览">
+        <button class="tool-button overlay-close" id="overviewClose" type="button" aria-label="关闭总览">×</button>
+        <div class="overview-grid" id="overviewGrid"></div>
+      </section>
+    </div>
+    <div class="sr-only" aria-live="polite" id="announcer"></div>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var deck = document.getElementById('deck');
+      var slides = Array.prototype.slice.call(deck.querySelectorAll('.slide'));
+      var slideNo = document.getElementById('slideNo');
+      var progressBar = document.getElementById('progressBar');
+      var clickDots = document.getElementById('clickDots');
+      var announcer = document.getElementById('announcer');
+      var overview = document.getElementById('overview');
+      var overviewGrid = document.getElementById('overviewGrid');
+      var state = { slide: 0, clicks: 0 };
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function maxClicks(index) {
+        return Number(slides[index].dataset.maxClicks || 0);
+      }
+
+      function readInitialState() {
+        var params = new URLSearchParams(location.search);
+        var requestedSlide = Number(params.get('slide'));
+        var requestedClicks = Number(params.get('clicks'));
+        state.slide = Number.isFinite(requestedSlide) && requestedSlide > 0
+          ? clamp(requestedSlide - 1, 0, slides.length - 1)
+          : 0;
+        state.clicks = Number.isFinite(requestedClicks)
+          ? clamp(requestedClicks, 0, maxClicks(state.slide))
+          : 0;
+      }
+
+      function updateUrl() {
+        var params = new URLSearchParams(location.search);
+        params.set('slide', String(state.slide + 1));
+        params.set('clicks', String(state.clicks));
+        history.replaceState(null, '', location.pathname + '?' + params.toString() + location.hash);
+      }
+
+      function renderClickTargets(slide) {
+        Array.prototype.forEach.call(slide.querySelectorAll('[data-click]'), function (item) {
+          var at = Number(item.dataset.click || 0);
+          var hideAt = item.dataset.hideAt === undefined ? Infinity : Number(item.dataset.hideAt);
+          item.classList.toggle('is-revealed', state.clicks >= at);
+          item.classList.toggle('is-current', state.clicks === at && at > 0);
+          item.classList.toggle('is-prior', state.clicks > at);
+          item.classList.toggle('is-click-hidden', state.clicks >= hideAt);
+        });
+      }
+
+      function renderDots() {
+        var max = maxClicks(state.slide);
+        clickDots.innerHTML = '';
+        for (var i = 0; i <= max; i += 1) {
+          var dot = document.createElement('i');
+          dot.className = i <= state.clicks ? 'on' : '';
+          clickDots.appendChild(dot);
+        }
+      }
+
+      function render() {
+        slides.forEach(function (slide, index) {
+          slide.classList.toggle('is-active', index === state.slide);
+          slide.classList.toggle('is-past', index < state.slide);
+          slide.dataset.step = index === state.slide ? String(state.clicks) : '0';
+          renderClickTargets(slide);
+        });
+        slideNo.textContent = String(state.slide + 1).padStart(2, '0') + ' / ' +
+          String(slides.length).padStart(2, '0');
+        var totalUnits = slides.reduce(function (sum, slide) {
+          return sum + Number(slide.dataset.maxClicks || 0) + 1;
+        }, 0);
+        var completed = slides.slice(0, state.slide).reduce(function (sum, slide) {
+          return sum + Number(slide.dataset.maxClicks || 0) + 1;
+        }, 0) + state.clicks + 1;
+        progressBar.style.width = (completed / totalUnits * 100) + '%';
+        renderDots();
+        Array.prototype.forEach.call(overviewGrid.children, function (card, index) {
+          card.classList.toggle('active', index === state.slide);
+        });
+        announcer.textContent = '第 ' + (state.slide + 1) + ' 页，' +
+          slides[state.slide].dataset.title + '，点击状态 ' + state.clicks;
+        updateUrl();
+      }
+
+      function next() {
+        closeOverlays();
+        if (state.clicks < maxClicks(state.slide)) {
+          state.clicks += 1;
+        } else if (state.slide < slides.length - 1) {
+          state.slide += 1;
+          state.clicks = 0;
+        }
+        render();
+      }
+
+      function previous() {
+        closeOverlays();
+        if (state.clicks > 0) {
+          state.clicks -= 1;
+        } else if (state.slide > 0) {
+          state.slide -= 1;
+          state.clicks = maxClicks(state.slide);
+        }
+        render();
+      }
+
+      function goTo(index) {
+        state.slide = clamp(index, 0, slides.length - 1);
+        state.clicks = 0;
+        closeOverlays();
+        render();
+      }
+
+      function closeOverlays() {
+        overview.classList.remove('is-open');
+      }
+
+      function toggleOverview() {
+        overview.classList.toggle('is-open');
+      }
+
+      function buildOverview() {
+        slides.forEach(function (slide, index) {
+          var card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'overview-card';
+          card.innerHTML = '<span>' + String(index + 1).padStart(2, '0') + '</span><b>' +
+            slide.dataset.title + '</b>';
+          card.addEventListener('click', function () { goTo(index); });
+          overviewGrid.appendChild(card);
+        });
+      }
+
+      function resizeDeck() {
+        var scale = Math.min(innerWidth / 1000, innerHeight / 562.5);
+        deck.style.setProperty('--scale', String(scale));
+      }
+
+      document.getElementById('nextButton').addEventListener('click', function (event) {
+        event.stopPropagation();
+        next();
+      });
+      document.getElementById('prevButton').addEventListener('click', function (event) {
+        event.stopPropagation();
+        previous();
+      });
+      document.getElementById('overviewButton').addEventListener('click', function (event) {
+        event.stopPropagation();
+        toggleOverview();
+      });
+      document.getElementById('fullButton').addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(function () {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      document.getElementById('overviewClose').addEventListener('click', function (event) {
+        event.stopPropagation();
+        overview.classList.remove('is-open');
+      });
+
+      deck.addEventListener('click', function (event) {
+        if (event.target.closest('button, a, .overview')) return;
+        next();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown') {
+          event.preventDefault();
+          next();
+        } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+          event.preventDefault();
+          previous();
+        } else if (event.key === 'Home') {
+          goTo(0);
+        } else if (event.key === 'End') {
+          goTo(slides.length - 1);
+        } else if (event.key.toLowerCase() === 'o') {
+          toggleOverview();
+        } else if (event.key.toLowerCase() === 'f') {
+          document.getElementById('fullButton').click();
+        } else if (event.key === 'Escape') {
+          closeOverlays();
+        }
+      });
+
+      var touchStartX = 0;
+      deck.addEventListener('touchstart', function (event) {
+        touchStartX = event.changedTouches[0].clientX;
+      }, { passive: true });
+      deck.addEventListener('touchend', function (event) {
+        var delta = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 45) {
+          delta < 0 ? next() : previous();
+        }
+      }, { passive: true });
+
+      window.addEventListener('resize', resizeDeck);
+      window.addEventListener('popstate', function () {
+        readInitialState();
+        render();
+      });
+
+      buildOverview();
+      readInitialState();
+      resizeDeck();
+      render();
+    }());
+  </script>
+</body>
+</html>
