@@ -233,6 +233,7 @@
     [data-click] {
       opacity: 0;
       transform: translateY(12px);
+      pointer-events: none;
       transition:
         opacity .32s ease,
         transform .42s cubic-bezier(.22,.82,.2,1);
@@ -246,6 +247,7 @@
     [data-click].is-revealed {
       opacity: 1;
       transform: none;
+      pointer-events: auto;
     }
 
     [data-click].is-current {
@@ -1847,7 +1849,7 @@
 
       <section class="slide s-defer" data-title="Linux 6.1 DEFER_TASKRUN" data-max-clicks="5">
         <div class="eyebrow">07 · Linux 6.1</div>
-        <h1 class="tight-title">DEFER_TASKRUN：<span class="term" tabindex="0" data-tip="ring 指内核中的 io_ring_ctx，即一个 io_uring 实例的共享状态。DEFER 的 callback 队列挂在这里。">ring</span> 承载 callback，<span class="term tip-left" tabindex="0" data-tip="IORING_SETUP_SINGLE_ISSUER 约定的唯一提交 task；它进入内核后消费 ring-local callback 队列。">single issuer</span> 负责消费</h1>
+        <h1 class="tight-title">DEFER_TASKRUN：callback 归 <span class="term" tabindex="0" data-tip="ring 指内核中的 io_ring_ctx，即一个 io_uring 实例的共享状态。DEFER 的 callback 队列挂在这里。">ring</span>，<span class="term tip-left" tabindex="0" data-tip="IORING_SETUP_SINGLE_ISSUER 约定的唯一提交 task；它进入内核后消费 ring-local callback 队列。">single issuer</span> 消费</h1>
         <div class="defer-stage">
           <svg viewBox="0 0 884 322" role="img" aria-label="DEFER_TASKRUN callback 入队与 single issuer 消费动画">
             <g class="svg-box stroke-pink">
@@ -1896,8 +1898,8 @@
       </section>
 
       <section class="slide s-wait-loop" data-title="DEFER_TASKRUN wait loop" data-max-clicks="6">
-        <div class="eyebrow">08 · Linux 7.2 wait loop</div>
-        <h1 class="tight-title"><span class="mono">submit + wait</span>：先 drain，再决定是否睡；醒来后再 drain</h1>
+        <div class="eyebrow">08 · Linux 6.1 wait loop</div>
+        <h1 class="tight-title"><span class="mono">submit + wait</span>：睡前 drain，醒后再 drain</h1>
         <div class="wait-loop-stage">
           <svg viewBox="0 0 884 332" role="img" aria-label="DEFER_TASKRUN submit and wait 循环动画">
             <g class="wait-loop-node wl-enter">
@@ -2378,7 +2380,7 @@ consumer: load_acquire(head->next)</div>
       });
 
       deck.addEventListener('click', function (event) {
-        if (event.target.closest('button, a, .overview')) return;
+        if (event.target.closest('button, a, .overview, .term')) return;
         next();
       });
 
