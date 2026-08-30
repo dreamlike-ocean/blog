@@ -951,75 +951,232 @@
     .tradeoff .gain { color: var(--green); }
     .tradeoff .debt { color: var(--amber); text-align: right; }
 
-    /* timeline */
-    .timeline-stage {
+    /* DEFER_TASKRUN wait loop */
+    .wait-loop-stage {
       position: absolute;
-      left: 86px;
-      right: 72px;
-      top: 125px;
-      height: 300px;
+      left: 58px;
+      right: 58px;
+      top: 111px;
+      height: 332px;
     }
 
-    .timeline-line {
-      position: absolute;
-      left: 80px;
-      right: 68px;
-      top: 142px;
-      height: 2px;
-      background: #46504b;
+    .wait-loop-stage svg { width: 100%; height: 100%; }
+
+    .wait-loop-node {
+      opacity: .3;
+      transition: opacity .28s ease, filter .28s ease;
     }
 
-    .era {
-      position: absolute;
-      top: 96px;
-      width: 190px;
-      text-align: center;
+    .wait-loop-node rect {
+      fill: rgba(7,11,9,.68);
+      stroke: #46504b;
+      stroke-width: 1.2;
     }
 
-    .era::before {
-      content: "";
-      display: block;
-      width: 13px;
-      height: 13px;
-      margin: 39px auto 22px;
-      border: 3px solid var(--green);
-      border-radius: 50%;
-      background: var(--bg);
-    }
-
-    .era.e1 { left: 0; }
-    .era.e2 { left: 290px; }
-    .era.e3 { right: 0; }
-
-    .era .year {
-      display: block;
-      color: var(--green);
-      font: 700 13px var(--mono);
-    }
-
-    .era b {
-      display: block;
-      margin-top: 7px;
-      color: var(--ink);
-      font-size: 18px;
-    }
-
-    .era p {
-      margin: 7px 0 0;
-      color: var(--muted);
+    .wait-loop-node text {
+      fill: #dce2df;
       font-size: 13px;
-      line-height: 1.45;
+      font-weight: 650;
     }
 
-    .timeline-question {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 28px;
-      text-align: center;
-      color: #e9ecea;
-      font-size: 20px;
+    .wait-loop-node .sub {
+      fill: var(--muted);
+      font: 10px var(--mono);
+      font-weight: 400;
     }
+
+    .s-wait-loop[data-step="0"] .wl-enter,
+    .s-wait-loop[data-step="1"] .wl-drain-before,
+    .s-wait-loop[data-step="2"] .wl-check,
+    .s-wait-loop[data-step="3"] .wl-sleep,
+    .s-wait-loop[data-step="4"] .wl-wake,
+    .s-wait-loop[data-step="5"] .wl-drain-after,
+    .s-wait-loop[data-step="6"] .wl-return {
+      opacity: 1;
+      filter: drop-shadow(0 0 9px rgba(66,184,131,.16));
+    }
+
+    .s-wait-loop[data-step="0"] .wl-enter rect,
+    .s-wait-loop[data-step="1"] .wl-drain-before rect,
+    .s-wait-loop[data-step="2"] .wl-check rect,
+    .s-wait-loop[data-step="3"] .wl-sleep rect,
+    .s-wait-loop[data-step="4"] .wl-wake rect,
+    .s-wait-loop[data-step="5"] .wl-drain-after rect,
+    .s-wait-loop[data-step="6"] .wl-return rect {
+      stroke: var(--green);
+    }
+
+    .wait-loop-token {
+      transform: translate(80px, 111px);
+      transition: transform .68s cubic-bezier(.22,.82,.2,1);
+    }
+
+    .s-wait-loop[data-step="1"] .wait-loop-token { transform: translate(242px, 111px); }
+    .s-wait-loop[data-step="2"] .wait-loop-token { transform: translate(420px, 111px); }
+    .s-wait-loop[data-step="3"] .wait-loop-token { transform: translate(610px, 111px); }
+    .s-wait-loop[data-step="4"] .wait-loop-token { transform: translate(610px, 270px); }
+    .s-wait-loop[data-step="5"] .wait-loop-token { transform: translate(420px, 270px); }
+    .s-wait-loop[data-step="6"] .wait-loop-token { transform: translate(80px, 270px); }
+
+    .wait-loop-token circle {
+      fill: var(--bg);
+      stroke: var(--green);
+      stroke-width: 2;
+    }
+
+    .wait-loop-token text {
+      fill: var(--green);
+      font: 700 10px var(--mono);
+    }
+
+    .wait-loop-stage .wake-bolt {
+      fill: var(--amber);
+      font-size: 24px;
+      animation: blink 1.1s ease-in-out infinite;
+    }
+
+    /* lazy wake countdown */
+    .countdown-stage {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 112px;
+      height: 320px;
+    }
+
+    .countdown-stage svg { width: 100%; height: 100%; }
+
+    .counter-shell rect {
+      fill: rgba(66,184,131,.055);
+      stroke: var(--green);
+      stroke-width: 1.4;
+    }
+
+    .counter-title {
+      fill: var(--muted);
+      font: 11px var(--mono);
+    }
+
+    .counter-digit {
+      fill: var(--green);
+      font: 700 34px var(--mono);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .22s ease, transform .35s cubic-bezier(.22,.82,.2,1);
+    }
+
+    .s-countdown[data-step="0"] .counter-digit.d3,
+    .s-countdown[data-step="1"] .counter-digit.d2,
+    .s-countdown[data-step="2"] .counter-digit.d1,
+    .s-countdown[data-step="3"] .counter-digit.d0,
+    .s-countdown[data-step="4"] .counter-digit.d0 {
+      opacity: 1;
+      transform: none;
+    }
+
+    .counter-tick {
+      fill: rgba(66,184,131,.04);
+      stroke: #46504b;
+      transition: fill .28s ease, stroke .28s ease;
+    }
+
+    .s-countdown[data-step="1"] .counter-tick.t1,
+    .s-countdown[data-step="2"] .counter-tick.t1,
+    .s-countdown[data-step="3"] .counter-tick.t1,
+    .s-countdown[data-step="4"] .counter-tick.t1,
+    .s-countdown[data-step="2"] .counter-tick.t2,
+    .s-countdown[data-step="3"] .counter-tick.t2,
+    .s-countdown[data-step="4"] .counter-tick.t2,
+    .s-countdown[data-step="3"] .counter-tick.t3,
+    .s-countdown[data-step="4"] .counter-tick.t3 {
+      fill: rgba(66,184,131,.24);
+      stroke: var(--green);
+    }
+
+    .count-work { transition: opacity .3s ease, transform .42s ease; }
+    .s-countdown[data-step="4"] .count-work { opacity: .16; transform: translateY(18px); }
+
+    .count-issuer {
+      transition: transform .75s cubic-bezier(.22,.82,.2,1), opacity .25s;
+    }
+
+    .s-countdown[data-step="4"] .count-issuer { transform: translateX(-305px); }
+
+    .count-cqe { opacity: 0; transform: translateY(10px); }
+    .s-countdown[data-step="4"] .count-cqe.c1 { animation: cqe-enter .35s .35s both; }
+    .s-countdown[data-step="4"] .count-cqe.c2 { animation: cqe-enter .35s .65s both; }
+    .s-countdown[data-step="4"] .count-cqe.c3 { animation: cqe-enter .35s .95s both; }
+
+    .countdown-stage .wake-signal {
+      stroke: var(--amber);
+      stroke-dasharray: 7 6;
+      animation: dash .9s linear infinite;
+    }
+
+    /* wake policy matrix */
+    .wake-policy-grid {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      top: 115px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+
+    .wake-case {
+      min-height: 130px;
+      padding: 17px 19px 15px;
+      border: 1px solid #3d4641;
+      border-radius: 7px;
+      background: rgba(6,10,8,.34);
+    }
+
+    .wake-case-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .wake-case h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 17px;
+    }
+
+    .wake-case p {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font: 11px/1.65 var(--mono);
+    }
+
+    .wake-badge {
+      flex: none;
+      padding: 5px 8px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      color: var(--green);
+      font: 700 10px var(--mono);
+    }
+
+    .wake-case.immediate { border-color: rgba(242,174,73,.52); }
+    .wake-case.immediate .wake-badge { border-color: var(--amber); color: var(--amber); }
+
+    .wake-policy-note {
+      position: absolute;
+      left: 58px;
+      right: 58px;
+      bottom: 33px;
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      color: #dce2df;
+      font-size: 14px;
+    }
+
+    .wake-policy-note code { color: var(--green); }
+    .wake-policy-note .warning { color: var(--amber); text-align: right; }
 
     /* mpsc */
     .queue-compare {
@@ -1738,32 +1895,196 @@
         <p class="bottom-copy" data-click="5">队列消费完毕后清除 TASKRUN 状态。callback 的承载者是 ring，运行者仍为 single issuer T。</p>
       </section>
 
-      <section class="slide" data-title="三代机制时间线" data-max-clicks="4">
-        <div class="eyebrow">08 · evolution</div>
-        <h1>三代 <span class="term" tabindex="0" data-tip="task-run 描述 io_uring 延后执行 callback 的机制，包括 callback 挂载位置、通知方式和消费时机。">task-run</span>：挂载位置、通知方式与消费时机</h1>
-        <div class="timeline-stage">
-          <div class="timeline-line"></div>
-          <article class="era e1" data-click="1">
-            <span class="year">Linux 5.7</span>
-            <b>默认 task_work</b>
-            <p>挂 task<br>主动通知 / 可能 IPI</p>
+      <section class="slide s-wait-loop" data-title="DEFER_TASKRUN wait loop" data-max-clicks="6">
+        <div class="eyebrow">08 · Linux 7.2 wait loop</div>
+        <h1 class="tight-title"><span class="mono">submit + wait</span>：先 drain，再决定是否睡；醒来后再 drain</h1>
+        <div class="wait-loop-stage">
+          <svg viewBox="0 0 884 332" role="img" aria-label="DEFER_TASKRUN submit and wait 循环动画">
+            <g class="wait-loop-node wl-enter">
+              <rect x="18" y="76" width="124" height="70" rx="7"/>
+              <text x="80" y="105" text-anchor="middle">enter</text>
+              <text class="sub" x="80" y="126" text-anchor="middle">submit + wait</text>
+            </g>
+            <g class="wait-loop-node wl-drain-before">
+              <rect x="172" y="76" width="140" height="70" rx="7"/>
+              <text x="242" y="105" text-anchor="middle">drain local work</text>
+              <text class="sub" x="242" y="126" text-anchor="middle">before sleep</text>
+            </g>
+            <g class="wait-loop-node wl-check">
+              <rect x="342" y="76" width="156" height="70" rx="7"/>
+              <text x="420" y="105" text-anchor="middle">check CQ</text>
+              <text class="sub" x="420" y="126" text-anchor="middle">CQE ≥ min_complete?</text>
+            </g>
+            <g class="wait-loop-node wl-sleep">
+              <rect x="532" y="76" width="156" height="70" rx="7"/>
+              <text x="610" y="105" text-anchor="middle">arm + schedule</text>
+              <text class="sub" x="610" y="126" text-anchor="middle">cq_wait_nr = nr_wait</text>
+            </g>
+
+            <path class="wire active" d="M 142 111 H 164" marker-end="url(#arrow-green)" data-click="1"/>
+            <path class="wire active" d="M 312 111 H 334" marker-end="url(#arrow-green)" data-click="2"/>
+            <path class="wire active" d="M 498 111 H 524" marker-end="url(#arrow-green)" data-click="3"/>
+            <text class="label" x="511" y="94" text-anchor="middle" data-click="3">not enough</text>
+
+            <g class="wait-loop-node wl-wake">
+              <rect x="532" y="235" width="156" height="70" rx="7"/>
+              <text x="610" y="264" text-anchor="middle">TASK_RUNNING</text>
+              <text class="sub" x="610" y="285" text-anchor="middle">wake claimed once</text>
+            </g>
+            <g class="wait-loop-node wl-drain-after">
+              <rect x="342" y="235" width="156" height="70" rx="7"/>
+              <text x="420" y="264" text-anchor="middle">drain local work</text>
+              <text class="sub" x="420" y="285" text-anchor="middle">after schedule</text>
+            </g>
+            <g class="wait-loop-node wl-return">
+              <rect x="172" y="235" width="140" height="70" rx="7"/>
+              <text x="242" y="264" text-anchor="middle">recheck CQ</text>
+              <text class="sub" x="242" y="285" text-anchor="middle">enough? return</text>
+            </g>
+            <g class="wait-loop-node wl-return">
+              <rect x="18" y="235" width="124" height="70" rx="7"/>
+              <text x="80" y="264" text-anchor="middle">userspace</text>
+              <text class="sub" x="80" y="285" text-anchor="middle">consume CQE</text>
+            </g>
+
+            <g data-click="4">
+              <rect x="724" y="229" width="140" height="82" rx="7" fill="rgba(239,93,168,.05)" stroke="#ef5da8"/>
+              <text x="794" y="258" text-anchor="middle" fill="#fbfbfe" font-size="13" font-weight="650">completion CPU</text>
+              <text class="label" x="794" y="280" text-anchor="middle">queue task_work</text>
+              <text class="wake-bolt" x="698" y="280" text-anchor="middle">ϟ</text>
+              <path class="wire wake-signal" d="M 724 270 H 696" marker-end="url(#arrow-amber)"/>
+            </g>
+            <path class="wire active" d="M 532 270 H 506" marker-end="url(#arrow-green)" data-click="5"/>
+            <path class="wire active" d="M 342 270 H 320" marker-end="url(#arrow-green)" data-click="6"/>
+            <path class="wire active" d="M 172 270 H 150" marker-end="url(#arrow-green)" data-click="6"/>
+            <path class="wire" d="M 242 235 C 242 190, 610 190, 610 154" marker-end="url(#arrow-amber)" data-click="6"/>
+            <text class="label" x="425" y="183" text-anchor="middle" data-click="6">still short → recompute nr_wait and loop</text>
+
+            <g class="wait-loop-token">
+              <circle cx="0" cy="0" r="14"/>
+              <text x="0" y="4" text-anchor="middle">T</text>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">进入 <code>io_cqring_wait()</code> 后，先消费已经挂在 ring 上的 local task_work。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3">drain 完才读取 CQ：已经达到 <code>min_complete</code> 就直接返回，不进入睡眠。</p>
+        <p class="bottom-copy" data-click="3" data-hide-at="4">仍不足时计算 <code>nr_wait</code>，写入 <code>cq_wait_nr</code>，把当前 task 设为 <code>TASK_INTERRUPTIBLE</code> 后 schedule。</p>
+        <p class="bottom-copy" data-click="4" data-hide-at="5">外部完成上下文只负责入队；lazy 计数归零或 non-lazy 抢到本轮 wake 权后，调用 <code>wake_up_state()</code>。</p>
+        <p class="bottom-copy" data-click="5" data-hide-at="6">schedule 返回后先恢复 <code>TASK_RUNNING</code>，解除本轮计数，再次 drain ring-local task_work。</p>
+        <p class="bottom-copy" data-click="6">最后重新检查真实 CQ 数量：够了返回 userspace；不够则更新剩余数量并进入下一轮。</p>
+      </section>
+
+      <section class="slide s-countdown" data-title="普通 one-shot 的 lazy wake" data-max-clicks="4">
+        <div class="eyebrow">08.1 · cq_wait_nr countdown</div>
+        <h1 class="tight-title">普通 one-shot read/write：一次 lazy task_work，只扣 <span class="mono">1</span></h1>
+        <div class="countdown-stage">
+          <svg viewBox="0 0 884 320" role="img" aria-label="普通 one-shot read write 逐次扣减 cq_wait_nr 动画">
+            <g class="counter-shell">
+              <rect x="330" y="4" width="224" height="92" rx="8"/>
+              <text class="counter-title" x="442" y="27" text-anchor="middle">cq_wait_nr · lazy adds still needed</text>
+              <text class="counter-digit d3" x="442" y="67" text-anchor="middle">3</text>
+              <text class="counter-digit d2" x="442" y="67" text-anchor="middle">2</text>
+              <text class="counter-digit d1" x="442" y="67" text-anchor="middle">1</text>
+              <text class="counter-digit d0" x="442" y="67" text-anchor="middle">0</text>
+              <rect class="counter-tick t1" x="395" y="77" width="27" height="7" rx="2"/>
+              <rect class="counter-tick t2" x="429" y="77" width="27" height="7" rx="2"/>
+              <rect class="counter-tick t3" x="463" y="77" width="27" height="7" rx="2"/>
+            </g>
+            <text class="label" x="442" y="111" text-anchor="middle">min_complete = 4 · CQ already has 1 → nr_wait = 3</text>
+
+            <g class="svg-box stroke-pink">
+              <rect x="18" y="145" width="150" height="78" rx="8"/>
+              <text x="93" y="176" text-anchor="middle">completion CPU</text>
+              <text class="sub" x="93" y="199" text-anchor="middle">one-shot read / write</text>
+            </g>
+            <path class="wire pink active" d="M 168 184 H 214" marker-end="url(#arrow-pink)"/>
+
+            <g class="svg-box stroke-green">
+              <rect x="214" y="132" width="392" height="104" rx="8"/>
+              <text x="410" y="158" text-anchor="middle">ring-local work_list</text>
+              <g class="count-work" data-click="1">
+                <rect x="250" y="176" width="78" height="38" rx="4"/>
+                <text class="sub" x="289" y="200" text-anchor="middle">read #1</text>
+              </g>
+              <g class="count-work" data-click="2">
+                <rect x="371" y="176" width="78" height="38" rx="4"/>
+                <text class="sub" x="410" y="200" text-anchor="middle">write #2</text>
+              </g>
+              <g class="count-work" data-click="3">
+                <rect x="492" y="176" width="78" height="38" rx="4"/>
+                <text class="sub" x="531" y="200" text-anchor="middle">read #3</text>
+              </g>
+            </g>
+
+            <g class="svg-box stroke-blue">
+              <rect x="716" y="145" width="150" height="78" rx="8"/>
+              <text x="791" y="176" text-anchor="middle">single issuer</text>
+              <text class="sub" x="791" y="199" text-anchor="middle">TASK_INTERRUPTIBLE</text>
+            </g>
+            <g class="count-issuer">
+              <rect x="768" y="230" width="46" height="24" rx="4" fill="#101210" stroke="#3585ff"/>
+              <text x="791" y="246" text-anchor="middle" fill="#3585ff" font-family="var(--mono)" font-size="10">T</text>
+            </g>
+
+            <g data-click="3">
+              <path class="wire wake-signal" d="M 606 184 H 708" marker-end="url(#arrow-amber)"/>
+              <text class="label" x="657" y="170" text-anchor="middle">0 → wake once</text>
+            </g>
+            <g data-click="4">
+              <path class="wire blue active" d="M 716 230 C 670 272, 570 276, 534 240" marker-end="url(#arrow-blue)"/>
+              <g class="count-cqe c1"><rect x="293" y="270" width="70" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="328" y="290" text-anchor="middle">CQE +1</text></g>
+              <g class="count-cqe c2"><rect x="375" y="270" width="70" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="410" y="290" text-anchor="middle">CQE +1</text></g>
+              <g class="count-cqe c3"><rect x="457" y="270" width="70" height="30" rx="4" fill="rgba(66,184,131,.1)" stroke="#42b883"/><text class="result-label" x="492" y="290" text-anchor="middle">CQE +1</text></g>
+            </g>
+          </svg>
+        </div>
+        <p class="bottom-copy" data-click="1" data-hide-at="2">read #1 的 completion 入队，<code>atomic_dec_and_test(3)</code> 得到 2：还不 wake。</p>
+        <p class="bottom-copy" data-click="2" data-hide-at="3">write #2 再扣一次，<code>2 → 1</code>：issuer 继续睡，producer 立即返回自己的完成路径。</p>
+        <p class="bottom-copy" data-click="3" data-hide-at="4">read #3 令 <code>1 → 0</code>：这个 producer 赢得本轮唯一一次 wake，唤醒 single issuer。</p>
+        <p class="bottom-copy" data-click="4">issuer 醒来后 drain 三个 callback，各发布一个 CQE；连同原有 1 个，真实 CQ 数达到 4。</p>
+      </section>
+
+      <section class="slide" data-title="lazy 与立即 wake 的边界" data-max-clicks="5">
+        <div class="eyebrow">08.2 · wake policy</div>
+        <h1>何时立刻 wake，何时等待凑够 <span class="mono">min_complete</span>？</h1>
+        <div class="wake-policy-grid">
+          <article class="wake-case" data-click="1">
+            <div class="wake-case-head">
+              <h3>普通 CQE · one-shot read/write</h3>
+              <span class="wake-badge">凑满后 wake</span>
+            </div>
+            <p>IOU_F_TWQ_LAZY_WAKE<br>cq_wait_nr--；只有减到 0 才 wake</p>
           </article>
-          <article class="era e2" data-click="2">
-            <span class="year">Linux 5.19</span>
-            <b>COOP_TASKRUN</b>
-            <p>仍挂 task<br>不为 work 单独发 IPI</p>
+          <article class="wake-case immediate" data-click="2">
+            <div class="wake-case-head">
+              <h3>multishot accept</h3>
+              <span class="wake-badge">立刻 wake</span>
+            </div>
+            <p>poll_exclusive → EPOLLEXCLUSIVE<br>REQ_F_POLL_NO_LAZY</p>
           </article>
-          <article class="era e3" data-click="3">
-            <span class="year">Linux 6.1</span>
-            <b>DEFER_TASKRUN</b>
-            <p>改挂 ring<br>由唯一 issuer 主动消费</p>
+          <article class="wake-case" data-click="3">
+            <div class="wake-case-head">
+              <h3>multishot recv</h3>
+              <span class="wake-badge">凑满后 wake</span>
+            </div>
+            <p>普通 poll wake 仍带 LAZY_WAKE<br>一次 task_work add 只扣 1</p>
+          </article>
+          <article class="wake-case immediate" data-click="4">
+            <div class="wake-case-head">
+              <h3>linked request</h3>
+              <span class="wake-badge">立刻 wake</span>
+            </div>
+            <p>IO_REQ_LINK_FLAGS<br>入队前主动 clear LAZY_WAKE</p>
           </article>
         </div>
-        <p class="timeline-question" data-click="3">这些 work 队列都具有多生产者、单消费者的 FIFO 访问模式。</p>
-        <div class="bridge-panel" data-click="4">
-          <div class="bridge-from">08 → 09</div>
+        <div class="wake-policy-note" data-click="4" data-hide-at="5">
+          <span><code>cq_wait_nr</code> 初值 = 欠缺 CQE 数；每个 lazy task_work add 扣 1。</span>
+          <span class="warning">立刻 wake 只叫醒 issuer；producer 不跑 callback。</span>
+        </div>
+        <div class="bridge-panel" data-click="5">
+          <div class="bridge-from">08.2 → 09</div>
           <div class="bridge-prompt medium">
-            <p>这些队列由多个完成上下文并发写入、一个 task 顺序消费。旧 <code>llist</code> 为恢复 FIFO 每批都要 <code>reverse</code>，这笔固定成本能否拿掉？</p>
+            <p>wait 策略解决“何时叫醒 consumer”；接下来再看多个 completion CPU 如何把 task_work 并发写入同一个 FIFO。</p>
           </div>
         </div>
       </section>
