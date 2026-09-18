@@ -16,6 +16,7 @@
 * [io_uring_sendzc相关分享](io_uring/io_uring_sendzc.md)
 * [Netty io_uring linked SQE 设计方案 和 cancel 行为调研](io_uring/netty_linked_sqe_cancel.md)
 * [从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路](io_uring/io_uring-fast-poll-entry.md)
+* [io_uring非对称工作组的一些想法](io_uring/io_uring_sqpoll_isolation.md)
 
 ## reactive
 
