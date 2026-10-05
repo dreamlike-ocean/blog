@@ -16,6 +16,7 @@
 * [io_uring_sendzc相关分享](io_uring/io_uring_sendzc.md)
 * [Netty io_uring linked SQE 设计方案 和 cancel 行为调研](io_uring/netty_linked_sqe_cancel.md)
 * [从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路](io_uring/io_uring-fast-poll-entry.md)
+* [io_uring 异步写如何让 Netty HTTP/2 把大 body 切成 1KB 碎片](io_uring/netty_io_uring_h2_flow_control.md)
 
 ## reactive
 
