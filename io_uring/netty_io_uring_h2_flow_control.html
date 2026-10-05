@@ -1,0 +1,1181 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>io_uring 异步写如何让 Netty HTTP/2 把大 body 切成 1KB 碎片 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../reactive_lock.html" />
+    
+    
+    <link rel="prev" href="io_uring_sqpoll_isolation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">性能总结</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../summary/api-gateway-performance-doubling.zh.html">
+            
+                <a href="../summary/api-gateway-performance-doubling.zh.html">
+            
+                    
+                    API网关性能翻倍技术实践（中文）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../summary/api-gateway-performance-doubling.en.html">
+            
+                <a href="../summary/api-gateway-performance-doubling.en.html">
+            
+                    
+                    API Gateway Performance Doubling in Practice (English)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">io_uring</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="io_uring.html">
+            
+                <a href="io_uring.html">
+            
+                    
+                    io_uring介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="io_uringAndMemory.html">
+            
+                <a href="io_uringAndMemory.html">
+            
+                    
+                    io_uring,Memory以及Procator的Socket IO
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="io_uring_recv_impl.html">
+            
+                <a href="io_uring_recv_impl.html">
+            
+                    
+                    io_uring_recv是怎么实现的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="io_uring_sendzc.html">
+            
+                <a href="io_uring_sendzc.html">
+            
+                    
+                    io_uring_sendzc相关分享
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="netty_linked_sqe_cancel.html">
+            
+                <a href="netty_linked_sqe_cancel.html">
+            
+                    
+                    Netty io_uring linked SQE 设计方案 和 cancel 行为调研
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="io_uring-fast-poll-entry.html">
+            
+                <a href="io_uring-fast-poll-entry.html">
+            
+                    
+                    从 FAST_POLL 到 MPSC FIFO：io_uring 的完成执行之路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="io_uring_sqpoll_isolation.html">
+            
+                <a href="io_uring_sqpoll_isolation.html">
+            
+                    
+                    io_uring非对称工作组的一些想法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="3.8" data-path="netty_io_uring_h2_flow_control.html">
+            
+                <a href="netty_io_uring_h2_flow_control.html">
+            
+                    
+                    io_uring 异步写如何让 Netty HTTP/2 把大 body 切成 1KB 碎片
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">reactive</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../reactive_lock.html">
+            
+                <a href="../reactive_lock.html">
+            
+                    
+                    响应式的锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../netty-4-2.html">
+            
+                <a href="../netty-4-2.html">
+            
+                    
+                    Netty4.2模型变化简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Loom</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../loom/Spring的loom化改造.html">
+            
+                <a href="../loom/Spring的loom化改造.html">
+            
+                    
+                    Spring的Loom化改造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../loom/为什么jvm需要有栈协程.html">
+            
+                <a href="../loom/为什么jvm需要有栈协程.html">
+            
+                    
+                    为什么jvm需要有栈协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../loom/virtualThread.html">
+            
+                <a href="../loom/virtualThread.html">
+            
+                    
+                    虚拟线程那些事
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../loom/synchronized适配.html">
+            
+                <a href="../loom/synchronized适配.html">
+            
+                    
+                    VitrualThread对于synchronized适配
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Panama</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../panama/panama-tutorial-0-A.html">
+            
+                <a href="../panama/panama-tutorial-0-A.html">
+            
+                    
+                    Panama教程-0-MethodHandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../panama/panama-tutorial-0-B.html">
+            
+                <a href="../panama/panama-tutorial-0-B.html">
+            
+                    
+                    Panama教程-0-Varhandle介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                <a href="../panama/panama-tutorial-1-MemorySegment.html">
+            
+                    
+                    Panama教程-1-MemorySegment介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                <a href="../panama/panama-tutorial-2-MemoryLayout.html">
+            
+                    
+                    Panama教程-2-MemoryLayout介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="../panama/panama-tutorial-3-FFI.html">
+            
+                <a href="../panama/panama-tutorial-3-FFI.html">
+            
+                    
+                    Panama教程-3-FFI介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="../panama/afterUnsafe.html">
+            
+                <a href="../panama/afterUnsafe.html">
+            
+                    
+                    失去了Unsafe内存操作之后该何去何从
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="../panama/Panama浅析.html">
+            
+                <a href="../panama/Panama浅析.html">
+            
+                    
+                    Panama ffi源码浅析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.8" data-path="../panama/arena_shared.html">
+            
+                <a href="../panama/arena_shared.html">
+            
+                    
+                    从一个关闭超时问题看Panama 内存管理API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">随笔</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="../jmm.html">
+            
+                <a href="../jmm.html">
+            
+                    
+                    Java Memory Order和Varhandle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="../lazySingleton.html">
+            
+                <a href="../lazySingleton.html">
+            
+                    
+                    基于JVM基建优化的单例模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">翻译</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                <a href="../translate/【翻译】为什么现代的JVM分析器仍然偏爱安全点？.html">
+            
+                    
+                    为什么现代的jvm仍然偏爱安全点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="../translate/loom_fiber_continuation.html">
+            
+                <a href="../translate/loom_fiber_continuation.html">
+            
+                    
+                    Java虚拟机的纤程和计算续体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="../translate/state_of_loom_part1.html">
+            
+                <a href="../translate/state_of_loom_part1.html">
+            
+                    
+                    State of Loom - Part 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="../translate/state_of_loom_part2.html">
+            
+                <a href="../translate/state_of_loom_part2.html">
+            
+                    
+                    State of Loom - Part 2
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="../loom/loom的实现.html">
+            
+                <a href="../loom/loom的实现.html">
+            
+                    
+                    loom的实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">CPP</li>
+        
+        
+    
+        <li class="chapter " data-level="9.1" data-path="../cpp_coroutine/first.html">
+            
+                <a href="../cpp_coroutine/first.html">
+            
+                    
+                    C++20协程入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="9.2" data-path="../cpp_coroutine/async_scope.html">
+            
+                <a href="../cpp_coroutine/async_scope.html">
+            
+                    
+                    async scope和通用回调转协程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >io_uring 异步写如何让 Netty HTTP/2 把大 body 切成 1KB 碎片</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="iouring-&#x5F02;&#x6B65;&#x5199;&#x5982;&#x4F55;&#x8BA9;-netty-http2-&#x628A;&#x5927;-body-&#x5207;&#x6210;-1kb-&#x788E;&#x7247;">io_uring &#x5F02;&#x6B65;&#x5199;&#x5982;&#x4F55;&#x8BA9; Netty HTTP/2 &#x628A;&#x5927; body &#x5207;&#x6210; 1KB &#x788E;&#x7247;</h1>
+<p>note: &#x672C;&#x6587;&#x8BB0;&#x5F55;&#x7684;&#x662F; Claude Opus 5.5 &#x4E0E;&#x6211;&#x4E00;&#x8D77;&#x6392;&#x67E5; Netty io_uring &#x5728; HTTP/2 &#x573A;&#x666F;&#x4E0B; CPU &#x5F02;&#x5E38;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x6587;&#x4E2D; Netty &#x4EE3;&#x7801;&#x5747;&#x57FA;&#x4E8E; <a href="https://github.com/netty/netty/tree/006a2f1d92db733d10112de251600da7b6f8ec51" target="_blank"><code>4.2@006a2f1d92</code></a>&#x3002;</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>&#x628A; Netty &#x7684; HTTP/2 &#x670D;&#x52A1;&#x4ECE; NIO&#xFF08;epoll&#xFF09;&#x5207;&#x5230; io_uring&#xFF0C;event loop &#x7684; CPU &#x53CD;&#x800C;<strong>&#x865A;&#x9AD8;</strong>&#x4E86;&#x3002;&#x95EE;&#x9898;&#x4E0D;&#x5728; io_uring &#x6162;&#xFF0C;&#x800C;&#x5728;&#x4E8E;<strong>&#x5B83;&#x7684;&#x5199;&#x662F;&#x5F02;&#x6B65;&#x5B8C;&#x6210;&#x7684;</strong>&#x3002;</li>
+<li>NIO &#x662F;&#x540C;&#x6B65;&#x5199;&#xFF0C;flush &#x65F6;&#x5B57;&#x8282;&#x7ACB;&#x523B;&#x79BB;&#x5F00; <code>ChannelOutboundBuffer</code>&#xFF0C;&#x5199;&#x6C34;&#x4F4D;&#x9A6C;&#x4E0A;&#x56DE;&#x843D;&#x3002;io_uring &#x8981;&#x7B49; CQE &#x5230;&#x6765;&#x624D; <code>removeBytes</code>&#xFF0C;&#x5728;&#x8FD9;&#x4E4B;&#x524D;&#x6C34;&#x4F4D;&#x4E00;&#x76F4;&#x88AB;&#x5360;&#x7740;&#x3002;</li>
+<li>h2 &#x7684; flow controller &#x6309; channel &#x5269;&#x4F59;&#x7684;&#x53EF;&#x5199;&#x5B57;&#x8282;&#x5206;&#x914D;&#x5199;&#x5165;&#x9884;&#x7B97;&#x3002;&#x5728;&#x9014;&#x5B57;&#x8282;&#x4E00;&#x65E6;&#x8D8A;&#x8FC7;&#x9AD8;&#x6C34;&#x4F4D;&#xFF08;&#x9ED8;&#x8BA4; 64KB&#xFF09;&#xFF0C;&#x540E;&#x7EED;&#x54CD;&#x5E94;&#x5C31;&#x4F1A;&#x79EF;&#x538B;&#x5728; flow controller &#x91CC;&#x3002;&#x79EF;&#x538B;&#x89E3;&#x9664;&#x65F6;&#xFF0C;&#x591A;&#x4E2A; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684; <code>WeightedFairQueueByteDistributor</code> &#x4EE5; <code>allocationQuantum = 1KB</code> &#x8F6E;&#x8F6C;&#xFF0C;&#x628A;&#x5927; body &#x5207;&#x6210;&#x4E00;&#x5806; 1KB &#x7684; DATA frame&#x3002;ByteBuf&#x3001;slice&#x3001;promise &#x7684;&#x6570;&#x91CF;&#x81A8;&#x80C0;&#x8FD1; 10 &#x500D;&#xFF0C;zero-copy &#x7684;&#x9608;&#x503C;&#x4E5F;&#x6C38;&#x8FDC;&#x8FBE;&#x4E0D;&#x5230;&#x3002;</li>
+<li>&#x5373;&#x4F7F;&#x662F; <code>HttpToHttp2ConnectionHandler</code> + &#x6BCF;&#x4E2A;&#x54CD;&#x5E94;&#x5404;&#x81EA; <code>writeAndFlush</code>&#xFF0C;&#x5728; io_uring &#x4E0B;&#x4E5F;&#x4F1A;&#x4E2D;&#x62DB;&#xFF1B;&#x5728; NIO &#x4E0B;&#x4E0D;&#x4F1A;&#x3002;</li>
+<li>&#x53C2;&#x8003; grpc-java&#xFF0C;&#x6539;&#x7528; <code>UniformStreamByteDistributor</code> + <code>minAllocationChunk = 16KB</code> &#x540E;&#xFF0C;io_uring &#x7684; event loop CPU &#x6BD4; WFQ &#x9ED8;&#x8BA4;&#x4E0B;&#x964D; 33% &#x5230; 63%&#xFF0C;&#x5EF6;&#x8FDF;&#x4E5F;&#x66F4;&#x4F4E;&#x3002;HTTP/2 &#x7684;&#x4F18;&#x5148;&#x7EA7;&#x6743;&#x91CD;&#x5DF2;&#x5728; RFC 9113 &#x4E2D;&#x88AB;&#x5E9F;&#x5F03;&#xFF0C;1KB &#x7684;&#x8F6E;&#x8F6C;&#x7C92;&#x5EA6;&#x5728;&#x5185;&#x7F51;&#x5E26;&#x5BBD;&#x4E0B;&#x4E5F;&#x6362;&#x4E0D;&#x6765;&#x53EF;&#x611F;&#x77E5;&#x7684;&#x516C;&#x5E73;&#x6027;&#x3002;Vert.x 5 &#x540C;&#x6837;&#x9ED8;&#x8BA4;&#x6539;&#x7528;&#x4E86; Uniform&#x3002;</li>
+<li><strong>&#x6838;&#x5FC3;&#x6559;&#x8BAD;&#xFF1A;io_uring &#x7684;&#x5F02;&#x6B65;&#x5199;&#x6539;&#x53D8;&#x4E86;&quot;&#x4E00;&#x6B21;&#x5199;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x7B97;&#x5B8C;&#x6210;&quot;&#x7684;&#x8BED;&#x4E49;&#xFF0C;&#x6240;&#x6709;&#x9690;&#x542B;&quot;&#x5199;&#x662F;&#x540C;&#x6B65;&#x5B8C;&#x6210;&quot;&#x8FD9;&#x4E2A;&#x5047;&#x8BBE;&#x7684;&#x4E0A;&#x5C42;&#x673A;&#x5236;&#xFF08;&#x5199;&#x6C34;&#x4F4D;&#x3001;&#x6D41;&#x63A7;&#x9884;&#x7B97;&#xFF09;&#xFF0C;&#x90FD;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x610F;&#x6599;&#x4E4B;&#x5916;&#x7684;&#x884C;&#x4E3A;&#x3002;</strong></li>
+</ul>
+<h2 id="1-&#x95EE;&#x9898;&#xFF1A;&#x547D;&#x4E2D;&#x4E0D;&#x4E86;&#x7684;-sendmsgzc&#xFF0C;&#x548C;&#x6BD4;-nio-&#x8FD8;&#x9AD8;&#x7684;-cpu">1. &#x95EE;&#x9898;&#xFF1A;&#x547D;&#x4E2D;&#x4E0D;&#x4E86;&#x7684; SENDMSG_ZC&#xFF0C;&#x548C;&#x6BD4; NIO &#x8FD8;&#x9AD8;&#x7684; CPU</h2>
+<p>&#x6211;&#x5728;&#x7814;&#x7A76; Netty io_uring &#x7684; <code>SENDMSG_ZC</code> &#x5728; h2 &#x4E0A;&#x7684;&#x4F18;&#x5316;&#x65F6;&#xFF0C;&#x78B0;&#x5230;&#x4E00;&#x4EF6;&#x5F88;&#x5947;&#x602A;&#x7684;&#x4E8B;&#xFF1A;&#x5411;&#x540C;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;&#x591A;&#x4E2A; stream &#x5199;&#x5165;&#x8FDC;&#x8D85; zero-copy &#x9608;&#x503C;&#x7684;&#x5927; body&#xFF0C;&#x540E;&#x7EED;&#x7684; DATA frame &#x7ADF;&#x7136;<strong>&#x6CA1;&#x6709;&#x4E00;&#x4E2A;</strong>&#x8FBE;&#x5230; <code>SENDMSG_ZC</code> &#x7684;&#x9608;&#x503C;&#x3002;&#x7528; bpftrace &#x7EDF;&#x8BA1; <code>io_uring:io_uring_submit_req</code>&#xFF0C;16KB body&#x3001;5000 rps &#x4E0B;&#xFF0C;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; <code>SEND_ZC</code>/<code>SENDMSG_ZC</code> &#x90FD;&#x662F; 0&#xFF0C;&#x53EA;&#x6709;&#x96F6;&#x661F;&#x7684; <code>WRITEV</code>&#xFF08;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42; 0.36 &#x6B21;&#xFF0C;&#x5373;&#x4E00;&#x6B21; writev &#x5E26;&#x8D70;&#x7EA6; 3 &#x4E2A;&#x54CD;&#x5E94;&#xFF09;&#x3002;</p>
+<p>&#x9000;&#x56DE;&#x5230;&#x666E;&#x901A; writev &#x540E;&#xFF0C;&#x66F4;&#x602A;&#x7684;&#x4E8B;&#x60C5;&#x6765;&#x4E86;&#xFF1A;<strong>io_uring &#x7684; event loop CPU &#x6BD4; NIO &#x5B9E;&#x73B0;&#x8FD8;&#x9AD8;</strong>&#x3002;&#x6362;&#x6210;&#x7EBF;&#x4E0A;&#x7684;&#x5199;&#x6CD5;&#xFF08;<code>HttpToHttp2ConnectionHandler</code>&#xFF0C;&#x6BCF;&#x4E2A;&#x54CD;&#x5E94;&#x5404;&#x81EA; <code>writeAndFlush(FullHttpResponse)</code>&#xFF09;&#xFF0C;64KB body&#x3001;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x5E76;&#x53D1; 4 &#x4E2A;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;NIO &#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x5199;&#x51FA; 12 &#x4E2A; ByteBuf&#x3001;event loop &#x8017;&#x65F6; 11.27 &#xB5;s&#xFF1B;io_uring &#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x5199;&#x51FA; 43.7 &#x4E2A; ByteBuf&#x3001;&#x8017;&#x65F6; 17.36 &#xB5;s&#xFF0C;&#x591A;&#x4E86; 54%&#xFF08;&#x8BE6;&#x89C1;&#x7B2C; 3 &#x8282;&#xFF09;&#x3002;&#x540C;&#x6837;&#x7684;&#x670D;&#x52A1;&#x6362;&#x6210; HTTP/1.1 &#x7684; <code>FullHttpResponse</code>&#xFF0C;&#x4E24;&#x4E2A; transport &#x57FA;&#x672C;&#x6CA1;&#x6709;&#x5DEE;&#x522B;&#xFF08;&#x4E91;&#x4E0A; 64KB &#x65F6;&#x662F; 15.5 &#x5BF9; 15.7 &#xB5;s&#xFF09;&#xFF0C;&#x5DEE;&#x8DDD;&#x53EA;&#x51FA;&#x73B0;&#x5728; h2 &#x4E0A;&#x3002;</p>
+<p>&#x6392;&#x67E5;&#x4E0B;&#x6765;&#xFF0C;&#x7F6A;&#x9B41;&#x7978;&#x9996;&#x662F; <code>WeightedFairQueueByteDistributor</code>&#xFF1A;&#x5B83;&#x628A;&#x5927; body &#x5207;&#x6210;&#x4E86;&#x5927;&#x91CF; 1KB &#x7684; DATA frame&#x3002;&#x4E3A;&#x4EC0;&#x4E48;&#x53EA;&#x6709; io_uring &#x4F1A;&#x8FD9;&#x6837;&#xFF1F;</p>
+<h2 id="2-&#x539F;&#x56E0;&#xFF1A;&#x5199;&#x6C34;&#x4F4D;&#x7684;&#x53D8;&#x5316;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;">2. &#x539F;&#x56E0;&#xFF1A;&#x5199;&#x6C34;&#x4F4D;&#x7684;&#x53D8;&#x5316;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;</h2>
+<h3 id="21-h2-&#x7684;&#x5199;&#x5165;&#x9884;&#x7B97;&#x8DDF;&#x7740;-channel-&#x7684;&#x53EF;&#x5199;&#x72B6;&#x6001;&#x8D70;">2.1 h2 &#x7684;&#x5199;&#x5165;&#x9884;&#x7B97;&#x8DDF;&#x7740; channel &#x7684;&#x53EF;&#x5199;&#x72B6;&#x6001;&#x8D70;</h3>
+<p>h2 &#x5199; DATA &#x5206;&#x4E24;&#x6B65;&#x3002;&#x7B2C;&#x4E00;&#x6B65;&#xFF0C;<code>DefaultHttp2RemoteFlowController.writePendingBytes()</code> &#x7B97;&#x51FA;&#x8FD9;&#x4E00;&#x8F6E;&#x80FD;&#x5199;&#x591A;&#x5C11;&#xFF0C;&#x518D;&#x4EA4;&#x7ED9; <code>StreamByteDistributor</code> &#x5206;&#x7ED9;&#x5404;&#x4E2A; stream&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2RemoteFlowController.java#L611-L634" target="_blank"><code>DefaultHttp2RemoteFlowController.java#L611-L634</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> bytesToWrite = writableBytes();
+<span class="hljs-keyword">for</span> (;;) {
+    <span class="hljs-keyword">if</span> (!streamByteDistributor.distribute(bytesToWrite, <span class="hljs-keyword">this</span>) ||
+        (bytesToWrite = writableBytes()) &lt;= <span class="hljs-number">0</span> ||
+        !isChannelWritable0()) {
+        <span class="hljs-keyword">break</span>;
+    }
+}
+</code></pre>
+<p>&#x9884;&#x7B97;&#x53D6;&#x51B3;&#x4E8E; channel &#x8FD8;&#x80FD;&#x5199;&#x591A;&#x5C11;&#x5B57;&#x8282;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2RemoteFlowController.java#L237-L262" target="_blank"><code>#L237-L262</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxUsableChannelBytes</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// If the channel isWritable, allow at least minUsableChannelBytes.</span>
+    <span class="hljs-keyword">int</span> channelWritableBytes = (<span class="hljs-keyword">int</span>) min(Integer.MAX_VALUE, ctx.channel().bytesBeforeUnwritable());
+    <span class="hljs-keyword">int</span> usableBytes = channelWritableBytes &gt; <span class="hljs-number">0</span> ? max(channelWritableBytes, minUsableChannelBytes()) : <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> min(connectionState.windowSize(), usableBytes);
+}
+</code></pre>
+<p><code>bytesBeforeUnwritable()</code> &#x662F;&#x5199;&#x9AD8;&#x6C34;&#x4F4D;&#x51CF;&#x53BB; <code>ChannelOutboundBuffer</code> &#x4E2D;<strong>&#x8FD8;&#x6CA1;&#x5199;&#x5B8C;</strong>&#x7684;&#x5B57;&#x8282;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java#L787" target="_blank"><code>ChannelOutboundBuffer.java#L787</code></a>&#xFF09;&#x3002;channel &#x4E0D;&#x53EF;&#x5199;&#x65F6;&#x9884;&#x7B97;&#x662F; 0&#xFF0C;&#x6570;&#x636E;&#x53EA;&#x80FD;&#x7559;&#x5728; flow controller &#x91CC;&#x6392;&#x961F;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x6B65;&#xFF0C;<code>FlowControlledData.write()</code> &#x53EA;&#x5199;&#x51FA;&#x672C;&#x8F6E;&#x5206;&#x5230;&#x7684; <code>allowedBytes</code>&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2ConnectionEncoder.java#L526" target="_blank"><code>DefaultHttp2ConnectionEncoder.java#L526</code></a>&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x7531; <code>DefaultHttp2FrameWriter.writeData()</code> &#x6309; <code>maxFrameSize</code> &#x5207;&#x5E27;&#x3002;&#x6BCF;&#x4E2A;&#x5E27;&#x90FD;&#x4F1A;&#x5355;&#x72EC;&#x5206;&#x914D;&#x4E00;&#x4E2A; 9 &#x5B57;&#x8282;&#x7684;&#x5E27;&#x5934; buffer&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A; payload &#x7684; retained slice&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/DefaultHttp2FrameWriter.java#L162-L183" target="_blank"><code>DefaultHttp2FrameWriter.java#L162-L183</code></a>&#xFF09;&#x3002;</p>
+<p>&#x6240;&#x4EE5;<strong>&#x5B9E;&#x9645; DATA frame &#x7684;&#x5927;&#x5C0F; = min(&#x672C;&#x8F6E;&#x5206;&#x5230;&#x7684;&#x5B57;&#x8282;&#x6570;, maxFrameSize)</strong>&#x3002;<code>SETTINGS_MAX_FRAME_SIZE</code>&#xFF08;&#x9ED8;&#x8BA4; 16KB&#xFF09;&#x53EA;&#x662F;&#x4E0A;&#x9650;&#xFF0C;&#x591A;&#x4E2A; stream &#x5E76;&#x53D1;&#x65F6;&#xFF0C;&#x771F;&#x6B63;&#x8D77;&#x4F5C;&#x7528;&#x7684;&#x662F; distributor &#x6BCF;&#x8F6E;&#x5206;&#x51FA;&#x53BB;&#x7684;&#x5B57;&#x8282;&#x6570;&#x3002;</p>
+<h3 id="22-wfq-&#x9ED8;&#x8BA4;-1kb-&#x8F6E;&#x8F6C;">2.2 WFQ &#x9ED8;&#x8BA4; 1KB &#x8F6E;&#x8F6C;</h3>
+<p><code>WeightedFairQueueByteDistributor</code> &#x7684;&#x9ED8;&#x8BA4; quantum &#x662F; 1KB&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2CodecUtil.java#L119" target="_blank"><code>Http2CodecUtil.java#L119</code></a>&#x3001;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/WeightedFairQueueByteDistributor.java#L90" target="_blank"><code>WeightedFairQueueByteDistributor.java#L90</code></a>&#xFF09;&#x3002;&#x591A;&#x4E2A; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#x65F6;&#xFF0C;&#x6BCF;&#x4E2A; stream &#x6BCF;&#x8F6E;&#x5206;&#x5230;&#x7684;&#x5B57;&#x8282;&#x6570;&#x662F;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/WeightedFairQueueByteDistributor.java#L313-L339" target="_blank"><code>#L313-L339</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> nsent = distribute(nextChildState == <span class="hljs-keyword">null</span> ? maxBytes :
+                min(maxBytes, (<span class="hljs-keyword">int</span>) min((nextChildState.pseudoTimeToWrite - childState.pseudoTimeToWrite) *
+                                   childState.weight / oldTotalQueuedWeights + allocationQuantum, MAX_VALUE)),
+                writer, childState);
+</code></pre>
+<p>&#x51E0;&#x4E2A; stream &#x521A;&#x5F00;&#x59CB;&#x65F6;&#x4F2A;&#x65F6;&#x95F4;&#x76F8;&#x540C;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x8F6E;&#x53EA;&#x80FD;&#x5206;&#x5230;&#x7EA6; <code>allocationQuantum</code> = 1KB&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x5207;&#x5230;&#x4E0B;&#x4E00;&#x4E2A; stream&#x3002;<strong>&#x53EA;&#x8981; flush &#x65F6;&#x6709;&#x4E24;&#x4E2A;&#x4EE5;&#x4E0A;&#x7684; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#xFF0C;&#x5927; body &#x5C31;&#x4F1A;&#x88AB;&#x5207;&#x6210;&#x4E00;&#x4E32;&#x7EA6; 1KB &#x7684; DATA frame</strong>&#xFF0C;&#x4EA4;&#x9519;&#x5199;&#x51FA;&#xFF1A;<code>[9B][~1KB][9B][~1KB]...</code>&#x3002;&#x53EA;&#x6709;&#x4E00;&#x4E2A; stream &#x5F85;&#x53D1;&#x65F6;&#xFF0C;&#x5B83;&#x80FD;&#x62FF;&#x5230;&#x5168;&#x90E8;&#x9884;&#x7B97;&#xFF0C;&#x4E0D;&#x4F1A;&#x88AB;&#x5207;&#x6210; 1KB&#x3002;</p>
+<p>&#x5173;&#x952E;&#x95EE;&#x9898;&#x56E0;&#x6B64;&#x53D8;&#x6210;&#xFF1A;<strong>&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x4F1A;&#x6709;&#x591A;&#x4E2A; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#xFF1F;</strong></p>
+<h3 id="23-nio&#xFF1A;&#x540C;&#x6B65;&#x5199;&#xFF0C;&#x6C34;&#x4F4D;&#x7ACB;&#x523B;&#x56DE;&#x843D;">2.3 NIO&#xFF1A;&#x540C;&#x6B65;&#x5199;&#xFF0C;&#x6C34;&#x4F4D;&#x7ACB;&#x523B;&#x56DE;&#x843D;</h3>
+<p>NIO &#x7684; <code>doWrite()</code> &#x5728; flush &#x91CC;&#x76F4;&#x63A5; <code>writev</code>&#xFF0C;&#x5199;&#x591A;&#x5C11;&#x5C31;&#x7ACB;&#x523B; <code>removeBytes</code> &#x591A;&#x5C11;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/transport/src/main/java/io/netty/channel/socket/nio/NioSocketChannel.java#L423-L431" target="_blank"><code>NioSocketChannel.java#L423-L431</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> localWrittenBytes = ch.write(nioBuffers, <span class="hljs-number">0</span>, nioBufferCnt);
+...
+in.removeBytes(localWrittenBytes);
+</code></pre>
+<p>&#x5185;&#x7F51;&#x573A;&#x666F;&#x4E0B; socket &#x53D1;&#x9001;&#x7F13;&#x51B2;&#x533A;&#x51E0;&#x4E4E;&#x603B;&#x6709;&#x7A7A;&#x95F4;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x4E2A;&#x5927; DATA frame flush &#x5B8C;&#xFF0C;outbound buffer &#x5C31;&#x6E05;&#x7A7A;&#x4E86;&#xFF0C;&#x6C34;&#x4F4D;&#x9A6C;&#x4E0A;&#x56DE;&#x843D;&#x3002;&#x4E0B;&#x4E00;&#x4E2A; stream &#x5199;&#x5165;&#x65F6;&#x770B;&#x5230;&#x7684;&#x9884;&#x7B97;&#x662F;&#x5145;&#x8DB3;&#x7684;&#xFF0C;flow controller &#x91CC;&#x53EA;&#x6709;&#x5B83;&#x81EA;&#x5DF1;&#xFF0C;&#x4E8E;&#x662F;&#x6574;&#x4E2A; body &#x4EE5;&#x6EE1;&#x5E27;&#xFF08;16KB&#xFF09;&#x53D1;&#x51FA;&#x3002;</p>
+<h3 id="24-iouring&#xFF1A;&#x5F02;&#x6B65;&#x5199;&#xFF0C;&#x6C34;&#x4F4D;&#x8981;&#x7B49;-cqe">2.4 io_uring&#xFF1A;&#x5F02;&#x6B65;&#x5199;&#xFF0C;&#x6C34;&#x4F4D;&#x8981;&#x7B49; CQE</h3>
+<p>io_uring &#x7684; flush &#x53EA;&#x662F;&#x63D0;&#x4EA4;&#x4E00;&#x4E2A; <code>WRITEV</code> SQE&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringStreamChannel.java#L265-L291" target="_blank"><code>AbstractIoUringStreamChannel.java#L265-L291</code></a>&#xFF09;&#xFF0C;&#x5B57;&#x8282;&#x8981;&#x7B49;<strong>&#x4E0B;&#x4E00;&#x8F6E; event loop &#x5904;&#x7406; CQE &#x65F6;</strong>&#x624D;&#x79FB;&#x9664;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/transport-classes-io_uring/src/main/java/io/netty/channel/uring/AbstractIoUringStreamChannel.java#L690-L720" target="_blank"><code>#L690-L720</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">writeComplete0</span><span class="hljs-params">(<span class="hljs-keyword">byte</span> op, <span class="hljs-keyword">int</span> res, <span class="hljs-keyword">int</span> flags, <span class="hljs-keyword">long</span> data, <span class="hljs-keyword">int</span> outstanding)</span> </span>{
+    ...
+    <span class="hljs-keyword">if</span> (res &gt;= <span class="hljs-number">0</span>) {
+        channelOutboundBuffer.removeBytes(res);
+    }
+    ...
+}
+</code></pre>
+<p>&#x800C;&#x4E14;&#x6BCF;&#x4E2A; channel &#x540C;&#x4E00;&#x65F6;&#x523B;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5199;&#x5728;&#x98DE;&#xFF0C;&#x5728;&#x9014;&#x671F;&#x95F4;&#x5230;&#x6765;&#x7684; flush &#x53EA;&#x80FD;&#x5F80; outbound buffer &#x91CC;&#x8FFD;&#x52A0;&#x3002;&#x4E8E;&#x662F;&#xFF1A;</p>
+<ol>
+<li>&#x540C;&#x4E00;&#x4E2A; read loop &#x91CC;&#x5904;&#x7406;&#x4E86;&#x540C;&#x4E00;&#x8FDE;&#x63A5;&#x4E0A;&#x7684;&#x591A;&#x4E2A;&#x8BF7;&#x6C42;&#xFF0C;&#x6BCF;&#x4E2A;&#x54CD;&#x5E94; <code>writeAndFlush</code> &#x540E;&#xFF0C;&#x5B57;&#x8282;&#x90FD;&#x8FD8;&#x7559;&#x5728; outbound buffer &#x91CC;&#xFF0C;&#x6C34;&#x4F4D;&#x53EA;&#x5347;&#x4E0D;&#x964D;&#x3002;</li>
+<li>&#x79EF;&#x7D2F;&#x51E0;&#x4E2A;&#x54CD;&#x5E94;&#x540E;&#x5C31;&#x8D8A;&#x8FC7;&#x4E86; 64KB &#x9AD8;&#x6C34;&#x4F4D;&#xFF08;<code>ChannelOutboundBuffer.incrementPendingOutboundBytes</code> &#x2192; <code>setUnwritable</code>&#xFF0C;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/transport/src/main/java/io/netty/channel/ChannelOutboundBuffer.java#L198-L205" target="_blank"><code>#L198-L205</code></a>&#xFF09;&#xFF0C;channel &#x53D8;&#x6210;&#x4E0D;&#x53EF;&#x5199;&#xFF0C;&#x9884;&#x7B97;&#x53D8;&#x6210; 0&#xFF0C;&#x540E;&#x7EED;&#x54CD;&#x5E94;&#x53EA;&#x80FD;&#x79EF;&#x538B;&#x5728; flow controller &#x91CC;&#x3002;</li>
+<li>CQE &#x56DE;&#x6765;&#x540E; <code>removeBytes</code>&#xFF0C;&#x6C34;&#x4F4D;&#x964D;&#x5230;&#x4F4E;&#x6C34;&#x4F4D;&#x4EE5;&#x4E0B;&#xFF0C;&#x89E6;&#x53D1; <code>channelWritabilityChanged</code>&#xFF0C;&#x8FDB;&#x800C; <code>Http2ConnectionHandler.flush()</code> &#x548C; <code>writePendingBytes()</code>&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2ConnectionHandler.java#L195-L207" target="_blank"><code>Http2ConnectionHandler.java#L195-L207</code></a>&#xFF09;&#x3002;&#x8FD9;&#x65F6; flow controller &#x91CC;<strong>&#x540C;&#x65F6;&#x6709;&#x591A;&#x4E2A; stream &#x5F85;&#x53D1;</strong>&#xFF0C;WFQ &#x5F00;&#x59CB;&#x6309; 1KB &#x8F6E;&#x8F6C;&#x3002;</li>
+</ol>
+<p><strong>&#x4E00;&#x53E5;&#x8BDD;&#x603B;&#x7ED3;&#xFF1A;NIO &#x548C; io_uring &#x7684;&#x5199;&#x6C34;&#x4F4D;&#x66F2;&#x7EBF;&#x4E0D;&#x4E00;&#x6837;&#x3002;NIO &#x6BCF;&#x5199;&#x5B8C;&#x4E00;&#x6B21;&#x5C31;&#x56DE;&#x843D;&#xFF0C;WFQ &#x6C38;&#x8FDC;&#x53EA;&#x770B;&#x5230;&#x4E00;&#x4E2A; stream&#xFF1B;io_uring &#x7684;&#x6C34;&#x4F4D;&#x8981;&#x7B49; CQE &#x624D;&#x56DE;&#x843D;&#xFF0C;&#x79EF;&#x538B;&#x8BA9; WFQ &#x8FDB;&#x5165;&#x591A; stream &#x8F6E;&#x8F6C;&#xFF0C;&#x628A;&#x5927; body &#x5207;&#x6210;&#x4E86; 1KB &#x7684;&#x788E;&#x7247;&#x3002;</strong></p>
+<h3 id="25-httptohttp2connectionhandler-&#x4E5F;&#x9003;&#x4E0D;&#x6389;&#xFF0C;http2multiplexhandler-&#x66F4;&#x7CDF;">2.5 <code>HttpToHttp2ConnectionHandler</code> &#x4E5F;&#x9003;&#x4E0D;&#x6389;&#xFF0C;<code>Http2MultiplexHandler</code> &#x66F4;&#x7CDF;</h3>
+<p>&#x6211;&#x4EEC;&#x7EBF;&#x4E0A;&#x7528;&#x7684;&#x662F; <code>HttpToHttp2ConnectionHandler</code>&#xFF1A;&#x6BCF;&#x4E2A; <code>FullHttpResponse</code> &#x76F4;&#x63A5; <code>writeAndFlush</code>&#xFF0C;&#x6574;&#x4E2A; body &#x4EA4;&#x7ED9; encoder&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/HttpToHttp2ConnectionHandler.java#L135" target="_blank"><code>HttpToHttp2ConnectionHandler.java#L135</code></a>&#xFF09;&#x3002;&#x5728; NIO &#x4E0B;&#xFF0C;&#x6BCF;&#x4E2A;&#x54CD;&#x5E94; flush &#x65F6;&#x53EA;&#x6709;&#x81EA;&#x5DF1;&#x4E00;&#x4E2A; stream &#x5F85;&#x53D1;&#xFF0C;&#x786E;&#x5B9E;&#x4E0D;&#x4F1A;&#x4EA4;&#x9519;&#xFF1B;&#x4F46;&#x5728; io_uring &#x4E0B;&#xFF0C;&#x4E00;&#x65E6;&#x79EF;&#x538B;&#xFF0C;&#x540C;&#x6837;&#x4F1A;&#x89E6;&#x53D1;&#x4E0A;&#x9762;&#x7684;&#x6D41;&#x7A0B;&#x3002;</p>
+<p><code>Http2MultiplexHandler</code> &#x7684;&#x60C5;&#x51B5;&#x66F4;&#x7CDF;&#xFF1A;&#x5B50; channel &#x7684; flush &#x5728;&#x7236; channel &#x7684; read loop &#x671F;&#x95F4;&#x662F;&#x7A7A;&#x64CD;&#x4F5C;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/AbstractHttp2StreamChannel.java#L1209-L1222" target="_blank"><code>AbstractHttp2StreamChannel.java#L1209-L1222</code></a>&#xFF09;&#xFF0C;&#x8981;&#x7B49;&#x5230; read complete &#x65F6;&#x7EDF;&#x4E00; flush &#x4E00;&#x6B21;&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexHandler.java#L391-L406" target="_blank"><code>Http2MultiplexHandler.java#L391-L406</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flush</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// If we are currently in the parent channel&apos;s read loop we should just ignore the flush.</span>
+    <span class="hljs-comment">// We will ensure we trigger ctx.flush() after we processed all Channels later on and</span>
+    <span class="hljs-comment">// so aggregate the flushes.</span>
+    <span class="hljs-keyword">if</span> (!writeDoneAndNoFlush || isParentReadInProgress()) {
+        <span class="hljs-keyword">return</span>;
+    }
+    ...
+}
+</code></pre>
+<p>&#x6240;&#x4EE5;&#x540C;&#x4E00;&#x6279;&#x8BF7;&#x6C42;&#x7684;&#x54CD;&#x5E94;&#x5929;&#x7136;&#x5C31;&#x4F1A;&#x540C;&#x65F6;&#x5F85;&#x53D1;&#xFF0C;<strong>&#x5373;&#x4F7F;&#x5728; NIO &#x4E0B;&#x4E5F;&#x4F1A;&#x88AB; WFQ &#x5207;&#x788E;</strong>&#xFF0C;&#x5728;&#x5B50; channel &#x91CC;&#x8C03;&#x7528; <code>writeAndFlush</code> &#x4E5F;&#x6CA1;&#x7528;&#x3002;&#x7B2C; 1 &#x8282;&#x4E2D; 16KB &#x4E00;&#x6B21; zero-copy &#x90FD;&#x6CA1;&#x547D;&#x4E2D;&#xFF0C;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x539F;&#x56E0;&#xFF08;&#x538B;&#x6D4B;&#x5DE5;&#x5177; h2load &#x7684; <code>--rps</code> &#x6BCF; 10ms &#x6210;&#x6279;&#x53D1;&#x8BF7;&#x6C42;&#xFF0C;&#x4F1A;&#x8BA9;&#x540C;&#x4E00;&#x8FDE;&#x63A5;&#x4E0A;&#x7684;&#x591A;&#x4E2A;&#x8BF7;&#x6C42;&#x843D;&#x8FDB;&#x540C;&#x4E00;&#x6B21;&#x8BFB;&#xFF09;&#x3002;</p>
+<h3 id="26-&#x9664;&#x4E86;&#x5207;&#x788E;&#xFF0C;&#x5F02;&#x6B65;&#x5B8C;&#x6210;&#x672C;&#x8EAB;&#x4E5F;&#x6709;&#x4EE3;&#x4EF7;">2.6 &#x9664;&#x4E86;&#x5207;&#x788E;&#xFF0C;&#x5F02;&#x6B65;&#x5B8C;&#x6210;&#x672C;&#x8EAB;&#x4E5F;&#x6709;&#x4EE3;&#x4EF7;</h3>
+<p>&#x5373;&#x4F7F;&#x6CA1;&#x6709;&#x591A;&#x4E2A; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#xFF0C;io_uring &#x5728; h2 &#x4E0A;&#x4E5F;&#x6BD4; NIO &#x8D35;&#x3002;&#x4E91;&#x4E0A;&#x4E24;&#x53F0; 4 vCPU &#x865A;&#x62DF;&#x673A;&#x8D70;&#x5185;&#x7F51;&#x538B;&#x6D4B;&#xFF0C;h2c&#xFF0C;<code>Http2MultiplexHandler</code>&#xFF0C;&#x56FA;&#x5B9A;&#x901F;&#x7387;&#xFF0C;event loop &#x7EBF;&#x7A0B;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; CPU&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>NIO</th>
+<th>io_uring&#xFF08;&#x672A;&#x5F00; zero-copy&#xFF09;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16KB @ 5000 rps</td>
+<td>14.4 &#xB5;s</td>
+<td>16.9 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB @ 1500 rps</td>
+<td>28.3 &#xB5;s</td>
+<td>32.4 &#xB5;s</td>
+</tr>
+<tr>
+<td>256KB @ 400 rps</td>
+<td>79.1 &#xB5;s</td>
+<td>85.6 &#xB5;s</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5176;&#x4E2D; 64KB @ 1500 rps &#x65F6;&#xFF0C;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x5E73;&#x5747;&#x7EA6; 10ms &#x624D;&#x6765;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#xFF0C;&#x51E0;&#x4E4E;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x591A;&#x4E2A; stream &#x540C;&#x65F6;&#x5F85;&#x53D1;&#x3002;&#x8FD9;&#x65F6;&#x7684;&#x5DEE;&#x8DDD;&#x5206;&#x6210;&#x4E24;&#x90E8;&#x5206;&#x3002;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x662F;&#x591A;&#x4E00;&#x8F6E; writev&#xFF1A;&#x4E00;&#x4E2A; 64KB &#x7684; h2 &#x54CD;&#x5E94;&#xFF08;&#x6570;&#x636E; + &#x5E27;&#x5934; + HEADERS&#xFF09;&#x521A;&#x597D;&#x8D85;&#x8FC7; 64KB &#x9AD8;&#x6C34;&#x4F4D;&#xFF0C;NIO &#x80FD;&#x5728;&#x540C;&#x4E00;&#x6B21; flush &#x91CC;&#x5199;&#x5B8C;&#xFF0C;io_uring &#x8981;&#x7B49; CQE &#x56DE;&#x6765;&#x91CA;&#x653E;&#x9884;&#x7B97;&#x540E;&#xFF0C;&#x5728;&#x4E0B;&#x4E00;&#x8F6E; event loop &#x518D;&#x63D0;&#x4EA4;&#x4E00;&#x6B21;&#x3002;&#x628A;&#x9AD8;&#x6C34;&#x4F4D;&#x8C03;&#x5230; 1MB &#x5C31;&#x80FD;&#x6D88;&#x9664;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x914D;&#x7F6E;&#xFF08;64KB @ 1500 rps&#xFF09;</th>
+<th>event loop &#xB5;s/req</th>
+<th>&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; WRITEV</th>
+<th>&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684;&#x53D1;&#x5305;&#x6B21;&#x6570;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NIO</td>
+<td>25.7</td>
+<td>&#x2014;</td>
+<td>1.96</td>
+</tr>
+<tr>
+<td>io_uring&#xFF0C;&#x9ED8;&#x8BA4; 64KB &#x9AD8;&#x6C34;&#x4F4D;</td>
+<td>31.1</td>
+<td>1.92</td>
+<td>2.58</td>
+</tr>
+<tr>
+<td>io_uring&#xFF0C;1MB &#x9AD8;&#x6C34;&#x4F4D;</td>
+<td>29.1</td>
+<td>0.96</td>
+<td>1.95</td>
+</tr>
+</tbody>
+</table>
+<p>&#x7B2C;&#x4E8C;&#x90E8;&#x5206;&#x662F;&#x5269;&#x4E0B;&#x7684;&#x7EA6; 3.4 &#xB5;s&#x3002;&#x7528; <code>perf stat -t</code> &#x53EA;&#x7EDF;&#x8BA1; event loop &#x7EBF;&#x7A0B;&#xFF08;20 &#x79D2;&#xFF0C;&#x7EA6; 1490 rps&#xFF0C;&#x4E24;&#x8F6E;&#xFF09;&#xFF1A;<strong>&#x4E24;&#x8FB9;&#x7684;&#x6307;&#x4EE4;&#x6570;&#x5B8C;&#x5168;&#x76F8;&#x540C;</strong>&#xFF08;2.58/2.53 G &#x5BF9; 2.53/2.56 G&#xFF09;&#xFF0C;&#x4F46; io_uring &#x7684;&#x5468;&#x671F;&#x6570;&#x591A; 8% &#x5230; 10%&#xFF0C;<strong>cache miss &#x591A; 35%</strong>&#xFF08;33.9/32.5 M &#x5BF9; 44.8/45.2 M&#xFF09;&#xFF0C;IPC &#x4ECE; 0.87 &#x964D;&#x5230; 0.80&#x3002;&#x6211;&#x7684;&#x63A8;&#x6D4B;&#x662F;&#xFF0C;NIO &#x5728; flush &#x91CC;&#x540C;&#x6B65;&#x5B8C;&#x6210;&#x5199;&#x5165;&#xFF0C;buffer&#x3001;promise&#x3001;outbound entry &#x5728;&#x88AB;&#x8BBF;&#x95EE;&#x65F6;&#x90FD;&#x8FD8;&#x5728;&#x7F13;&#x5B58;&#x91CC;&#xFF1B;io_uring &#x8981;&#x5230;&#x4E0B;&#x4E00;&#x8F6E;&#x5904;&#x7406; CQE &#x65F6;&#x624D;&#x56DE;&#x5934;&#x91CA;&#x653E; buffer&#x3001;&#x5B8C;&#x6210; promise&#x3001;&#x6E05;&#x7406; entry&#xFF0C;&#x8FD9;&#x65F6;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x88AB;&#x5176;&#x4ED6;&#x5DE5;&#x4F5C;&#x6324;&#x51FA;&#x4E86;&#x7F13;&#x5B58;&#x3002;</p>
+<h2 id="3-&#x6D4B;&#x8BD5;">3. &#x6D4B;&#x8BD5;</h2>
+<h3 id="31-&#x73AF;&#x5883;">3.1 &#x73AF;&#x5883;</h3>
+<ul>
+<li><strong>&#x672C;&#x5730;</strong>&#xFF1A;i5-13600KF&#xFF0C;loopback&#x3002;&#x670D;&#x52A1;&#x7AEF; 2 &#x4E2A; event loop&#xFF0C;&#x7ED1;&#x5728; P &#x6838; 0 &#x548C; 2&#xFF1B;&#x538B;&#x6D4B;&#x7AEF;&#x7ED1;&#x5728; P &#x6838; 4/6/8/10&#x3002;</li>
+<li><strong>&#x4E91;&#x4E0A;</strong>&#xFF1A;&#x4E24;&#x53F0;&#x817E;&#x8BAF;&#x4E91; SA9.LARGE8&#xFF08;4 vCPU&#xFF0C;&#x5185;&#x6838; 7.0&#xFF0C;virtio_net&#xFF0C;iommu=pt&#xFF09;&#xFF0C;&#x8D70;&#x5185;&#x7F51;&#xFF0C;&#x5E26;&#x5BBD;&#x88AB;&#x9650;&#x5728;&#x7EA6; 2.25 Gbps&#xFF0C;&#x6240;&#x4EE5;&#x7EDF;&#x4E00;&#x7528;&#x56FA;&#x5B9A;&#x901F;&#x7387;&#x6BD4;&#x8F83;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; CPU&#x3002;&#x6CE8;&#x610F;&#xFF1A;&#x4E3B;&#x673A;&#x5B89;&#x5168; agent &#x5728;&#x7F51;&#x5361;&#x4E0A;&#x6302;&#x7684; <code>ETH_P_ALL</code> &#x6293;&#x5305; socket &#x4F1A;&#x8BA9;&#x6240;&#x6709; zero-copy &#x6084;&#x6084;&#x9000;&#x5316;&#x6210; copy&#xFF08;&#x53D1;&#x9001;&#x8DEF;&#x5F84;&#x4E0A; <code>dev_queue_xmit_nit</code> &#x4F1A;&#x8C03;&#x7528; <code>skb_copy_ubufs</code>&#xFF09;&#xFF0C;&#x6D4B;&#x8BD5;&#x524D;&#x5FC5;&#x987B;&#x505C;&#x6389;&#x3002;</li>
+<li>&#x57FA;&#x7EBF;&#x4EE3;&#x7801;&#xFF1A;Netty <a href="https://github.com/netty/netty/tree/006a2f1d92db733d10112de251600da7b6f8ec51" target="_blank"><code>4.2@006a2f1d92</code></a>&#xFF0C;JDK 25&#x3002;</li>
+</ul>
+<h3 id="32-&#x670D;&#x52A1;&#x7AEF;&#xFF1A;&#x6A21;&#x62DF;&#x7EBF;&#x4E0A;&#x7684;-httptohttp2connectionhandler">3.2 &#x670D;&#x52A1;&#x7AEF;&#xFF1A;&#x6A21;&#x62DF;&#x7EBF;&#x4E0A;&#x7684; <code>HttpToHttp2ConnectionHandler</code></h3>
+<p>&#x8BF7;&#x6C42;&#x7ECF; <code>InboundHttp2ToHttpAdapter</code> &#x805A;&#x5408;&#x6210; <code>FullHttpRequest</code>&#xFF0C;handler &#x76F4;&#x63A5; <code>writeAndFlush(FullHttpResponse)</code>&#x3002;body &#x5728;&#x542F;&#x52A8;&#x65F6;&#x6784;&#x9020;&#x4E00;&#x6B21;&#xFF0C;&#x6BCF;&#x6B21;&#x5199;&#x51FA; <code>retainedDuplicate()</code>&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x4EFD;&#x7F13;&#x5B58;&#x597D;&#x7684;&#x5185;&#x5BB9;&#xFF1A;</p>
+<pre><code class="lang-java">DefaultHttp2Connection connection = <span class="hljs-keyword">new</span> DefaultHttp2Connection(<span class="hljs-keyword">true</span>);
+installDistributor(connection, distributor, quantum);
+pipeline.addLast(<span class="hljs-keyword">new</span> HttpToHttp2ConnectionHandlerBuilder()
+                .connection(connection)
+                .initialSettings(Http2Settings.defaultSettings().maxConcurrentStreams(<span class="hljs-number">1024</span>))
+                .frameListener(<span class="hljs-keyword">new</span> InboundHttp2ToHttpAdapterBuilder(connection)
+                        .maxContentLength(<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">20</span>)
+                        .propagateSettings(<span class="hljs-keyword">false</span>)
+                        .validateHttpHeaders(<span class="hljs-keyword">false</span>)
+                        .build())
+                .build(),
+        <span class="hljs-keyword">new</span> AdaptedH2Handler(body));
+
+<span class="hljs-comment">// AdaptedH2Handler</span>
+<span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead0</span><span class="hljs-params">(ChannelHandlerContext ctx, FullHttpRequest req)</span> </span>{
+    DefaultFullHttpResponse res = <span class="hljs-keyword">new</span> DefaultFullHttpResponse(HTTP_1_1, OK, body.retainedDuplicate());
+    res.headers().setInt(CONTENT_LENGTH, body.readableBytes());
+    res.headers().set(HttpConversionUtil.ExtensionHeaderNames.STREAM_ID.text(),
+                      req.headers().get(HttpConversionUtil.ExtensionHeaderNames.STREAM_ID.text()));
+    ctx.writeAndFlush(res, ctx.voidPromise());
+}
+</code></pre>
+<p>&#x5207;&#x6362; distributor &#x7684;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">installDistributor</span><span class="hljs-params">(DefaultHttp2Connection connection, String distributor, <span class="hljs-keyword">int</span> quantum)</span> </span>{
+    StreamByteDistributor d;
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;uniform&quot;</span>.equals(distributor)) {
+        UniformStreamByteDistributor u = <span class="hljs-keyword">new</span> UniformStreamByteDistributor(connection);
+        <span class="hljs-keyword">if</span> (quantum &gt; <span class="hljs-number">0</span>) {
+            u.minAllocationChunk(quantum);
+        }
+        d = u;
+    } <span class="hljs-keyword">else</span> {
+        WeightedFairQueueByteDistributor w = <span class="hljs-keyword">new</span> WeightedFairQueueByteDistributor(connection);
+        <span class="hljs-keyword">if</span> (quantum &gt; <span class="hljs-number">0</span>) {
+            w.allocationQuantum(quantum);
+        }
+        d = w;
+    }
+    connection.remote().flowController(<span class="hljs-keyword">new</span> DefaultHttp2RemoteFlowController(connection, d));
+}
+</code></pre>
+<p>&#x4E3A;&#x4E86;&#x770B;&#x6E05; transport &#x5B9E;&#x9645;&#x6536;&#x5230;&#x4E86;&#x4EC0;&#x4E48;&#xFF0C;pipeline &#x6700;&#x524D;&#x9762;&#x6302;&#x4E86;&#x4E00;&#x4E2A;&#x51FA;&#x7AD9; handler&#xFF0C;&#x7EDF;&#x8BA1;&#x6BCF;&#x4E2A;&#x5199;&#x51FA;&#x7684; <code>ByteBuf</code> &#x7684;&#x5927;&#x5C0F;&#x5206;&#x5E03;&#x3002;</p>
+<h3 id="33-&#x538B;&#x6D4B;&#x7AEF;&#xFF1A;&#x540C;&#x4E00;&#x8FDE;&#x63A5;&#x4E0A;&#x6210;&#x6279;&#x5E76;&#x53D1;">3.3 &#x538B;&#x6D4B;&#x7AEF;&#xFF1A;&#x540C;&#x4E00;&#x8FDE;&#x63A5;&#x4E0A;&#x6210;&#x6279;&#x5E76;&#x53D1;</h3>
+<p>&#x538B;&#x6D4B;&#x7AEF;&#x662F;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E; Netty &#x7684; h2c &#x5BA2;&#x6237;&#x7AEF;&#xFF1A;16 &#x4E2A;&#x8FDE;&#x63A5;&#xFF0C;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x6BCF; 10ms <strong>&#x4E00;&#x6B21;&#x6027;</strong>&#x6253;&#x5F00; N &#x4E2A; stream&#xFF08;&#x5F00;&#x73AF;&#xFF09;&#xFF0C;&#x6A21;&#x62DF;&#x6D4F;&#x89C8;&#x5668;&#x6216; gRPC &#x5728;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x4E0A;&#x7684;&#x5E76;&#x53D1;&#x8BF7;&#x6C42;&#x3002;&#x6BCF;&#x4E2A; stream &#x8BB0;&#x5F55;&#x5B8C;&#x6210;&#x65F6;&#x95F4;&#xFF1B;&#x6D4B;&#x91CF;&#x7A97;&#x53E3;&#x524D;&#x540E;&#x5404;&#x8BF7;&#x6C42;&#x4E00;&#x6B21; <code>/stats</code>&#xFF0C;&#x62FF;&#x5230;&#x670D;&#x52A1;&#x7AEF; event loop &#x7EBF;&#x7A0B;&#x7684;&#x7D2F;&#x8BA1; CPU&#xFF08;<code>ThreadMXBean.getThreadCpuTime</code>&#xFF09;&#x548C; buffer &#x5927;&#x5C0F;&#x76F4;&#x65B9;&#x56FE;&#xFF0C;&#x76F8;&#x51CF;&#x5F97;&#x5230;&#x4E25;&#x683C;&#x5BF9;&#x9F50;&#x6D4B;&#x91CF;&#x7A97;&#x53E3;&#x7684;&#x6570;&#x636E;&#xFF1A;</p>
+<pre><code class="lang-java">loop.scheduleAtFixedRate(() -&gt; {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; burst; k++) {
+        request(ch, reqHeaders, rec);   <span class="hljs-comment">// Http2StreamChannelBootstrap(ch).open() -&gt; HEADERS(endStream)</span>
+    }
+}, initialDelayMicros, interval * <span class="hljs-number">1000L</span>, TimeUnit.MICROSECONDS);
+</code></pre>
+<h3 id="34-&#x7ED3;&#x679C;&#x4E00;&#xFF1A;nio-&#x4E0D;&#x5207;&#xFF0C;iouring-&#x5207;">3.4 &#x7ED3;&#x679C;&#x4E00;&#xFF1A;NIO &#x4E0D;&#x5207;&#xFF0C;io_uring &#x5207;</h3>
+<p><code>HttpToHttp2ConnectionHandler</code> + <code>writeAndFlush</code>&#xFF0C;WFQ&#xFF08;Netty &#x9ED8;&#x8BA4;&#xFF09;&#xFF0C;&#x9ED8;&#x8BA4; 64KB &#x9AD8;&#x6C34;&#x4F4D;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;&#x5E76;&#x53D1;</th>
+<th>transport</th>
+<th>&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; ByteBuf &#x6570;</th>
+<th>&#x5176;&#x4E2D; 1-2KB &#x5C0F;&#x5757;</th>
+<th>event loop &#xB5;s/req</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16KB</td>
+<td>4</td>
+<td>NIO</td>
+<td>4.0</td>
+<td>0</td>
+<td>8.22</td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>4</td>
+<td>io_uring</td>
+<td>4.0</td>
+<td>0</td>
+<td>8.09</td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>16</td>
+<td>NIO</td>
+<td>4.0</td>
+<td>0</td>
+<td>6.02</td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>16</td>
+<td><strong>io_uring</strong></td>
+<td><strong>16.4</strong></td>
+<td>2.5</td>
+<td><strong>7.93&#xFF08;+32%&#xFF09;</strong></td>
+</tr>
+<tr>
+<td>32KB</td>
+<td>4</td>
+<td>NIO</td>
+<td>6.0</td>
+<td>0</td>
+<td>8.07</td>
+</tr>
+<tr>
+<td>32KB</td>
+<td>4</td>
+<td><strong>io_uring</strong></td>
+<td><strong>8.4</strong></td>
+<td>1.3</td>
+<td>8.23</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>NIO</td>
+<td>12.0</td>
+<td>0</td>
+<td>11.27</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td><strong>io_uring</strong></td>
+<td><strong>43.7</strong></td>
+<td>16.2</td>
+<td><strong>17.36&#xFF08;+54%&#xFF09;</strong></td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>io_uring&#xFF0C;1MB &#x9AD8;&#x6C34;&#x4F4D;</td>
+<td>10.0</td>
+<td>0</td>
+<td>10.21</td>
+</tr>
+</tbody>
+</table>
+<p>NIO &#x5728;&#x6240;&#x6709;&#x7EC4;&#x5408;&#x4E0B;&#x90FD;&#x4FDD;&#x6301;&#x6EE1;&#x5E27;&#x3002;io_uring &#x53EA;&#x8981;&#x5728;&#x9014;&#x5B57;&#x8282;&#x8D8A;&#x8FC7;&#x9AD8;&#x6C34;&#x4F4D;&#xFF08;body &#x8D8A;&#x5927;&#x3001;&#x5E76;&#x53D1;&#x8D8A;&#x9AD8;&#x8D8A;&#x5BB9;&#x6613;&#x53D1;&#x751F;&#xFF09;&#x5C31;&#x5F00;&#x59CB;&#x5207;&#x5206;&#xFF1B;&#x628A;&#x9AD8;&#x6C34;&#x4F4D;&#x8C03;&#x5230; 1MB &#x540E;&#x5207;&#x5206;&#x6D88;&#x5931;&#x3002;</p>
+<h3 id="35-&#x7ED3;&#x679C;&#x4E8C;&#xFF1A;&#x6362;-distributor">3.5 &#x7ED3;&#x679C;&#x4E8C;&#xFF1A;&#x6362; distributor</h3>
+<p>io_uring&#xFF0C;<code>HttpToHttp2ConnectionHandler</code> + <code>writeAndFlush</code>&#xFF0C;<strong>&#x9ED8;&#x8BA4; 64KB &#x9AD8;&#x6C34;&#x4F4D;</strong>&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>&#x5E76;&#x53D1;</th>
+<th>distributor</th>
+<th>&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684; ByteBuf &#x6570;</th>
+<th>16KB &#x5E27;</th>
+<th>event loop &#xB5;s/req</th>
+<th>&#x5B8C;&#x6210;&#x65F6;&#x95F4; p50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>WFQ&#xFF08;Netty &#x9ED8;&#x8BA4;&#xFF09;</td>
+<td>43.8</td>
+<td>1.9</td>
+<td>18.0</td>
+<td>58 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>Uniform&#xFF08;Vert.x 5 &#x9ED8;&#x8BA4;&#xFF09;</td>
+<td>13.9</td>
+<td>3.8</td>
+<td>12.0&#xFF08;&#x2212;33%&#xFF09;</td>
+<td>40 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>Uniform + 16KB&#xFF08;grpc-java&#xFF09;</td>
+<td>13.9</td>
+<td>3.7</td>
+<td>12.1</td>
+<td>40 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>4</td>
+<td>WFQ + quantum 16KB</td>
+<td>12.5</td>
+<td>4.0</td>
+<td>11.2</td>
+<td>39 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>16</td>
+<td>WFQ&#xFF08;Netty &#x9ED8;&#x8BA4;&#xFF09;</td>
+<td>109.5</td>
+<td>0.5</td>
+<td>28.9</td>
+<td>423 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>16</td>
+<td>Uniform&#xFF08;Vert.x 5 &#x9ED8;&#x8BA4;&#xFF09;</td>
+<td>49.5</td>
+<td>0.6</td>
+<td>17.0&#xFF08;&#x2212;41%&#xFF09;</td>
+<td>240 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>16</td>
+<td><strong>Uniform + 16KB&#xFF08;grpc-java&#xFF09;</strong></td>
+<td><strong>12.6</strong></td>
+<td>4.0</td>
+<td><strong>10.6&#xFF08;&#x2212;63%&#xFF09;</strong></td>
+<td><strong>144 &#xB5;s</strong></td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>16</td>
+<td>WFQ&#xFF08;Netty &#x9ED8;&#x8BA4;&#xFF09;</td>
+<td>16.4</td>
+<td>0.5</td>
+<td>7.93</td>
+<td>62 &#xB5;s</td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>16</td>
+<td><strong>Uniform + 16KB</strong></td>
+<td><strong>4.3</strong></td>
+<td>1.0</td>
+<td><strong>5.25&#xFF08;&#x2212;34%&#xFF09;</strong></td>
+<td>49 &#xB5;s</td>
+</tr>
+</tbody>
+</table>
+<p><code>UniformStreamByteDistributor</code> &#x6BCF;&#x6B21;&#x7ED9;&#x6BCF;&#x4E2A; stream &#x5206; <code>max(minAllocationChunk, &#x9884;&#x7B97; / &#x5F85;&#x53D1; stream &#x6570;)</code>&#xFF08;<a href="https://github.com/netty/netty/blob/006a2f1d92db733d10112de251600da7b6f8ec51/codec-http2/src/main/java/io/netty/handler/codec/http2/UniformStreamByteDistributor.java#L96" target="_blank"><code>UniformStreamByteDistributor.java#L96</code></a>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> chunkSize = max(minAllocationChunk, maxBytes / size);
+</code></pre>
+<ul>
+<li>&#x5E76;&#x53D1; 4 &#x65F6;&#xFF0C;&#x9884;&#x7B97;&#x5E73;&#x5206;&#x540E;&#x6BCF;&#x4E2A; stream &#x6709; 8KB &#x5230; 16KB&#xFF0C;Uniform &#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x5C31;&#x57FA;&#x672C;&#x4E0D;&#x5207;&#x4E86;&#x3002;</li>
+<li>&#x5E76;&#x53D1; 16 &#x65F6;&#xFF0C;&#x5E73;&#x5206;&#x540E;&#x53EA;&#x5269; 2KB &#x5230; 4KB&#xFF0C;Uniform &#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x53C8;&#x5F00;&#x59CB;&#x9000;&#x5316;&#xFF08;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42; 49.5 &#x4E2A; ByteBuf&#xFF09;&#x3002;</li>
+<li><code>minAllocationChunk = 16KB</code> &#x8BA9;&#x6BCF;&#x6B21;&#x5206;&#x914D;&#x81F3;&#x5C11;&#x4E00;&#x4E2A;&#x6EE1;&#x5E27;&#xFF0C;&#x5728;&#x6240;&#x6709;&#x5E76;&#x53D1;&#x5EA6;&#x4E0B;&#x90FD;&#x4E0D;&#x5207;&#x5206;&#x3002;16KB &#x5E76;&#x53D1; 16 &#x65F6;&#xFF0C;io_uring &#x7684; event loop CPU&#xFF08;5.25 &#xB5;s&#xFF09;&#x751A;&#x81F3;&#x4F4E;&#x4E8E; NIO&#xFF08;6.02 &#xB5;s&#xFF09;&#x3002;</li>
+</ul>
+<p>&#x66F4;&#x7C97;&#x7684;&#x7C92;&#x5EA6;&#x6CA1;&#x6709;&#x635F;&#x5BB3;&#x5EF6;&#x8FDF;&#xFF0C;&#x53CD;&#x800C;&#x56E0;&#x4E3A; CPU &#x5F00;&#x9500;&#x4E0B;&#x964D;&#xFF0C;&#x6240;&#x6709; stream &#x90FD;&#x66F4;&#x5FEB;&#x5B8C;&#x6210;&#x4E86;&#x3002;</p>
+<h2 id="4-&#x522B;&#x4EBA;&#x4E5F;&#x8E29;&#x8FC7;&#xFF1A;grpc-java-&#x548C;-vertx">4. &#x522B;&#x4EBA;&#x4E5F;&#x8E29;&#x8FC7;&#xFF1A;grpc-java &#x548C; Vert.x</h2>
+<p><strong>grpc-java</strong> &#x6539;&#x4E86;&#x4E24;&#x6B21;&#xFF1A;</p>
+<ul>
+<li>2017 &#x5E74;&#xFF0C;commit <a href="https://github.com/grpc/grpc-java/commit/7b821a0e50a4059cd22dc63f81134fcfbd9c7c4f" target="_blank"><code>7b821a0e50</code> &quot;netty: increase message quantum&quot;</a> &#x628A; WFQ &#x7684; <code>allocationQuantum</code> &#x8BBE;&#x6210; 16KB&#xFF0C;&#x6CE8;&#x91CA;&#x662F; <code>// Make benchmarks fast again.</code>&#x3002;commit message &#x91CC;&#x5199;&#x9053;&#xFF1A;&quot;The size was ~1024bytes previously, which resulted in the <code>writev</code> syscalls sending many smaller chunks before hitting the low water mark&#x2026;&#x2026;When sending as many 1MB messages as possible it nearly doubles the rate.&quot;</li>
+<li>2025 &#x5E74;&#xFF0C;PR <a href="https://github.com/grpc/grpc-java/pull/11954" target="_blank">#11954 &quot;netty: Swap to UniformStreamByteDistributor&quot;</a> &#x6539;&#x7528; Uniform&#xFF0C;<code>minAllocationChunk = 16 * 1024</code>&#xFF08;<a href="https://github.com/grpc/grpc-java/blob/1084e9707d05a64dcb16a934bc03f7e2f68d013e/netty/src/main/java/io/grpc/netty/AbstractNettyHandler.java#L53" target="_blank"><code>AbstractNettyHandler.java#L53</code></a>&#x3001;<a href="https://github.com/grpc/grpc-java/blob/1084e9707d05a64dcb16a934bc03f7e2f68d013e/netty/src/main/java/io/grpc/netty/NettyServerHandler.java#L261-L265" target="_blank"><code>NettyServerHandler.java#L261-L265</code></a>&#xFF09;&#x3002;&#x8D77;&#x56E0;&#x662F; issue <a href="https://github.com/grpc/grpc-java/issues/11659" target="_blank">#11659</a>&#xFF1A;WFQ &#x4F1A;&#x8BA9;&#x540C;&#x4E00;&#x7EBF;&#x7A0B;&#x6309;&#x987A;&#x5E8F;&#x53D1;&#x51FA;&#x7684; RPC &#x5728;&#x670D;&#x52A1;&#x7AEF;&#x4E71;&#x5E8F;&#x5230;&#x8FBE;&#x3002;grpc-java &#x4E5F;&#x5728; Netty issue <a href="https://github.com/netty/netty/issues/14918" target="_blank">#14918</a> &#x4E2D;&#x63D0;&#x5230;&#xFF0C;&#x56E0;&#x4E3A;&#x4F18;&#x5148;&#x7EA7;&#x5DF2;&#x88AB;&#x5E9F;&#x5F03;&#xFF0C;&#x60F3;&#x6362;&#x6210; Uniform&#x3002;</li>
+</ul>
+<p><strong>Vert.x</strong>&#xFF1A;</p>
+<ul>
+<li>4.x&#xFF0C;PR <a href="https://github.com/eclipse-vertx/vert.x/pull/5071" target="_blank">#5071 &quot;HTTP/2 configurable stream byte distributor&quot;</a>&#xFF1A;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027; <code>vertx.h2StreamByteDistributor=uniform</code> &#x5207;&#x6362;&#x5230; Uniform&#xFF0C;&#x9ED8;&#x8BA4;&#x4ECD;&#x662F; WFQ&#x3002;</li>
+<li>5.x&#xFF0C;PR <a href="https://github.com/eclipse-vertx/vert.x/pull/5077" target="_blank">#5077</a>&#xFF1A;&#x9ED8;&#x8BA4;&#x6539;&#x4E3A; Uniform&#xFF0C;&#x7406;&#x7531;&#x662F; &quot;does not use stream priorities and yields better performance since it consumes less CPU&quot;&#xFF08;&#x53E6;&#x89C1;<a href="https://vertx.io/docs/guides/vertx-5-migration-guide/#_use_of_uniform_byte_distributor_for_http2_streams" target="_blank">&#x8FC1;&#x79FB;&#x6307;&#x5357;</a>&#xFF09;&#x3002;&#x4F46; Vert.x &#x6CA1;&#x6709;&#x8C03; chunk &#x5927;&#x5C0F;&#xFF0C;&#x7528;&#x7684;&#x4ECD;&#x662F;&#x9ED8;&#x8BA4;&#x7684; 1KB&#xFF08;<a href="https://github.com/eclipse-vertx/vert.x/blob/c206d7a70f942bf1e191e2dcc89118cb72edfecd/vertx-core/src/main/java/io/vertx/core/http/impl/http2/codec/VertxHttp2ConnectionHandlerBuilder.java#L155-L160" target="_blank"><code>VertxHttp2ConnectionHandlerBuilder.java#L155-L160</code></a>&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x9AD8;&#x5E76;&#x53D1;&#x79EF;&#x538B;&#x65F6;&#x8FD8;&#x4F1A;&#x51FA;&#x73B0;&#x4E0A;&#x8868;&#x4E2D;&quot;Uniform &#x9ED8;&#x8BA4;&#x3001;&#x5E76;&#x53D1; 16&quot;&#x90A3;&#x4E00;&#x884C;&#x7684;&#x9000;&#x5316;&#x3002;</li>
+</ul>
+<h2 id="5-&#x7ED3;&#x8BBA;">5. &#x7ED3;&#x8BBA;</h2>
+<h3 id="51-&#x4F18;&#x5148;&#x7EA7;&#x5DF2;&#x5E9F;&#x9664;&#xFF0C;1kb-&#x7684;&#x7C92;&#x5EA6;&#x4E5F;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x4E86;">5.1 &#x4F18;&#x5148;&#x7EA7;&#x5DF2;&#x5E9F;&#x9664;&#xFF0C;1KB &#x7684;&#x7C92;&#x5EA6;&#x4E5F;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x4E86;</h3>
+<p><strong>&quot;&#x52A0;&#x6743;&quot;&#x5DF2;&#x7ECF;&#x6CA1;&#x6709;&#x8F93;&#x5165;&#x3002;</strong> <a href="https://www.rfc-editor.org/rfc/rfc9113.html#section-5.3" target="_blank">RFC 9113 &#xA7;5.3</a> &#x5E9F;&#x5F03;&#x4E86; RFC 7540 &#x7684;&#x4F18;&#x5148;&#x7EA7;&#x65B9;&#x6848;&#xFF0C;&#x65B0;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x4E0D;&#x518D;&#x53D1;&#x9001;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;&#x548C;&#x6743;&#x91CD;&#xFF0C;&#x6240;&#x6709; stream &#x6743;&#x91CD;&#x76F8;&#x540C;&#x3002;WFQ &#x7684; CFS &#x5F0F;&#x4F2A;&#x65F6;&#x95F4;&#x8BA1;&#x7B97;&#x9000;&#x5316;&#x6210;&#x4E86;&#x5E26;&#x989D;&#x5916;&#x5F00;&#x9500;&#x7684;&#x8F6E;&#x8F6C;&#xFF0C;&#x8FD8;&#x4F1A;&#x9020;&#x6210; grpc-java #11659 &#x90A3;&#x79CD;&#x4E71;&#x5E8F;&#x3002;</p>
+<p><strong>&#x8F6E;&#x8F6C;&#x7C92;&#x5EA6;&#x8FD8;&#x6709;&#x610F;&#x4E49;&#xFF0C;&#x4F46; 1KB &#x592A;&#x5C0F;&#x3002;</strong> &#x5B83;&#x63A7;&#x5236;&#x7684;&#x662F;&#x5E76;&#x53D1;&#x65F6;&#x6BCF;&#x4E2A; stream &#x4E00;&#x6B21;&#x80FD;&#x8FDE;&#x7EED;&#x5199;&#x591A;&#x5C11;&#xFF0C;&#x672C;&#x8D28;&#x662F;&#x9996;&#x5B57;&#x8282;&#x516C;&#x5E73;&#x6027;&#x548C;&#x5E27;&#x6570;/CPU &#x4E4B;&#x95F4;&#x7684;&#x53D6;&#x820D;&#x3002;&#x6309; 12 Gbps &#x5185;&#x7F51;&#x7C97;&#x7B97;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x7C92;&#x5EA6;</th>
+<th>&#x7EBF;&#x4E0A;&#x53D1;&#x9001;&#x65F6;&#x95F4;</th>
+<th>&#x6BCF;&#x591A;&#x4E00;&#x4E2A;&#x7ADE;&#x4E89; stream&#xFF0C;&#x6700;&#x591A;&#x591A;&#x7B49;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1KB</td>
+<td>&#x7EA6; 0.7 &#xB5;s</td>
+<td>0.7 &#xB5;s</td>
+</tr>
+<tr>
+<td>16KB</td>
+<td>&#x7EA6; 11 &#xB5;s</td>
+<td>11 &#xB5;s</td>
+</tr>
+<tr>
+<td>64KB</td>
+<td>&#x7EA6; 44 &#xB5;s</td>
+<td>44 &#xB5;s</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x5185;&#x7F51; RTT &#x5728;&#x51E0;&#x5341;&#x5230;&#x51E0;&#x767E;&#x5FAE;&#x79D2;&#xFF0C;&#x5355;&#x4E2A;&#x8BF7;&#x6C42;&#x5728; event loop &#x4E0A;&#x7684;&#x5904;&#x7406;&#x65F6;&#x95F4;&#x4E5F;&#x6709;&#x51E0;&#x5341;&#x5FAE;&#x79D2;&#xFF0C;16KB &#x7C92;&#x5EA6;&#x5E26;&#x6765;&#x7684;&#x7EA6; 11 &#xB5;s &#x7B49;&#x5F85;&#x6839;&#x672C;&#x6D4B;&#x4E0D;&#x51FA;&#x6765;&#xFF1B;1KB &#x6362;&#x6765;&#x7684;&#x90A3;&#x70B9;&#x516C;&#x5E73;&#x6027;&#x88AB;&#x5B8C;&#x5168;&#x6DF9;&#x6CA1;&#xFF0C;&#x4EE3;&#x4EF7;&#xFF08;&#x7EA6; 10 &#x500D;&#x7684;&#x5E27;&#x6570;&#x548C;&#x660E;&#x663E;&#x7684; CPU &#x5F00;&#x9500;&#xFF09;&#x5374;&#x662F;&#x5B9E;&#x5B9E;&#x5728;&#x5728;&#x7684;&#x3002;</li>
+<li>&#x66F4;&#x5173;&#x952E;&#x7684;&#x662F;&#xFF0C;Netty &#x7684;&#x8C03;&#x5EA6;&#x53EA;&#x51B3;&#x5B9A;&#x5B57;&#x8282;<strong>&#x8FDB;&#x5165; socket &#x7684;&#x987A;&#x5E8F;</strong>&#x3002;&#x6570;&#x636E;&#x4E00;&#x65E6;&#x8FDB;&#x5165;&#x5185;&#x6838;&#x53D1;&#x9001;&#x7F13;&#x51B2;&#x533A;&#xFF08;&#x81EA;&#x52A8;&#x8C03;&#x6574;&#x540E;&#x53EF;&#x8FBE;&#x6570; MB&#xFF09;&#xFF0C;&#x5C31;&#x662F; FIFO &#x53D1;&#x51FA;&#x3002;Netty &#x6BCF;&#x6B21;&#x53EA;&#x8C03;&#x5EA6;&#x9AD8;&#x6C34;&#x4F4D;&#x8303;&#x56F4;&#x5185;&#x7684;&#x51E0;&#x5341; KB&#xFF0C;&#x518D;&#x7CBE;&#x7EC6;&#x7684;&#x8F6E;&#x8F6C;&#xFF0C;&#x5728;&#x6570; MB &#x7684;&#x5185;&#x6838;&#x961F;&#x5217;&#x9762;&#x524D;&#x4E5F;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x3002;</li>
+<li>&#x53EA;&#x6709;&#x5728;&#x4F4E;&#x5E26;&#x5BBD;&#x94FE;&#x8DEF;&#x4E0A;&#xFF08;&#x6BD4;&#x5982;&#x9762;&#x5411;&#x516C;&#x7F51;&#x7684;&#x79FB;&#x52A8;&#x7AEF;&#xFF0C;10 Mbps &#x4E0B; 16KB &#x8981;&#x7EA6; 13 ms&#xFF09;&#xFF0C;&#x5C0F;&#x7C92;&#x5EA6;&#x624D;&#x53EF;&#x80FD;&#x5BF9;&#x9996;&#x5B57;&#x8282;&#x65F6;&#x95F4;&#x6709;&#x4E00;&#x70B9;&#x5E2E;&#x52A9;&#xFF0C;&#x800C;&#x4E14;&#x4E5F;&#x4F1A;&#x88AB;&#x5185;&#x6838;&#x53D1;&#x9001;&#x7F13;&#x51B2;&#x533A;&#x7A00;&#x91CA;&#x3002;</li>
+</ul>
+<h3 id="52-&#x6211;&#x4EEC;&#x7684;&#x505A;&#x6CD5;">5.2 &#x6211;&#x4EEC;&#x7684;&#x505A;&#x6CD5;</h3>
+<ol>
+<li><p><strong>&#x6539;&#x7528; <code>UniformStreamByteDistributor</code> + <code>minAllocationChunk(16 * 1024)</code></strong>&#xFF0C;&#x548C; grpc-java &#x4E00;&#x81F4;&#xFF1A;</p>
+<pre><code class="lang-java">DefaultHttp2Connection connection = <span class="hljs-keyword">new</span> DefaultHttp2Connection(<span class="hljs-keyword">true</span>);
+UniformStreamByteDistributor distributor = <span class="hljs-keyword">new</span> UniformStreamByteDistributor(connection);
+distributor.minAllocationChunk(<span class="hljs-number">16</span> * <span class="hljs-number">1024</span>);
+connection.remote().flowController(<span class="hljs-keyword">new</span> DefaultHttp2RemoteFlowController(connection, distributor));
+HttpToHttp2ConnectionHandler handler = <span class="hljs-keyword">new</span> HttpToHttp2ConnectionHandlerBuilder()
+        .connection(connection)
+        .frameListener(...)
+        .build();
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x7684;&#x5E26;&#x5BBD;&#x5927;&#x5230;&#x51E0;&#x4E4E;&#x6253;&#x4E0D;&#x6EE1;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x4E5F;&#x5DF2;&#x7ECF;&#x88AB;&#x5E9F;&#x5F03;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x4FEE;&#x6539;&#x5BF9;&#x6211;&#x4EEC;&#x662F;&#x7EAF;&#x6536;&#x76CA;&#x3002;</p>
+</li>
+<li><p><strong>&#x7528; io_uring &#x65F6;&#xFF0C;&#x540C;&#x65F6;&#x8C03;&#x5927; <code>WRITE_BUFFER_WATER_MARK</code></strong>&#xFF08;&#x6BD4;&#x5982;&#x9AD8;&#x6C34;&#x4F4D; 1MB&#xFF09;&#xFF0C;&#x4ECE;&#x6E90;&#x5934;&#x4E0A;&#x51CF;&#x5C11;&quot;&#x5F02;&#x6B65;&#x5B8C;&#x6210;&#x5BFC;&#x81F4;&#x9884;&#x7B97;&#x88AB;&#x51BB;&#x7ED3;&#x3001;&#x591A;&#x4E2A; stream &#x79EF;&#x538B;&quot;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+</li>
+<li><p><strong>&#x53EF;&#x4EE5;&#x7ED9; Netty &#x63D0;&#x7684;&#x6539;&#x8FDB;</strong>&#xFF1A;h2 &#x9ED8;&#x8BA4;&#x4F7F;&#x7528; Uniform&#xFF0C;&#x4E14; chunk &#x81F3;&#x5C11;&#x7B49;&#x4E8E; <code>SETTINGS_MAX_FRAME_SIZE</code>&#xFF1B;io_uring transport &#x5728;&#x8BA1;&#x7B97;&#x53EF;&#x5199;&#x5B57;&#x8282;&#x65F6;&#x8003;&#x8651;&quot;&#x5DF2;&#x63D0;&#x4EA4;&#x3001;&#x672A;&#x5B8C;&#x6210;&quot;&#x7684;&#x5199;&#xFF0C;&#x6216;&#x8005;&#x8BA9; h2 &#x7684; flush &#x5728; CQE &#x56DE;&#x6765;&#x540E;&#x7EE7;&#x7EED;&#xFF0C;&#x907F;&#x514D;&#x5F02;&#x6B65;&#x5199;&#x628A;&#x5199;&#x5165;&#x9884;&#x7B97;&#x51BB;&#x7ED3;&#x4E00;&#x6574;&#x8F6E;&#x3002;</p>
+</li>
+</ol>
+<h3 id="53-&#x6559;&#x8BAD;">5.3 &#x6559;&#x8BAD;</h3>
+<p>io_uring &#x7684;&#x5F02;&#x6B65;&#x5199;&#x4E0D;&#x53EA;&#x662F;&quot;&#x66F4;&#x5FEB;&#x7684;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&quot;&#x3002;<strong>&#x5B83;&#x6539;&#x53D8;&#x4E86;&quot;&#x4E00;&#x6B21;&#x5199;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x7B97;&#x5B8C;&#x6210;&quot;&#x7684;&#x8BED;&#x4E49;&#x3002;</strong> Netty &#x7684;&#x5199;&#x6C34;&#x4F4D;&#x3001;h2 &#x7684;&#x6D41;&#x63A7;&#x9884;&#x7B97;&#xFF0C;&#x4EE5;&#x53CA;&#x6D41;&#x63A7;&#x4E4B;&#x4E0A;&#x7684; stream &#x8C03;&#x5EA6;&#xFF0C;&#x90FD;&#x9690;&#x542B;&#x4E86;&quot;flush &#x8FD4;&#x56DE;&#x65F6;&#x5B57;&#x8282;&#x5DF2;&#x7ECF;&#x4EA4;&#x7ED9;&#x5185;&#x6838;&quot;&#x7684;&#x5047;&#x8BBE;&#x3002;NIO &#x6EE1;&#x8DB3;&#x8FD9;&#x4E2A;&#x5047;&#x8BBE;&#xFF0C;io_uring &#x4E0D;&#x6EE1;&#x8DB3;&#x3002;&#x4ECE; epoll &#x8FC1;&#x79FB;&#x5230; io_uring &#x65F6;&#xFF0C;&#x9664;&#x4E86; transport &#x672C;&#x8EAB;&#xFF0C;&#x8FD8;&#x8981;&#x56DE;&#x5934;&#x68C0;&#x67E5;&#x8FD9;&#x4E9B;&#x5EFA;&#x7ACB;&#x5728;&#x540C;&#x6B65;&#x5199;&#x8BED;&#x4E49;&#x4E0A;&#x7684;&#x4E0A;&#x5C42;&#x673A;&#x5236;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="io_uring_sqpoll_isolation.html" class="navigation navigation-prev " aria-label="Previous page: io_uring非对称工作组的一些想法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../reactive_lock.html" class="navigation navigation-next " aria-label="Next page: 响应式的锁">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"io_uring 异步写如何让 Netty HTTP/2 把大 body 切成 1KB 碎片","level":"3.8","depth":1,"next":{"title":"响应式的锁","level":"4.1","depth":1,"path":"reactive_lock.md","ref":"reactive_lock.md","articles":[]},"previous":{"title":"io_uring非对称工作组的一些想法","level":"3.7","depth":1,"path":"io_uring/io_uring_sqpoll_isolation.md","ref":"io_uring/io_uring_sqpoll_isolation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"io_uring/netty_io_uring_h2_flow_control.md","mtime":"2026-10-05T10:55:57.537Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2026-10-05T10:56:24.953Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
